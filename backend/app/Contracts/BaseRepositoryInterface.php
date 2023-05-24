@@ -10,7 +10,7 @@ interface BaseRepositoryInterface
 {
     public function create(array $data): Model;
     public function getById(int $id): ?Model;
-    public function update(int $id, array $data): Model;
+    public function update(int $id, array $data): ?Model;
     public function delete(int $id): bool;
     public function getAll(): Collection;
     public function getAllWithPagination(int $limit): LengthAwarePaginator;

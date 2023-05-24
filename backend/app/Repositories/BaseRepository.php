@@ -42,11 +42,14 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Update
      * @param int $id
      * @param array $data
-     * @return Model
+     * @return Model|null
      */
-    public function update(int $id, array $data): Model
+    public function update(int $id, array $data): ?Model
     {
         $model = $this->getById($id);
+        if (!$model) {
+            return null;
+        }
         $model->update($data);
 
         return $model;

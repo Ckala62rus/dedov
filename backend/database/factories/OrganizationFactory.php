@@ -2,16 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\LessonCategory;
+use App\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\LessonCategory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Organization>
  */
-class LessonCategoryFactory extends Factory
+class OrganizationFactory extends Factory
 {
-
-    protected $model = LessonCategory::class;
+    protected $model = Organization::class;
 
     /**
      * Define the model's default state.

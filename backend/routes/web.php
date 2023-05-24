@@ -57,18 +57,6 @@ Route::middleware(['admin', 'auth'])->group(function () {
     Route::get('admin/profile', [ProfileController::class, 'profilePage'])->name('metronic.profile');
 
     Route::group(['prefix' => 'admin'], function () {
-        // Lesson begin
-        Route::get('lessons-pagination', [LessonController::class, 'getAllLessons'])->name('metronic.lesson.getAllLessons');
-        Route::get('lessons', [LessonController::class, 'index'])->name('metronic.lesson.index');
-        Route::get('lessons/create', [LessonController::class, 'create'])->name('metronic.lesson.create');
-        Route::get('lessons/{id}/edit', [LessonController::class, 'edit'])->name('metronic.lesson.edit');
-        Route::get('lessons/{id}', [LessonController::class, 'show'])->name('metronic.lesson.show');
-        Route::put('lessons/{id}', [LessonController::class, 'update'])->name('metronic.lesson.update');
-        Route::delete('lessons/{id}', [LessonController::class, 'destroy'])->name('metronic.lesson.destroy');
-        Route::post('lessons', [LessonController::class, 'store'])->name('metronic.lesson.store');
-
-        // Get concrete lesson view
-        Route::get('course/lessons/{id}', [LessonController::class, 'lessonView'])->name('metronic.lesson.lesson-view');
 
         // User
         Route::get('user', [UserController::class, 'index'])->name('metronic.user.index')->middleware(['permission:read user']);
@@ -91,16 +79,6 @@ Route::middleware(['admin', 'auth'])->group(function () {
         Route::get('role/{id}/edit', [RolePermissionController::class, 'edit'])->name('metronic.role.edit');
         Route::delete('role/{id}', [RolePermissionController::class, 'destroy']);
 
-        // Lesson Category
-        Route::get('category', [LessonCategoryController::class, 'index'])->name('metronic.lesson-category.index');
-        Route::post('category', [LessonCategoryController::class, 'store']);
-        Route::get('category/create', [LessonCategoryController::class, 'create'])->name('metronic.lesson-category.create');
-        Route::get('category/paginate', [LessonCategoryController::class, 'getAllLessonCategoriesWithPagination']);
-        Route::get('category/collection', [LessonCategoryController::class, 'getAllLessonCategoryCollection']);
-        Route::get('category/{id}/edit', [LessonCategoryController::class, 'edit'])->name('metronic.lesson-category.edit');
-        Route::get('category/{id}', [LessonCategoryController::class, 'show']);
-        Route::put('category/{id}', [LessonCategoryController::class, 'update']);
-        Route::delete('category/{id}', [LessonCategoryController::class, 'destroy']);
     });
 
     // Permission
@@ -112,3 +90,8 @@ Route::middleware(['admin', 'auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+/**
+ * Devices
+ * ACP
+ */
