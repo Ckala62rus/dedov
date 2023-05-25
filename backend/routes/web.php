@@ -3,6 +3,7 @@
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\LessonCategoryController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
@@ -49,7 +50,7 @@ Route::middleware('auth')->group(function () {
 //    return Inertia::render('Dashboard');
 //})->name('www');
 
-Route::middleware(['admin', 'auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/admin', function () {
         return Inertia::render('admin/dashboard');
     })->name('www');
@@ -78,6 +79,10 @@ Route::middleware(['admin', 'auth'])->group(function () {
         Route::put('role/{id}', [RolePermissionController::class, 'update']);
         Route::get('role/{id}/edit', [RolePermissionController::class, 'edit'])->name('metronic.role.edit');
         Route::delete('role/{id}', [RolePermissionController::class, 'destroy']);
+
+        // Organization
+        Route::resource('organizations', OrganizationController::class);
+        Route::get('organization-all-paginate', [OrganizationController::class, 'getAllOrganizationsWithPagination']);
 
     });
 

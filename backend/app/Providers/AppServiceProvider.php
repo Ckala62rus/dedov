@@ -15,6 +15,7 @@ use App\Repositories\OrganizationRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use App\Services\EquipmentService;
+use App\Services\OrganizationsService;
 use App\Services\RoleService;
 use App\Services\UserService;
 use Illuminate\Routing\UrlGenerator;
@@ -36,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RoleServiceInterface::class, RoleService::class);
 
         $this->app->bind(OrganizationRepositoryInterface::class, OrganizationRepository::class);
-        $this->app->bind(OrganizationServiceInterface::class, OrganizationRepository::class);
+        $this->app->bind(OrganizationServiceInterface::class, OrganizationsService::class);
 
         $this->app->bind(EquipmentRepositoryInterface::class, EquipmentRepository::class);
         $this->app->bind(EquipmentServiceInterface::class, EquipmentService::class);
