@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Contracts\OrganizationServiceInterface;
 use App\Http\Requests\Organization\OrganizationStoreRequest;
+use App\Http\Requests\Organization\OrganizationUpdateRequest;
 use App\Http\Requests\OrganizationCollectionRequest;
 use App\Http\Resources\Admin\Dashboard\Organization\OrganizationCollectionResource;
 use App\Http\Resources\Admin\Dashboard\Organization\OrganizationCreateResource;
 use App\Http\Resources\Admin\Dashboard\Organization\OrganizationShowResource;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -57,9 +57,24 @@ class OrganizationController extends BaseController
         );
     }
 
-    public function show(int $id)
+    /**
+     * Get organization by id
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function show(int $id): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $organization = $this->organizationService->getOrganizationsById($id);
+
+        if (!$organization) {
+            return $this->response(
+                ['organization' => null],
+                'Organization by id ' . $id,
+                false,
+                Response::HTTP_OK
+            );
+        }
+
         return $this->response(
             ['organization' => OrganizationShowResource::make($organization)],
             'Organization by id',
@@ -78,9 +93,22 @@ class OrganizationController extends BaseController
         return Inertia::render('Organization/OrganizationEdit', ['id' => $id]);
     }
 
-    public function update(Request $request, int $id)
+    /**
+     * Update organization by id
+     * @param OrganizationUpdateRequest $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function update(OrganizationUpdateRequest $request, int $id): \Symfony\Component\HttpFoundation\JsonResponse
     {
-        //
+        $data = $request->validated();
+        $organization = $this->organizationService->updateOrganizations($id, $data);
+        return $this->response(
+            ['organization' => OrganizationShowResource::make($organization)],
+            'Update organization by id',
+            true,
+            Response::HTTP_OK
+        );
     }
 
     /**

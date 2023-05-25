@@ -78,38 +78,21 @@ export default {
 
     methods: {
         createOrganization() {
-            this.resetErrors()
-
-            axios.post('/admin/organizations', this.form)
+            axios.put('/admin/organizations/' + this.id, this.form)
                 .then(res => {
-                    if (res.status === 201){
+                    if (res.status === 200){
                         this.$notify({
-                            title: "Создание организации",
-                            text: "Организация создана!",
+                            title: "Редактирование организации",
+                            text: "Данные отредактированны!",
                             speed: 1000,
                             duration: 1000,
                             type: 'success'
                         });
-
-                        this.resetForm();
                     }
+                    console.log(res)
                 })
                 .catch(err => {
-                    let errors = err.response.data.errors
-
-                    if (err.response.status === 422) {
-                        console.log(errors)
-                        this.errors = {
-                            errorName: errors.hasOwnProperty('name'),
-                        };
-                        this.$notify({
-                            title: "Ошибка",
-                            text: "Ошибка в заполнении полей",
-                            speed: 1000,
-                            duration: 1000,
-                            type: 'error'
-                        });
-                    }
+                    console.log(err)
                 })
         },
 

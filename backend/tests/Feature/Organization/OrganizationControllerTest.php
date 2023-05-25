@@ -126,7 +126,26 @@ class OrganizationControllerTest extends TestCase
         // act
         $response = $this->get('admin/organizations/' . $organization->id);
         $result = $response->decodeResponseJson();
-        dd($result);
+
         // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $this->assertEquals($result['data']['organization']['id'], $organization->id);
+    }
+
+    public function test_get_organization_by_id_if_not_exist()
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // act
+        $response = $this->get('admin/organizations/' . random_int(1, 10));
+        $result = $response->decodeResponseJson();
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $this->assertNull($result['data']['organization']);
+        $this->assertFalse($result['status']);
     }
 }
