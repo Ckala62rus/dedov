@@ -2,23 +2,19 @@
 
 namespace App\Providers;
 
-use App\Contracts\LessonCategoryRepositoryInterface;
-use App\Contracts\LessonCategoryServiceInterface;
-use App\Contracts\LessonRepositoryInterface;
-use App\Contracts\LessonServiceInterface;
+use App\Contracts\EquipmentRepositoryInterface;
+use App\Contracts\EquipmentServiceInterface;
 use App\Contracts\OrganizationRepositoryInterface;
 use App\Contracts\OrganizationServiceInterface;
 use App\Contracts\RoleRepositoryInterface;
 use App\Contracts\RoleServiceInterface;
 use App\Contracts\UserRepositoryInterface;
 use App\Contracts\UserServiceInterface;
-use App\Repositories\LessonCategoryRepository;
-use App\Repositories\LessonRepository;
+use App\Repositories\EquipmentRepository;
 use App\Repositories\OrganizationRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
-use App\Services\LessonCategoryService;
-use App\Services\LessonService;
+use App\Services\EquipmentService;
 use App\Services\RoleService;
 use App\Services\UserService;
 use Illuminate\Routing\UrlGenerator;
@@ -41,6 +37,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(OrganizationRepositoryInterface::class, OrganizationRepository::class);
         $this->app->bind(OrganizationServiceInterface::class, OrganizationRepository::class);
+
+        $this->app->bind(EquipmentRepositoryInterface::class, EquipmentRepository::class);
+        $this->app->bind(EquipmentServiceInterface::class, EquipmentService::class);
     }
 
     /**
