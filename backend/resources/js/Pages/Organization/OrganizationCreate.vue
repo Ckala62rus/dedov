@@ -89,7 +89,6 @@ export default {
                     let errors = err.response.data.errors
 
                     if (err.response.status === 422) {
-                        console.log(errors)
                         this.errors = {
                             errorName: errors.hasOwnProperty('name'),
                         };

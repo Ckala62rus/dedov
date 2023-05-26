@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Admin\Dashboard\Organization;
+namespace App\Http\Resources\Admin\Dashboard\Equipment;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrganizationCreateResource extends JsonResource
+class EquipmentStoreResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Resources\Admin\Dashboard\Organization;
+namespace App\Http\Resources\Admin\Dashboard\Equipment;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrganizationCreateResource extends JsonResource
+class EquipmentCollectionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @param  Request  $request
+     * @return array
      */
     public function toArray($request)
     {

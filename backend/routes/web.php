@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\LessonCategoryController;
 use App\Http\Controllers\LessonController;
@@ -83,6 +84,10 @@ Route::middleware(['auth'])->group(function () {
         // Organization
         Route::resource('organizations', OrganizationController::class);
         Route::get('organization-all-paginate', [OrganizationController::class, 'getAllOrganizationsWithPagination']);
+
+        // Equipment
+        Route::resource('equipments', EquipmentController::class);
+        Route::get('equipments-all-paginate', [EquipmentController::class, 'getAllEquipmentsWithPagination']);
 
     });
 

@@ -20,7 +20,8 @@ class EquipmentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->slug()
+            'name' => fake()->slug(),
+            'description' => fake()->text(50),
         ];
     }
 }

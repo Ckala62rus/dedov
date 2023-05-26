@@ -5,39 +5,39 @@
                 <div class="card card-custom height-profile">
                     <div class="card-header">
                         <h3 class="card-title">
-                            Редактирование организации
+                            Редактирование типа оборудования
                         </h3>
                     </div>
 
                     <!--begin::Form-->
-                    <form @submit.prevent="createOrganization">
+                    <form @submit.prevent="updateEquipment">
                         <div class="card-body">
                             <div class="form-group mb-8">
                             </div>
                             <div class="form-group">
-                                <label>Организация <span class="text-danger">*</span></label>
+                                <label>Тип оборудования <span class="text-danger">*</span></label>
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Название организации"
+                                    placeholder="Название типа оборудования"
                                     v-model="form.name"
                                     :class="{'is-invalid': errors.errorName}"
                                 />
-                                <div class="invalid-feedback">Название организации обязательно!</div>
+                                <div class="invalid-feedback">Название типа оборудования, обязательно!</div>
                             </div>
                             <div class="form-group">
                                 <label>Описание</label>
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Полное название организации"
+                                    placeholder="Полное название оборудования"
                                     v-model="form.description"
                                 />
                             </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-success mr-2">Создать</button>
-                            <Link :href="route('organizations.index')" as="button" method="get" class="btn btn-primary font-weight-bolder">Назад</Link>
+                            <Link :href="route('equipments.index')" as="button" method="get" class="btn btn-primary font-weight-bolder">Назад</Link>
                         </div>
                     </form>
                 </div>
@@ -51,7 +51,7 @@
 import {Link, usePage} from "@inertiajs/inertia-vue3";
 
 export default {
-    name: "OrganizationEdit",
+    name: "OrganizationCreate",
 
     components: {
         Link
@@ -77,8 +77,8 @@ export default {
     },
 
     methods: {
-        createOrganization() {
-            axios.put('/admin/organizations/' + this.id, this.form)
+        updateEquipment() {
+            axios.put('/admin/equipments/' + this.id, this.form)
                 .then(res => {
                     if (res.status === 200){
                         this.$notify({
@@ -109,16 +109,16 @@ export default {
             };
         },
 
-        getOrganizationById(){
-          axios.get('/admin/organizations/' + this.id)
-              .then(res => {
-                  this.form = res.data.data.organization;
-              })
+        getEquipmentById(){
+            axios.get('/admin/equipments/' + this.id)
+                .then(res => {
+                    this.form = res.data.data.equipment;
+                })
         },
     },
 
     mounted() {
-        this.getOrganizationById();
+        this.getEquipmentById();
     }
 }
 </script>
