@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\DeviceRepositoryInterface;
+use App\Contracts\DeviceServiceInterface;
 use App\Contracts\EquipmentRepositoryInterface;
 use App\Contracts\EquipmentServiceInterface;
 use App\Contracts\OrganizationRepositoryInterface;
@@ -10,10 +12,12 @@ use App\Contracts\RoleRepositoryInterface;
 use App\Contracts\RoleServiceInterface;
 use App\Contracts\UserRepositoryInterface;
 use App\Contracts\UserServiceInterface;
+use App\Repositories\DeviceRepository;
 use App\Repositories\EquipmentRepository;
 use App\Repositories\OrganizationRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
+use App\Services\DeviceService;
 use App\Services\EquipmentService;
 use App\Services\OrganizationsService;
 use App\Services\RoleService;
@@ -41,6 +45,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(EquipmentRepositoryInterface::class, EquipmentRepository::class);
         $this->app->bind(EquipmentServiceInterface::class, EquipmentService::class);
+
+        $this->app->bind(DeviceRepositoryInterface::class, DeviceRepository::class);
+        $this->app->bind(DeviceServiceInterface::class, DeviceService::class);
     }
 
     /**
