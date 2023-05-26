@@ -84,9 +84,9 @@ export default {
                 // see the options API
                 editableColumns:['text'],
                 headings: {
-                    id: 'id',
+                    id: '№',
                     name: 'Имя',
-                    email: 'Почта',
+                    description: 'Описание',
                     created_at: 'Время создания',
                     updated_at: 'Время обновления',
                     actions: 'Действия',
