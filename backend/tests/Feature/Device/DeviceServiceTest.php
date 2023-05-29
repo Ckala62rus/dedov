@@ -173,4 +173,34 @@ class DeviceServiceTest extends TestCase
         $this->assertNotEquals($deviceUpdated->date_update, $device->date_update);
         $this->assertNotEquals($deviceUpdated->cpu, $device->cpu);
     }
+
+    public function test_delete_device_if_exist_success()
+    {
+        // arrange
+        $device = Device::factory()->create();
+
+        /** @var DeviceService $service */
+        $service = $this->app->make(DeviceService::class);
+
+        // act
+        $isDelete = $service->deleteDevice($device->id);
+
+        // assert
+        $this->assertTrue($isDelete);
+        $this->assertDatabaseCount(Device::class, 0);
+    }
+
+    public function test_delete_device_if_not_exist_fail()
+    {
+        // arrange
+        /** @var DeviceService $service */
+        $service = $this->app->make(DeviceService::class);
+
+        // act
+        $isDelete = $service->deleteDevice(random_int(1, 10));
+
+        // assert
+        $this->assertFalse($isDelete);
+        $this->assertDatabaseCount(Device::class, 0);
+    }
 }

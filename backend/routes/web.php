@@ -89,6 +89,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('equipments', EquipmentController::class);
         Route::get('equipments-all-paginate', [EquipmentController::class, 'getAllEquipmentsWithPagination']);
 
+        // Device
+        Route::resource('devices', \App\Http\Controllers\DeviceController::class);
+
     });
 
     // Permission

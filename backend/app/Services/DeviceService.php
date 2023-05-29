@@ -4,9 +4,13 @@ namespace App\Services;
 
 use App\Contracts\DeviceRepositoryInterface;
 use App\Contracts\DeviceServiceInterface;
+use App\Contracts\EquipmentServiceInterface;
+use App\Contracts\OrganizationServiceInterface;
+use App\Contracts\UserServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Intervention\Image\Exception\NotFoundException;
 
 class DeviceService implements DeviceServiceInterface
 {
@@ -16,11 +20,36 @@ class DeviceService implements DeviceServiceInterface
     private DeviceRepositoryInterface $deviceRepository;
 
     /**
-     * @param DeviceRepositoryInterface $deviceRepository
+     * @var OrganizationServiceInterface
      */
-    public function __construct(DeviceRepositoryInterface $deviceRepository)
-    {
+    private OrganizationServiceInterface $organizationService;
+
+    /**
+     * @var EquipmentServiceInterface
+     */
+    private EquipmentServiceInterface $equipmentService;
+
+    /**
+     * @var UserServiceInterface
+     */
+    private UserServiceInterface $userService;
+
+    /**
+     * @param DeviceRepositoryInterface $deviceRepository
+     * @param OrganizationServiceInterface $organizationService
+     * @param EquipmentServiceInterface $equipmentService
+     * @param UserServiceInterface $userService
+     */
+    public function __construct(
+        DeviceRepositoryInterface $deviceRepository,
+        OrganizationServiceInterface $organizationService,
+        EquipmentServiceInterface $equipmentService,
+        UserServiceInterface $userService,
+    ) {
         $this->deviceRepository = $deviceRepository;
+        $this->organizationService = $organizationService;
+        $this->equipmentService = $equipmentService;
+        $this->userService = $userService;
     }
 
     /**
@@ -79,6 +108,30 @@ class DeviceService implements DeviceServiceInterface
      */
     public function createDevice(array $data): Model
     {
+        $organization = $this
+            ->organizationService
+            ->getOrganizationsById($data['organization_id']);
+
+        if (!$organization) {
+            throw new NotFoundException('Organization not found in database!');
+        }
+
+        $equipment = $this
+            ->equipmentService
+            ->getEquipmentById($data['equipment_id']);
+
+        if (!$equipment) {
+            throw new NotFoundException('Equipment not found in database!');
+        }
+
+        $user = $this
+            ->userService
+            ->getUserById($data['user_id']);
+
+        if (!$user) {
+            throw new NotFoundException("User not found in database!");
+        }
+
         $query = $this
             ->deviceRepository
             ->getQuery();
