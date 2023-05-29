@@ -108,29 +108,7 @@ class DeviceService implements DeviceServiceInterface
      */
     public function createDevice(array $data): Model
     {
-        $organization = $this
-            ->organizationService
-            ->getOrganizationsById($data['organization_id']);
-
-        if (!$organization) {
-            throw new NotFoundException('Organization not found in database!');
-        }
-
-        $equipment = $this
-            ->equipmentService
-            ->getEquipmentById($data['equipment_id']);
-
-        if (!$equipment) {
-            throw new NotFoundException('Equipment not found in database!');
-        }
-
-        $user = $this
-            ->userService
-            ->getUserById($data['user_id']);
-
-        if (!$user) {
-            throw new NotFoundException("User not found in database!");
-        }
+        $this->checkExistForeignKeyEntity($data);
 
         $query = $this
             ->deviceRepository
@@ -177,6 +155,8 @@ class DeviceService implements DeviceServiceInterface
             ->deviceRepository
             ->getQuery();
 
+        $this->checkExistForeignKeyEntity($data);
+
         return $this
             ->deviceRepository
             ->updateDevice($query, $id, $data);
@@ -196,5 +176,39 @@ class DeviceService implements DeviceServiceInterface
         return $this
             ->deviceRepository
             ->deleteDevice($query, $id);
+    }
+
+    private function checkExistForeignKeyEntity(array $data)
+    {
+
+        if (isset($data['organization_id'])){
+            $organization = $this
+                ->organizationService
+                ->getOrganizationsById($data['organization_id']);
+
+            if (!$organization) {
+                throw new NotFoundException('Organization not found in database!');
+            }
+        }
+
+        if (isset($data['equipment_id'])){
+            $equipment = $this
+                ->equipmentService
+                ->getEquipmentById($data['equipment_id']);
+
+            if (!$equipment) {
+                throw new NotFoundException('Equipment not found in database!');
+            }
+        }
+
+        if (isset($data['user_id'])){
+            $user = $this
+                ->userService
+                ->getUserById($data['user_id']);
+
+            if (!$user) {
+                throw new NotFoundException("User not found in database!");
+            }
+        }
     }
 }

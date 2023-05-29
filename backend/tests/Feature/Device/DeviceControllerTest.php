@@ -2,10 +2,13 @@
 
 namespace Tests\Feature\Device;
 
+use App\Models\Device;
 use App\Models\Equipment;
 use App\Models\Organization;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Tests\TestCase;
 
@@ -300,6 +303,99 @@ class DeviceControllerTest extends TestCase
             'message' => "Device with id:$device_id not found!",
             'data' => [
                 'device' => null,
+            ]
+        ]);
+    }
+
+    public function test_update_device_by_id_controller_success(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $organizations = Organization::factory(2)->create();
+        $equipments = Equipment::factory(2)->create();
+
+        $this->actingAs($user);
+
+        $data = $this->getData($user, $organizations[0], $equipments[0]);
+
+        $device_id = $this
+            ->post('admin/devices', $data)
+            ->decodeResponseJson()['data']['device']['id'];
+
+        $device = $this->get('admin/devices/' . $device_id)->decodeResponseJson();
+
+        // act
+        $updateDeviceResponse = $this
+            ->put('admin/devices/' . $device_id, [
+                'hostname' => 'test_updated',
+                'date_buy' => Carbon::parse($device['data']['device']['date_buy'])
+                    ->subDay(1)
+                    ->format('Y-m-d'),
+                'address' => 'address_updated',
+                'comment' => 'comment_updated',
+                'organization_id' => $organizations[1]->id,
+                'equipment_id' => $equipments[1]->id,
+            ]);
+
+        $result = $updateDeviceResponse->decodeResponseJson();
+
+        // assert
+        $updateDeviceResponse->assertStatus(ResponseAlias::HTTP_OK);
+        $updateDeviceResponse->assertJson([
+            'data' => [
+                'device' => [
+                    'organization_id' => $organizations[1]->id,
+                    'equipment_id' => $equipments[1]->id
+                ]
+            ]
+        ]);
+
+        $this->assertNotEquals($result['data']['device']['organization']['name'], $organizations[0]->name);
+        $this->assertNotEquals($result['data']['device']['equipment']['name'], $equipments[0]->name);
+    }
+
+    public function test_delete_device_controller_success()
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $device = Device::factory()->create();
+
+        $this->actingAs($user);
+
+        // act
+        $response = $this->delete('admin/devices/' . $device->id);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $response->assertJson([
+            'status' => true,
+            'message' => 'Device was deleted',
+            'data' => [
+                'delete' => true
+            ]
+        ]);
+    }
+
+    public function test_delete_device_controller_fail()
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // act
+        $response = $this->delete('admin/devices/' . random_int(1,100));
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $response->assertJson([
+            'status' => true,
+            'message' => 'Device was deleted',
+            'data' => [
+                'delete' => false
             ]
         ]);
     }

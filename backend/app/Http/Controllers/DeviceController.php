@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\DeviceServiceInterface;
+use App\Http\Requests\Admin\Device\DeviceUpdateRequest;
 use App\Http\Requests\Device\DeviceStoreRequest;
 use App\Http\Resources\Admin\Dashboard\Device\DeviceShowResource;
 use App\Http\Resources\Admin\Dashboard\Device\DeviceStoreResource;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -99,13 +99,44 @@ class DeviceController extends BaseController
         //
     }
 
-    public function update(Request $request, int $id)
+    /**
+     * Update device by id
+     * @param DeviceUpdateRequest $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(DeviceUpdateRequest $request, int $id): JsonResponse
     {
-        //
+        $data = $request->validated();
+
+        $device = $this
+            ->deviceService
+            ->updateDevice($id, $data);
+
+        return $this->response(
+            ['device' => DeviceShowResource::make($device)],
+            'Device was updated',
+            true,
+            ResponseAlias::HTTP_OK
+        );
     }
 
-    public function destroy(int $id)
+    /**
+     * Delete device by id
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $isDelete = $this
+            ->deviceService
+            ->deleteDevice($id);
+
+        return $this->response(
+            ['delete' => $isDelete],
+            'Device was deleted',
+            true,
+            ResponseAlias::HTTP_OK
+        );
     }
 }
