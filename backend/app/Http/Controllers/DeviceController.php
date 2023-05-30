@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\DeviceServiceInterface;
-use App\Http\Requests\Admin\Device\DeviceUpdateRequest;
+use App\Http\Requests\Device\DeviceCollectionRequest;
 use App\Http\Requests\Device\DeviceStoreRequest;
+use App\Http\Requests\Device\DeviceUpdateRequest;
+use App\Http\Resources\Admin\Dashboard\Device\DeviceCollectionResource;
 use App\Http\Resources\Admin\Dashboard\Device\DeviceShowResource;
 use App\Http\Resources\Admin\Dashboard\Device\DeviceStoreResource;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -25,14 +30,22 @@ class DeviceController extends BaseController
         $this->deviceService = $deviceService;
     }
 
-    public function index()
+    /**
+     * Return index devices page
+     * @return Response
+     */
+    public function index(): Response
     {
-        //
+        return Inertia::render('Device/DeviceIndex');
     }
 
-    public function create()
+    /**
+     * Return create device page
+     * @return Response
+     */
+    public function create(): Response
     {
-        //
+        return Inertia::render('Device/DeviceCreate');
     }
 
     /**
@@ -138,5 +151,24 @@ class DeviceController extends BaseController
             true,
             ResponseAlias::HTTP_OK
         );
+    }
+
+    /**
+     * Get all devices with pagination
+     * @param DeviceCollectionRequest $request
+     * @return JsonResponse
+     */
+    public function getAllDeviceWithPagination(DeviceCollectionRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $devices = $this
+            ->deviceService
+            ->getAllDevicesWithPagination($data['limit'], $data);
+
+        return response()->json([
+            'data' => DeviceCollectionResource::collection($devices),
+            'count' => $devices->total()
+        ]);
     }
 }

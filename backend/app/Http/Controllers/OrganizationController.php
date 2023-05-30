@@ -9,8 +9,8 @@ use App\Http\Requests\OrganizationCollectionRequest;
 use App\Http\Resources\Admin\Dashboard\Organization\OrganizationCollectionResource;
 use App\Http\Resources\Admin\Dashboard\Organization\OrganizationCreateResource;
 use App\Http\Resources\Admin\Dashboard\Organization\OrganizationShowResource;
-use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrganizationController extends BaseController
@@ -60,9 +60,9 @@ class OrganizationController extends BaseController
     /**
      * Get organization by id
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function show(int $id): \Symfony\Component\HttpFoundation\JsonResponse
+    public function show(int $id): JsonResponse
     {
         $organization = $this->organizationService->getOrganizationsById($id);
 
@@ -97,9 +97,9 @@ class OrganizationController extends BaseController
      * Update organization by id
      * @param OrganizationUpdateRequest $request
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function update(OrganizationUpdateRequest $request, int $id): \Symfony\Component\HttpFoundation\JsonResponse
+    public function update(OrganizationUpdateRequest $request, int $id): JsonResponse
     {
         $data = $request->validated();
         $organization = $this->organizationService->updateOrganizations($id, $data);
@@ -114,9 +114,9 @@ class OrganizationController extends BaseController
     /**
      * Delete organization by id
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function destroy(int $id): \Symfony\Component\HttpFoundation\JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         $isDelete = $this->organizationService->deleteOrganizations($id);
         return $this->response(
@@ -144,5 +144,23 @@ class OrganizationController extends BaseController
             'data' => OrganizationCollectionResource::collection($organizations),
             'count' => $organizations->total()
         ]);
+    }
+
+    /**
+     * Get all organization collection
+     * @return JsonResponse
+     */
+    public function getOrganizationsCollection(): JsonResponse
+    {
+        $organizations = $this
+            ->organizationService
+            ->getAllOrganizationsCollection();
+
+        return $this->response(
+            ['organizations' => $organizations],
+            'Organization was deleted',
+            true,
+            Response::HTTP_OK
+        );
     }
 }

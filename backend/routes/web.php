@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\LessonCategoryController;
@@ -84,13 +85,16 @@ Route::middleware(['auth'])->group(function () {
         // Organization
         Route::resource('organizations', OrganizationController::class);
         Route::get('organization-all-paginate', [OrganizationController::class, 'getAllOrganizationsWithPagination']);
+        Route::get('organization-all-collection', [OrganizationController::class, 'getOrganizationsCollection']);
 
         // Equipment
         Route::resource('equipments', EquipmentController::class);
         Route::get('equipments-all-paginate', [EquipmentController::class, 'getAllEquipmentsWithPagination']);
+        Route::get('equipments-all-collection', [EquipmentController::class, 'getAllEquipmentsCollection']);
 
         // Device
-        Route::resource('devices', \App\Http\Controllers\DeviceController::class);
+        Route::resource('devices', DeviceController::class);
+        Route::get('devices-all-paginate', [DeviceController::class, 'getAllDeviceWithPagination']);
 
     });
 

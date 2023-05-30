@@ -9,7 +9,6 @@ use App\Http\Requests\Equipment\EquipmentUpdateRequest;
 use App\Http\Resources\Admin\Dashboard\Equipment\EquipmentCollectionResource;
 use App\Http\Resources\Admin\Dashboard\Equipment\EquipmentStoreResource;
 use App\Http\Resources\Admin\Dashboard\EquipmentShowResource;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -149,5 +148,23 @@ class EquipmentController extends BaseController
             'data' => EquipmentCollectionResource::collection($equipments),
             'count' => $equipments->total()
         ]);
+    }
+
+    /**
+     * Get all equipments collection
+     * @return JsonResponse
+     */
+    public function getAllEquipmentsCollection(): JsonResponse
+    {
+        $equipments = $this
+            ->equipmentService
+            ->getAllEquipmentsCollection();
+
+        return $this->response(
+            ['equipments' => $equipments],
+            'Organization was deleted',
+            true,
+            ResponseAlias::HTTP_OK
+        );
     }
 }
