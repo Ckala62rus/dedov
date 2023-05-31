@@ -25,8 +25,8 @@ return new class extends Migration
             $table->integer('count_core')->nullable();
             $table->integer('count_core_with_ht')->nullable();
             $table->integer('memory')->nullable();
-            $table->decimal('hdd')->nullable();
-            $table->decimal('ssd')->nullable();
+            $table->integer('hdd')->nullable();
+            $table->integer('ssd')->nullable();
             $table->string('address')->nullable();
             $table->string('comment')->nullable();
             $table->unsignedBigInteger('user_id');

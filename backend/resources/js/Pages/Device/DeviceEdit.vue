@@ -64,7 +64,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="form__button">
-                                <button type="submit" class="btn btn-success mr-2 button_width">Создать</button>
+                                <button type="submit" class="btn btn-success mr-2 button_width">Обновить</button>
                                 <Link :href="route('devices.index')" as="button" method="get" class="btn btn-primary font-weight-bolder button_width">Назад</Link>
                             </div>
                         </div>
@@ -250,10 +250,19 @@
 import {Link, usePage} from "@inertiajs/inertia-vue3";
 
 export default {
-    name: "DeviceCreate",
+    name: "DeviceEdit",
+
     components: {
         Link
     },
+
+    props: {
+        id: {
+            type: Number,
+            required: true,
+        },
+    },
+
     data() {
         return {
             form: {
@@ -328,18 +337,16 @@ export default {
         createOrganization() {
             this.resetErrors()
 
-            axios.post('/admin/devices', this.form)
+            axios.put('/admin/devices/' + this.id, this.form)
                 .then(res => {
-                    if (res.status === 201){
+                    if (res.status === 200){
                         this.$notify({
-                            title: "Создание оборудования",
-                            text: "Оборудование создано!",
+                            title: "Обновление записи оборудования",
+                            text: "Запись оборудования обновлена!",
                             speed: 1000,
                             duration: 1000,
                             type: 'success'
                         });
-
-                        this.resetForm();
                     }
                 })
                 .catch(err => {
@@ -437,12 +444,20 @@ export default {
                     this.equipments = res.data.data.equipments;
                 })
         },
+
+        getDevice(){
+            axios.get('/admin/devices/' + this.id)
+                .then(res => {
+                    this.form = res.data.data.device;
+                })
+        },
     },
 
     mounted() {
         this.getOrganizations();
         this.getEquipments();
         this.form.user_id = this.$page.props.auth.user.id;
+        this.getDevice();
     }
 }
 </script>

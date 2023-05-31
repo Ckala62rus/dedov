@@ -8,7 +8,6 @@ use App\Models\Organization;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Tests\TestCase;
 
@@ -44,7 +43,7 @@ class DeviceControllerTest extends TestCase
             'count_core' => 8,
             'count_core_with_ht' => 8,
             'memory' => 1024,
-            'hdd' => 1024.12,
+            'hdd' => 1024,
             'ssd' => 1024,
             'address' => 'test',
             'comment' => 'test',
@@ -141,7 +140,7 @@ class DeviceControllerTest extends TestCase
             'count_core' => 8,
             'count_core_with_ht' => 8,
             'memory' => 1024,
-            'hdd' => 1024.12,
+            'hdd' => 1024,
             'ssd' => 1024,
             'address' => 'test',
             'comment' => 'test',
@@ -186,7 +185,7 @@ class DeviceControllerTest extends TestCase
             'count_core' => 8,
             'count_core_with_ht' => 8,
             'memory' => 1024,
-            'hdd' => 1024.12,
+            'hdd' => 1024,
             'ssd' => 1024,
             'address' => 'test',
             'comment' => 'test',
@@ -231,7 +230,7 @@ class DeviceControllerTest extends TestCase
             'count_core' => 8,
             'count_core_with_ht' => 8,
             'memory' => 1024,
-            'hdd' => 1024.12,
+            'hdd' => 1024,
             'ssd' => 1024,
             'address' => 'test',
             'comment' => 'test',

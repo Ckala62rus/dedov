@@ -24,12 +24,11 @@
                             :url="url"
                             :columns="columns"
                             :options="options"
-                            ref="equipments-table"
+                            ref="devices-table"
                         >
-
                             <template v-slot:actions="{row}">
 
-                                <Link :href="route('equipments.edit', {id: row.id})" method="get">
+                                <Link :href="route('devices.edit', {id: row.id})" method="get">
                                     <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -41,7 +40,7 @@
                                     </span>
                                 </Link>
 
-                                <a href="javascript:;" @click="deleteEquipment(row)">
+                                <a href="javascript:;" @click="deleteDevice(row)">
                                       <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2020-10-29-133027/theme/html/demo1/dist/../src/media/svg/icons/Home/Trash.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -120,7 +119,7 @@ export default {
         }
     },
     methods: {
-        deleteEquipment(row) {
+        deleteDevice(row) {
             Swal.fire({
                 title: 'Удалить оборудование?',
                 text: "Выбранное оборудование будет удалено",
@@ -132,11 +131,11 @@ export default {
                 cancelButtonText: 'Отмена',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete('/admin/equipments/' + row.id).then(response => {
+                    axios.delete('/admin/devices/' + row.id).then(response => {
                         this.$notify({
                             group: 'foo',
                             type: 'success',
-                            title: 'Удаление оборудование',
+                            title: 'Удаление оборудования',
                             text: 'Оборудование успешно удалено'
                         });
                         Swal.fire(
@@ -144,7 +143,7 @@ export default {
                             'Оборудование удалено',
                             'success'
                         )
-                        this.$refs['equipments-table'].refresh();
+                        this.$refs['devices-table'].refresh();
                     });
                 }
             })

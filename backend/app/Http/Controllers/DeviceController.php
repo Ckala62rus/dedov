@@ -107,9 +107,14 @@ class DeviceController extends BaseController
         );
     }
 
-    public function edit(int $id)
+    /**
+     * Return edit page
+     * @param int $id
+     * @return Response
+     */
+    public function edit(int $id): Response
     {
-        //
+        return Inertia::render('Device/DeviceEdit', ['id' => $id]);
     }
 
     /**

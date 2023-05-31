@@ -34,10 +34,10 @@ class DeviceUpdateRequest extends FormRequest
             'count_core' => 'integer',
             'count_core_with_ht' => 'integer',
             'memory' => 'integer',
-            'hdd' => 'decimal:2',
-            'ssd' => 'integer',
+            'hdd' => 'integer',
+            'ssd' => 'nullable|integer',
             'address' => 'string',
-            'comment' => 'string',
+            'comment' => 'nullable|string',
             'organization_id' => 'integer',
             'equipment_id' => 'integer',
         ];
