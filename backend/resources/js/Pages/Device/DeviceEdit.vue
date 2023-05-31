@@ -339,6 +339,7 @@ export default {
 
             axios.put('/admin/devices/' + this.id, this.form)
                 .then(res => {
+                    // console.log(res)
                     if (res.status === 200){
                         this.$notify({
                             title: "Обновление записи оборудования",
@@ -372,7 +373,6 @@ export default {
                             organization_id: errors.hasOwnProperty('organization_id'),
                         };
 
-                        console.log(errors.date_buy[0])
                         this.error_messages = {
                             hostname: errors.hasOwnProperty('hostname') ? errors.hostname[0] : '',
                             model: errors.hasOwnProperty('model') ? errors.model[0] : '',
