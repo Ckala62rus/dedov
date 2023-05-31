@@ -8,7 +8,7 @@
                 </a>
             </div>
 
-            <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
+            <button @click="toggleMenu" class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
                 <span class="svg-icon svg-icon-xl"><!--begin::Svg Icon | path:media/svg/icons/Navigation/Angle-double-left.svg--><svg
                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                     height="24px" viewBox="0 0 24 24" version="1.1">
@@ -225,6 +225,18 @@ export default {
                     window.location.href = '/login'
                 }
             })
+        },
+        toggleMenu(){
+            let body = document.querySelector('body');
+
+            // need add class for collapse nav bar menu "aside-minimize"
+            let toggleMenu = body.classList.contains('aside-minimize');
+
+            if (!toggleMenu) {
+                body.classList.add('aside-minimize');
+            } else  {
+                body.classList.remove('aside-minimize');
+            }
         },
     },
 }

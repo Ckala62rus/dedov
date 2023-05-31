@@ -1,8 +1,9 @@
 <template>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card card-custom height-profile">
+            <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+
                     <div class="card-header">
                         <h3 class="card-title">
                             Создание оборудования
@@ -12,8 +13,6 @@
                     <!--begin::Form-->
                     <form @submit.prevent="createOrganization">
                         <div class="card-body">
-                            <div class="form-group mb-8">
-                            </div>
                             <div class="form-group">
                                 <label>Хост <span class="text-danger">*</span></label>
                                 <input
@@ -58,6 +57,21 @@
                                 />
                                 <div class="invalid-feedback">Название типа оборудования, обязательно!</div>
                             </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success mr-2">Создать</button>
+                            <Link :href="route('devices.index')" as="button" method="get" class="btn btn-primary font-weight-bolder">Назад</Link>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+                    <!--begin::Form-->
+                    <form @submit.prevent="createOrganization">
+                        <div class="card-body">
                             <div class="form-group">
                                 <label>Желаемый срок замены <span class="text-danger">*</span></label>
                                 <input
@@ -102,33 +116,6 @@
                                 />
                                 <div class="invalid-feedback">Название типа оборудования, обязательно!</div>
                             </div>
-
-
-                            <div class="form-group">
-                                <label>Описание</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Полное название оборудования"
-                                    v-model="form.description"
-                                />
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-success mr-2">Создать</button>
-                            <Link :href="route('devices.index')" as="button" method="get" class="btn btn-primary font-weight-bolder">Назад</Link>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card card-custom height-profile">
-                    <!--begin::Form-->
-                    <form @submit.prevent="createOrganization">
-                        <div class="card-body">
-                            <div class="form-group mb-8">
-                            </div>
                             <div class="form-group">
                                 <label>Кол-во ядер с учетом HT <span class="text-danger">*</span></label>
                                 <input
@@ -151,6 +138,16 @@
                                 />
                                 <div class="invalid-feedback">Название типа оборудования, обязательно!</div>
                             </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+                    <!--begin::Form-->
+                    <form @submit.prevent="createOrganization">
+                        <div class="card-body">
                             <div class="form-group">
                                 <label>HDD, Gb <span class="text-danger">*</span></label>
                                 <input
@@ -234,7 +231,6 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 </template>

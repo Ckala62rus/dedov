@@ -1,6 +1,6 @@
 <template>
 
-    <div class="container mb-5 equipment__container">
+    <div class="container-fluid mb-5 equipment__container">
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-custom rdp_statistic_mg">
