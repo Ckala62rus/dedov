@@ -93,7 +93,9 @@ class DeviceRepository extends BaseRepository implements DeviceRepositoryInterfa
      */
     public function deleteDevice(Builder $query, int $id): bool
     {
-        return $query->delete();
+        return $query
+            ->where('id', $id)
+            ->delete();
     }
 
     /**

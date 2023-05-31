@@ -203,4 +203,19 @@ class DeviceServiceTest extends TestCase
         $this->assertFalse($isDelete);
         $this->assertDatabaseCount(Device::class, 0);
     }
+
+    public function test_delete_one_device()
+    {
+        // arrange
+        $devices = Device::factory(2)->create();
+
+        // act
+        /** @var DeviceService $service */
+        $service = $this->app->make(DeviceService::class);
+        $isDelete = $service->deleteDevice($devices[0]->id);
+
+        // assert
+        $this->assertTrue($isDelete);
+        $this->assertDatabaseCount(Device::class, 1);
+    }
 }
