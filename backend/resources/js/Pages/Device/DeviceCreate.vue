@@ -5,7 +5,7 @@
                 <div class="card card-flush h-md-100">
 
                     <div class="card-header">
-                        <h3 class="card-title">
+                        <h3 class="card-title d-flex flex-center">
                             Создание оборудования
                         </h3>
                     </div>
@@ -13,6 +13,41 @@
                     <!--begin::Form-->
                     <form @submit.prevent="createOrganization">
                         <div class="card-body">
+                            <label>Организация</label>
+                            <div class="form-group select-form_group">
+                                <el-select
+                                    v-model="form.organization_id"
+                                    class="m-0 select-category w-100"
+                                    placeholder="Организация"
+                                    size="large"
+                                >
+                                    <el-option
+                                        v-for="organization in organizations"
+                                        :key="organization.id"
+                                        :label="organization.name"
+                                        :value="organization.id"
+                                    />
+                                </el-select>
+                                <div style="color: #F64E60" v-if="errors.organization_id">{{error_messages.organization_id}}</div>
+                            </div>
+
+                            <label>Тип оборудования</label>
+                            <div class="form-group select-form_group">
+                                <el-select
+                                    v-model="form.equipment_id"
+                                    class="m-0 select-category w-100"
+                                    placeholder="Тип оборудования"
+                                    size="large"
+                                >
+                                    <el-option
+                                        v-for="equipment in equipments"
+                                        :key="equipment.id"
+                                        :label="equipment.name"
+                                        :value="equipment.id"
+                                    />
+                                </el-select>
+                                <div style="color: #F64E60" v-if="errors.equipment_id">{{error_messages.equipment_id}}</div>
+                            </div>
                             <div class="form-group">
                                 <label>Хост <span class="text-danger">*</span></label>
                                 <input
@@ -49,17 +84,6 @@
                                 />
                                 <div class="invalid-feedback">{{error_messages.date_buy}}</div>
                             </div>
-                            <div class="form-group">
-                                <label>Какие сервисы развернуты <span class="text-danger">*</span></label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Description service"
-                                    v-model="form.description_service"
-                                    :class="{'is-invalid': errors.description_service}"
-                                />
-                                <div class="invalid-feedback">{{error_messages.description_service}}</div>
-                            </div>
 
                         </div>
                         <div class="card-footer">
@@ -77,6 +101,17 @@
                     <!--begin::Form-->
                     <form @submit.prevent="createOrganization">
                         <div class="card-body">
+                            <div class="form-group">
+                                <label>Какие сервисы развернуты <span class="text-danger">*</span></label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Description service"
+                                    v-model="form.description_service"
+                                    :class="{'is-invalid': errors.description_service}"
+                                />
+                                <div class="invalid-feedback">{{error_messages.description_service}}</div>
+                            </div>
                             <div class="form-group">
                                 <label>Желаемый срок замены <span class="text-danger">*</span></label>
                                 <el-date-picker
@@ -200,42 +235,6 @@
                                     :class="{'is-invalid': errors.comment}"
                                 />
                                 <div class="invalid-feedback">{{error_messages.comment}}</div>
-                            </div>
-
-                            <label>Организация</label>
-                            <div class="form-group select-form_group">
-                                <el-select
-                                    v-model="form.organization_id"
-                                    class="m-0 select-category w-100"
-                                    placeholder="Организация"
-                                    size="large"
-                                >
-                                    <el-option
-                                        v-for="organization in organizations"
-                                        :key="organization.id"
-                                        :label="organization.name"
-                                        :value="organization.id"
-                                    />
-                                </el-select>
-                                <div style="color: #F64E60" v-if="errors.organization_id">{{error_messages.organization_id}}</div>
-                            </div>
-
-                            <label>Тип оборудования</label>
-                            <div class="form-group select-form_group">
-                                <el-select
-                                    v-model="form.equipment_id"
-                                    class="m-0 select-category w-100"
-                                    placeholder="Тип оборудования"
-                                    size="large"
-                                >
-                                    <el-option
-                                        v-for="equipment in equipments"
-                                        :key="equipment.id"
-                                        :label="equipment.name"
-                                        :value="equipment.id"
-                                    />
-                                </el-select>
-                                <div style="color: #F64E60" v-if="errors.equipment_id">{{error_messages.equipment_id}}</div>
                             </div>
 
                         </div>

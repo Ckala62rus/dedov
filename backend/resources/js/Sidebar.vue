@@ -76,7 +76,7 @@
                         </Link>
                     </li>
 
-                    <li class="menu-item" aria-haspopup="true">
+                    <li v-if="role === 'super'" class="menu-item" aria-haspopup="true">
                         <Link :href="route('metronic.user.index')" class="menu-link ">
                         <span class="svg-icon menu-icon"><!--begin::Svg Icon | path:media/svg/icons/Design/Layers.svg-->
                             <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo8/dist/../src/media/svg/icons/Communication/Group.svg-->
@@ -93,7 +93,7 @@
                         </Link>
                     </li>
 
-                    <li class="menu-item" aria-haspopup="true">
+                    <li v-if="role === 'super'" class="menu-item" aria-haspopup="true">
                         <Link :href="route('organizations.index')" class="menu-link ">
                         <span class="svg-icon menu-icon"><!--begin::Svg Icon | path:media/svg/icons/Design/Layers.svg-->
                             <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo2/dist/../src/media/svg/icons/Shopping/Box2.svg-->
@@ -110,7 +110,7 @@
                         </Link>
                     </li>
 
-                    <li class="menu-item" aria-haspopup="true">
+                    <li v-if="role === 'super'" class="menu-item" aria-haspopup="true">
                         <Link :href="route('equipments.index')" class="menu-link ">
                         <span class="svg-icon menu-icon"><!--begin::Svg Icon | path:media/svg/icons/Design/Layers.svg-->
                             <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo2/dist/../src/media/svg/icons/Devices/CPU1.svg-->
@@ -150,7 +150,7 @@
                         </Link>
                     </li>
 
-                    <li class="menu-item" aria-haspopup="true">
+                    <li v-if="role === 'super'" class="menu-item" aria-haspopup="true">
                         <Link :href="route('metronic.role.index')" class="menu-link ">
                         <span class="svg-icon menu-icon"><!--begin::Svg Icon | path:media/svg/icons/Design/Layers.svg-->
                             <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-04-09-093151/theme/html/demo1/dist/../src/media/svg/icons/General/Clipboard.svg-->
@@ -168,7 +168,7 @@
                         </Link>
                     </li>
 
-                    <li class="menu-item" aria-haspopup="true">
+                    <li v-if="role === 'super'" class="menu-item" aria-haspopup="true">
                         <a href="/elfinder/tinymce5" class="menu-link" target="_blank">
                         <span class="svg-icon menu-icon"><!--begin::Svg Icon | path:media/svg/icons/Design/Layers.svg-->
                             <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo8/dist/../src/media/svg/icons/Files/Group-folders.svg-->
@@ -185,7 +185,7 @@
                         </a>
                     </li>
 
-                    <li class="menu-item" aria-haspopup="true">
+                    <li v-if="role === 'super'" class="menu-item" aria-haspopup="true">
                         <a href="/log-viewer" class="menu-link" target="_blank">
                         <span class="svg-icon menu-icon"><!--begin::Svg Icon | path:media/svg/icons/Design/Layers.svg-->
                             <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo8/dist/../src/media/svg/icons/Code/Error-circle.svg-->
@@ -218,6 +218,12 @@ export default {
         Link
     },
 
+    data() {
+        return {
+            role: '',
+        }
+    },
+
     methods: {
         logout(){
             axios.post('/logout').then(res => {
@@ -239,6 +245,10 @@ export default {
             }
         },
     },
+
+    created() {
+        this.role = this.$page.props.auth.user.roles[0].name;
+    }
 }
 </script>
 
