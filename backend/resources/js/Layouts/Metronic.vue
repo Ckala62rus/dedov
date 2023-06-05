@@ -34,9 +34,17 @@
 
         <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
 
-            <div class="">
-                <slot/>
-            </div>
+<!--            <div class="">-->
+<!--                <slot/>-->
+<!--            </div>-->
+
+            <transition name="page" mode="out-in" appear>
+                <main :key="$page.url" class="">
+                    <div class="">
+                        <slot/>
+                    </div>
+                </main>
+            </transition>
 
             <div id="kt_header" class="header  header-fixed ">
                 <div class="container-fluid d-flex align-items-center justify-content-between">
@@ -2010,5 +2018,13 @@ export default {
 </script>
 
 <style scoped>
+.page-enter-active,
+.page-leave-active {
+    transition: all .2s;
+}
 
+.page-enter,
+.page-leave-active {
+    opacity: 0;
+}
 </style>
