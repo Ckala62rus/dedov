@@ -172,7 +172,7 @@
                                 <div class="invalid-feedback">{{error_messages.count_core_with_ht}}</div>
                             </div>
                             <div class="form-group">
-                                <label>Оперетивная память, Mb <span class="text-danger">*</span></label>
+                                <label>Оперетивная память, Gb <span class="text-danger">*</span></label>
                                 <input
                                     type="text"
                                     class="form-control"
@@ -250,9 +250,11 @@ import {Link, usePage} from "@inertiajs/inertia-vue3";
 
 export default {
     name: "DeviceCreate",
+
     components: {
         Link
     },
+
     data() {
         return {
             form: {

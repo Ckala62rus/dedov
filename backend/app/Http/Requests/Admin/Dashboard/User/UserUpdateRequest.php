@@ -28,9 +28,9 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name' => ['string', 'max:255'],
-//            'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'email' => 'email|max:255|unique:' . User::class . ',email,' . $this->route('id'),
             'role_id' => 'required|int',
+            'organization_id' => 'nullable|integer',
         ];
     }
 }

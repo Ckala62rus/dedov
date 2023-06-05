@@ -69,6 +69,29 @@
                                     />
                                 </el-select>
                             </div>
+
+                            <label>Организация</label>
+                            <div class="form-group select-form_group">
+                                <el-select
+                                    v-model="form_profile.organization_id"
+                                    class="m-0 select-category w-100"
+                                    placeholder="Организация"
+                                    size="large"
+                                >
+                                    <el-option
+                                        label="Нет"
+                                        :value=0
+                                        :key=0
+                                    />
+                                    <el-option
+                                        v-for="organization in organizations"
+                                        :key="organization.id"
+                                        :label="organization.name"
+                                        :value="organization.id"
+                                    />
+                                </el-select>
+                                <div style="color: #F64E60" v-if="errors.organization_id">{{error_messages.organization_id}}</div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-success mr-2">Создать</button>
@@ -107,7 +130,8 @@ export default {
                 email: '',
                 password: '',
                 password_confirmation: '',
-                role_id: null
+                role_id: null,
+                organization_id : null,
             },
             errors: {
                 errorName: false,
@@ -116,6 +140,12 @@ export default {
             },
             roles: {},
             options: [],
+            organizations: [
+                {
+                    id: 0,
+                    name: "Нет",
+                },
+            ],
         }
     },
 
@@ -148,6 +178,7 @@ export default {
                        name: user.name,
                        email: user.email,
                        role_id: role_id,
+                       organization_id: user.organization_id,
                    };
                })
                .catch(error => {
@@ -161,11 +192,19 @@ export default {
                    this.roles = response.data.data.roles
                })
         },
+
+        getOrganizations(){
+            axios.get('/admin/organization-all-collection')
+                .then(res => {
+                    this.organizations = res.data.data.organizations;
+                })
+        },
     },
 
     mounted() {
         this.getUser()
         this.getRoles()
+        this.getOrganizations()
     }
 }
 </script>

@@ -27,6 +27,7 @@ class UserCreateRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:255|email|unique:App\Models\User,email',
             'password' => 'required|confirmed',
+            'organization_id' => 'nullable|integer',
         ];
     }
 

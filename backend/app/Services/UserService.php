@@ -40,6 +40,10 @@ class UserService implements UserServiceInterface
         if(isset($data['password'])){
             $data['password'] = Hash::make($data['password']);
         }
+        if (isset($data['organization_id']) && $data['organization_id'] === 0) {
+            $data['organization_id'] = null;
+        }
+
         return $this->userRepository->createUser($data);
     }
 
@@ -51,6 +55,10 @@ class UserService implements UserServiceInterface
     public function updateUser(int $id, array $data): ?Model
     {
         $user = $this->userRepository->getUserById($id);
+
+        if (isset($data['organization_id']) && $data['organization_id'] === 0) {
+            $data['organization_id'] = null;
+        }
 
         if (isset($data['role_id'])){
             $user->syncRoles($data['role_id']);
