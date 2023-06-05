@@ -8,6 +8,7 @@ use App\Models\Organization;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Tests\TestCase;
 
@@ -359,10 +360,11 @@ class DeviceControllerTest extends TestCase
     {
         // arrange
         $this->withExceptionHandling();
-        $user = User::factory()->create();
         $device = Device::factory()->create();
 
+        $user = User::factory()->create();
         $this->actingAs($user);
+        $user->syncRoles(Role::create(['name'=>'super']));
 
         // act
         $response = $this->delete('admin/devices/' . $device->id);
@@ -384,6 +386,7 @@ class DeviceControllerTest extends TestCase
         $this->withExceptionHandling();
         $user = User::factory()->create();
         $this->actingAs($user);
+        $user->syncRoles(Role::create(['name'=>'super']));
 
         // act
         $response = $this->delete('admin/devices/' . random_int(1,100));

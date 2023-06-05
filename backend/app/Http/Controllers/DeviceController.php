@@ -146,9 +146,21 @@ class DeviceController extends BaseController
      */
     public function destroy(int $id): JsonResponse
     {
-        $isDelete = $this
-            ->deviceService
-            ->deleteDevice($id);
+        try
+        {
+            $isDelete = $this
+                ->deviceService
+                ->deleteDevice($id);
+        }
+        catch (\Exception $exception)
+        {
+            return $this->response(
+                ['delete' => false],
+                $exception->getMessage(),
+                false,
+                ResponseAlias::HTTP_OK
+            );
+        }
 
         return $this->response(
             ['delete' => $isDelete],

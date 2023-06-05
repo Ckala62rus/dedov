@@ -28,7 +28,7 @@
                         >
                             <template v-slot:actions="{row}">
 
-                                <Link :href="route('devices.edit', {id: row.id})" method="get">
+                                <Link v-if="row.can_action" :href="route('devices.edit', {id: row.id})" method="get">
                                     <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -40,7 +40,7 @@
                                     </span>
                                 </Link>
 
-                                <a href="javascript:;" @click="deleteDevice(row)">
+                                <a href="javascript:;" @click="deleteDevice(row)" v-if="row.can_action">
                                       <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2020-10-29-133027/theme/html/demo1/dist/../src/media/svg/icons/Home/Trash.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -132,18 +132,32 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios.delete('/admin/devices/' + row.id).then(response => {
-                        this.$notify({
-                            group: 'foo',
-                            type: 'success',
-                            title: 'Удаление оборудования',
-                            text: 'Оборудование успешно удалено'
-                        });
-                        Swal.fire(
-                            'Удалено!',
-                            'Оборудование удалено',
-                            'success'
-                        )
-                        this.$refs['devices-table'].refresh();
+                        if (response.data.status === true) {
+                            this.$notify({
+                                group: 'foo',
+                                type: 'success',
+                                title: 'Удаление оборудования',
+                                text: 'Оборудование успешно удалено'
+                            });
+                            Swal.fire(
+                                'Удалено!',
+                                'Оборудование удалено',
+                                'success'
+                            )
+                            this.$refs['devices-table'].refresh();
+                        }
+                        if (response.data.status === false) {
+                            this.$notify({
+                                group: 'foo',
+                                type: 'error',
+                                title: 'Удаление оборудования',
+                            });
+                            Swal.fire(
+                                'Ошибка!',
+                                response.data.message,
+                                'error'
+                            )
+                        }
                     });
                 }
             })

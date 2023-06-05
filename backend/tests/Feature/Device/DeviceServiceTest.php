@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\DeviceService;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class DeviceServiceTest extends TestCase
@@ -177,6 +178,10 @@ class DeviceServiceTest extends TestCase
     public function test_delete_device_if_exist_success()
     {
         // arrange
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $user->syncRoles(Role::create(['name'=>'super']));
+
         $device = Device::factory()->create();
 
         /** @var DeviceService $service */
@@ -193,6 +198,10 @@ class DeviceServiceTest extends TestCase
     public function test_delete_device_if_not_exist_fail()
     {
         // arrange
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $user->syncRoles(Role::create(['name'=>'super']));
+
         /** @var DeviceService $service */
         $service = $this->app->make(DeviceService::class);
 
@@ -207,6 +216,10 @@ class DeviceServiceTest extends TestCase
     public function test_delete_one_device()
     {
         // arrange
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $user->syncRoles(Role::create(['name'=>'super']));;
+
         $devices = Device::factory(2)->create();
 
         // act

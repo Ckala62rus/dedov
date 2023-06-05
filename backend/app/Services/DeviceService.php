@@ -7,9 +7,11 @@ use App\Contracts\DeviceServiceInterface;
 use App\Contracts\EquipmentServiceInterface;
 use App\Contracts\OrganizationServiceInterface;
 use App\Contracts\UserServiceInterface;
+use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Exception\NotFoundException;
 
 class DeviceService implements DeviceServiceInterface
@@ -173,9 +175,37 @@ class DeviceService implements DeviceServiceInterface
             ->deviceRepository
             ->getQuery();
 
-        return $this
+        $user = $this
+            ->userService
+            ->getUserById(Auth::user()->id);
+
+        $device = $this
             ->deviceRepository
-            ->deleteDevice($query, $id);
+            ->getDeviceById($query, $id);
+
+        if ($user->hasRole('user') && $user->organization_id == $device->organization_id) {
+            return $this
+                ->deviceRepository
+                ->deleteDevice($query, $id);
+        }
+
+        if ($user->hasRole('user') && $user->organization_id != $device->organization_id) {
+            throw new \Exception(
+                'Нельзя удалить эту запись, так как вы её не создавали!
+                Удалить запись может администратор или тот пользователь,
+                который относится к этой организации'
+            );
+        }
+
+        if (count($user->roles) > 0 && $user->roles->first()->name === 'super'){
+            return $this
+                ->deviceRepository
+                ->deleteDevice($query, $id);
+        }
+
+        throw new \Exception(
+            'У Вас отсутствуют роли, обратитесь к администратору.'
+        );
     }
 
     private function checkExistForeignKeyEntity(array $data)
