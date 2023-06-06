@@ -3,7 +3,7 @@
         <div class="brand flex-column-auto " id="kt_brand">
 
             <div class="brand-logo">
-                <a href="https://leather.ru/" target="_blank">
+                <a href="#" target="_blank">
                     <img alt="Laravel" :src="'/template/media/logos/logo.png'" style="max-width: 60px"/>
                 </a>
             </div>
