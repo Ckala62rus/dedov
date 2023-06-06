@@ -24,7 +24,9 @@ class DeviceCollectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'limit' => 'required|integer'
+            'limit' => 'required|integer',
+            "organization_id" => 'integer',
+            "equipment_id" => 'integer',
         ];
     }
 }

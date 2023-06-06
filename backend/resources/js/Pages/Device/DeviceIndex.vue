@@ -20,6 +20,62 @@
                             Создать запись оборудования
                         </Link>
 
+                        <button
+                            type="submit"
+                            class="btn btn-info mb-5 ml-5"
+                            @click.prevent="findByFilter"
+                        >Найти</button>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Организация</label>
+                                <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="filter.organization_id"
+                                        class="m-0 select-category w-100"
+                                        placeholder="Организация"
+                                        size="large"
+                                    >
+                                        <el-option
+                                            label="Все организации"
+                                            :value=0
+                                            :key=0
+                                        />
+                                        <el-option
+                                            v-for="organization in organizations"
+                                            :key="organization.id"
+                                            :label="organization.name"
+                                            :value="organization.id"
+                                        />
+                                    </el-select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Тип оборудования</label>
+                                <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="filter.equipment_id"
+                                        class="m-0 select-category w-100"
+                                        placeholder="Тип оборудования"
+                                        size="large"
+                                    >
+                                        <el-option
+                                            label="Все оборудование"
+                                            :value=0
+                                            :key=0
+                                        />
+                                        <el-option
+                                            v-for="equipment in equipments"
+                                            :key="equipment.id"
+                                            :label="equipment.name"
+                                            :value="equipment.id"
+                                        />
+                                    </el-select>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <v-server-table
                             :url="url"
                             :columns="columns"
@@ -70,9 +126,9 @@ export default {
         Link,
     },
     data() {
-
         return {
-            url: '/admin/devices-all-paginate',
+            urlPrepare: '/admin/devices-all-paginate?',
+            url: '/admin/devices-all-paginate?',
             columns: [
                 'organization.name',
                 'equipment.name',
@@ -115,7 +171,16 @@ export default {
                     "VueTables__child-row " +
                     "table-vue-width " +
                     "table-hover ",
-            }
+                filterable: false,
+                noResults: "В базе данных нет записей",
+                loading: "Загрузка...",
+            },
+            organizations: null,
+            equipments: null,
+            filter: {
+                organization_id: 0,
+                equipment_id: 0,
+            },
         }
     },
     methods: {
@@ -162,7 +227,51 @@ export default {
                 }
             })
         },
+
+        getOrganizations(){
+            axios.get('/admin/organization-all-collection')
+                .then(res => {
+                    this.organizations = res.data.data.organizations;
+                })
+        },
+
+        getEquipments(){
+            axios.get('/admin/equipments-all-collection')
+                .then(res => {
+                    this.equipments = res.data.data.equipments;
+                })
+        },
+
+        findByFilter(){
+            const params = new URLSearchParams();
+            let oldUrl = this.url;
+
+            if (this.filter.organization_id === 0) {
+                params.append('organization_id', 0)
+            }
+
+            if (this.filter.organization_id != null && this.filter.organization_id != '0'){
+                params.append('organization_id', this.filter.organization_id)
+            }
+
+            if (this.filter.equipment_id != null){
+                params.append('equipment_id', this.filter.equipment_id)
+            }
+
+            if (params.toString().length > 0) {
+                this.url = this.urlPrepare + params.toString();
+            }
+
+            if (this.url === oldUrl) {
+                this.$refs['devices-table'].refresh();
+            }
+        },
     },
+
+    mounted() {
+        this.getOrganizations();
+        this.getEquipments();
+    }
 }
 </script>
 

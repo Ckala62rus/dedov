@@ -66,6 +66,14 @@ class DeviceService implements DeviceServiceInterface
             ->deviceRepository
             ->getQuery();
 
+        if(isset($filter['organization_id']) && $filter['organization_id'] != 0) {
+            $query = $query->where('organization_id', $filter['organization_id']);
+        }
+
+        if(isset($filter['equipment_id']) && $filter['equipment_id'] != 0) {
+            $query = $query->where('equipment_id', $filter['equipment_id']);
+        }
+
         $query = $this
             ->deviceRepository
             ->withDeviceRelation($query, [
