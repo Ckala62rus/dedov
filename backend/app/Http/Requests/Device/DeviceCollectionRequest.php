@@ -27,6 +27,12 @@ class DeviceCollectionRequest extends FormRequest
             'limit' => 'required|integer',
             "organization_id" => 'integer',
             "equipment_id" => 'integer',
+            "hostname" => 'nullable|string',
+            "model" => 'nullable|string',
+            "operation_system" => 'nullable|string',
+            "description_service" => 'nullable|string',
+            "cpu" => 'nullable|string',
+            "comment" => 'nullable|string',
         ];
     }
 }

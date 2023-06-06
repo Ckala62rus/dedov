@@ -22,9 +22,15 @@
 
                         <button
                             type="submit"
-                            class="btn btn-info mb-5 ml-5"
+                            class="btn btn-info mb-5 ml-10"
                             @click.prevent="findByFilter"
                         >Найти</button>
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark mb-5 ml-5"
+                            @click.prevent="clearFilter"
+                        >Сброс фильтров</button>
 
                         <div class="row">
                             <div class="col-md-2">
@@ -73,8 +79,76 @@
                                     </el-select>
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Хост</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Hostname"
+                                        v-model="filter.hostname"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Модель</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Model"
+                                        v-model="filter.model"
+                                    />
+                                </div>
+                            </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Description service</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Description service"
+                                        v-model="filter.description_service"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>CPU</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="CPU"
+                                        v-model="filter.cpu"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Comment</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Comment"
+                                        v-model="filter.comment"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Операционная система</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Operation system"
+                                        v-model="filter.operation_system"
+                                    />
+                                </div>
+                            </div>
+                        </div>
 
                         <v-server-table
                             :url="url"
@@ -162,6 +236,8 @@ export default {
                 texts: {
                     limit: 'Вывод записей',
                     count: "Показано с {from} по {to} из {count} записей|{count} записей|Одна запись",
+                    noResults: "Ничего не нашлось",
+                    loading: "Загрузка...",
                 },
                 perPageValues: [10,25,30,35,50,100],
                 skin: "VueTables__table " +
@@ -172,14 +248,18 @@ export default {
                     "table-vue-width " +
                     "table-hover ",
                 filterable: false,
-                noResults: "В базе данных нет записей",
-                loading: "Загрузка...",
             },
             organizations: null,
             equipments: null,
             filter: {
                 organization_id: 0,
                 equipment_id: 0,
+                hostname: '',
+                model: '',
+                operation_system: '',
+                description_service: '',
+                cpu: '',
+                comment: '',
             },
         }
     },
@@ -258,6 +338,30 @@ export default {
                 params.append('equipment_id', this.filter.equipment_id)
             }
 
+            if (this.filter.hostname.length > 0){
+                params.append('hostname', this.filter.hostname)
+            }
+
+            if (this.filter.model.length > 0){
+                params.append('model', this.filter.model)
+            }
+
+            if (this.filter.operation_system.length > 0){
+                params.append('operation_system', this.filter.operation_system)
+            }
+
+            if (this.filter.description_service.length > 0){
+                params.append('description_service', this.filter.description_service)
+            }
+
+            if (this.filter.cpu.length > 0){
+                params.append('cpu', this.filter.cpu)
+            }
+
+            if (this.filter.comment.length > 0){
+                params.append('comment', this.filter.comment)
+            }
+
             if (params.toString().length > 0) {
                 this.url = this.urlPrepare + params.toString();
             }
@@ -265,6 +369,21 @@ export default {
             if (this.url === oldUrl) {
                 this.$refs['devices-table'].refresh();
             }
+        },
+
+        clearFilter(){
+            this.filter = {
+                organization_id: 0,
+                equipment_id: 0,
+                hostname: '',
+                model: '',
+                operation_system: '',
+                description_service: '',
+                cpu: '',
+                comment: '',
+            };
+
+            this.url = this.urlPrepare;
         },
     },
 

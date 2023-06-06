@@ -7,7 +7,7 @@ use App\Contracts\DeviceServiceInterface;
 use App\Contracts\EquipmentServiceInterface;
 use App\Contracts\OrganizationServiceInterface;
 use App\Contracts\UserServiceInterface;
-use http\Exception\InvalidArgumentException;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -72,6 +72,30 @@ class DeviceService implements DeviceServiceInterface
 
         if(isset($filter['equipment_id']) && $filter['equipment_id'] != 0) {
             $query = $query->where('equipment_id', $filter['equipment_id']);
+        }
+
+        if(isset($filter['hostname']) && $filter['hostname'] != 0) {
+            $query = $query->where('hostname', 'LIKE', '%' . $filter['hostname'] . '%');
+        }
+
+        if(isset($filter['model']) && $filter['model'] != 0) {
+            $query = $query->where('model', 'LIKE', '%' . $filter['model'] . '%');
+        }
+
+        if(isset($filter['operation_system']) && $filter['operation_system'] != 0) {
+            $query = $query->where('operation_system', 'LIKE', '%' . $filter['operation_system'] . '%');
+        }
+
+        if(isset($filter['description_service']) && $filter['description_service'] != 0) {
+            $query = $query->where('description_service', 'LIKE', '%' . $filter['description_service'] . '%');
+        }
+
+        if(isset($filter['cpu']) && $filter['cpu'] != 0) {
+            $query = $query->where('cpu', 'LIKE', '%' . $filter['cpu'] . '%');
+        }
+
+        if(isset($filter['comment']) && $filter['comment'] != 0) {
+            $query = $query->where('comment', 'LIKE', '%' . $filter['comment'] . '%');
         }
 
         $query = $this
@@ -176,6 +200,7 @@ class DeviceService implements DeviceServiceInterface
      * Delete device by  id
      * @param int $id
      * @return bool
+     * @throws Exception
      */
     public function deleteDevice(int $id): bool
     {
@@ -198,7 +223,7 @@ class DeviceService implements DeviceServiceInterface
         }
 
         if ($user->hasRole('user') && $user->organization_id != $device->organization_id) {
-            throw new \Exception(
+            throw new Exception(
                 'Нельзя удалить эту запись, так как вы её не создавали!
                 Удалить запись может администратор или тот пользователь,
                 который относится к этой организации'
@@ -211,12 +236,17 @@ class DeviceService implements DeviceServiceInterface
                 ->deleteDevice($query, $id);
         }
 
-        throw new \Exception(
+        throw new Exception(
             'У Вас отсутствуют роли, обратитесь к администратору.'
         );
     }
 
-    private function checkExistForeignKeyEntity(array $data)
+    /**
+     * Check and return exception
+     * @param array $data
+     * @return void
+     */
+    private function checkExistForeignKeyEntity(array $data): void
     {
 
         if (isset($data['organization_id'])){
