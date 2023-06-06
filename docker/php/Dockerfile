@@ -11,7 +11,8 @@ RUN apk add --no-cache \
     icu \
     icu-dev \
     libxml2-dev \
-	mc
+	mc \
+    libzip-dev
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
@@ -23,7 +24,8 @@ RUN docker-php-ext-install \
     opcache \
     soap \
     sockets \
-    exif
+    exif \
+    zip
 
 # Setup GD extension
 RUN apk add --no-cache \

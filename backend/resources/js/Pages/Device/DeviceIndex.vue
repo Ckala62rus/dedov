@@ -32,6 +32,12 @@
                             @click.prevent="clearFilter"
                         >Сброс фильтров</button>
 
+                        <button
+                            type="submit"
+                            class="btn btn-primary mb-5 ml-5"
+                            @click="toExcel"
+                        >Выгрузить Excel</button>
+
                         <div class="row">
                             <div class="col-md-2">
                                 <label>Организация</label>
@@ -385,6 +391,33 @@ export default {
 
             this.url = this.urlPrepare;
         },
+
+        toExcel(){
+            let params = this.filter;
+
+            axios({
+                method:'GET',
+                url: '/admin/export',
+                responseType: 'blob',
+                params: {
+                    // date_start: params.date_start,
+                    // date_end: params.date_end,
+                    // login: params.login,
+                }
+            })
+                .then((response) => {
+                    if (response.status === 200){
+                        // console.log(response.headers['accept-ranges'])
+                        const url = window.URL.createObjectURL(new Blob([response.data]));
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.setAttribute('download', 'output.xlsx'); //or any other extension
+                        document.body.appendChild(link);
+                        link.click();
+                        // console.log(response);
+                    }
+                });
+        }
     },
 
     mounted() {

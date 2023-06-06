@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\LessonCategoryController;
 use App\Http\Controllers\LessonController;
@@ -96,6 +97,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('devices', DeviceController::class);
         Route::get('devices-all-paginate', [DeviceController::class, 'getAllDeviceWithPagination']);
 
+        // Export Excel
+        Route::get('export', [ExcelController::class, 'exportDevice']);
     });
 
     // Permission
