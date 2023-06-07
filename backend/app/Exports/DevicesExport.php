@@ -7,9 +7,14 @@ use App\Http\Resources\Excel\DeviceExportCollectionResource;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 
-class DevicesExport implements FromCollection, WithHeadings, ShouldAutoSize
+class DevicesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents
 {
     /**
      * @var DeviceServiceInterface
@@ -43,30 +48,47 @@ class DevicesExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function headings(): array
     {
         return [
-            'id',
-            'hostname',
-            'model',
-            'date_buy',
-            'description_service',
-            'date_update',
-            'operation_system',
-            'cpu',
-            'count_core',
-            'count_core_with_ht',
-            'memory',
-            'hdd',
-            'ssd',
-            'address',
-            'comment',
+            'Id',
+            'Org',
+            'Type',
+            'Hostname',
+            'Model',
+            'Description service',
+            'Operation system',
+            'Cpu',
+            'Count core',
+            'Count core with ht',
+            'Memory',
+            'Hdd',
+            'Ssd',
+            'Address',
+            'Comment',
+            'Date buy',
+            'Date update',
+            'User',
+        ];
+    }
 
-            'user_id',
-            'user',
-
-            'organization_id',
-            'organization',
-
-            'equipment_id',
-            'equipment',
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+                $event
+                    ->sheet
+                    ->getDelegate()
+                    ->getStyle('A1:R1')
+                    ->applyFromArray([
+                        'font' => [
+                            'bold' => true,
+                            'color' => ['argb' => 'ffffff'],
+                            'size' => 14,
+                        ],
+                    ])
+                    ->getFill()
+                    ->setFillType(Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('1BC5BD');
+            },
         ];
     }
 }

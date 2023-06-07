@@ -17,11 +17,11 @@ class DeviceExportCollectionResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'organization' => $this->organization->name,
+            'equipment' => $this->equipment->name,
             'hostname' => $this->hostname,
             'model' => $this->model,
-            'date_buy' => $this->date_buy,
             'description_service' => $this->description_service,
-            'date_update' => $this->date_update,
             'operation_system' => $this->operation_system,
             'cpu' => $this->cpu,
             'count_core' => $this->count_core,
@@ -31,15 +31,9 @@ class DeviceExportCollectionResource extends JsonResource
             'ssd' => $this->ssd,
             'address' => $this->address,
             'comment' => $this->comment,
-
-            'user_id' => $this->user_id,
+            'date_buy' => $this->date_buy,
+            'date_update' => $this->date_update,
             'user' => $this->user->email,
-
-            'organization_id' => $this->organization_id,
-            'organization' => $this->organization->name,
-
-            'equipment_id' => $this->equipment_id,
-            'equipment' => $this->equipment->name,
         ];
     }
 }
