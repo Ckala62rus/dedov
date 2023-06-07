@@ -9,7 +9,6 @@ use App\Http\Requests\Device\DeviceUpdateRequest;
 use App\Http\Resources\Admin\Dashboard\Device\DeviceCollectionResource;
 use App\Http\Resources\Admin\Dashboard\Device\DeviceShowResource;
 use App\Http\Resources\Admin\Dashboard\Device\DeviceStoreResource;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;

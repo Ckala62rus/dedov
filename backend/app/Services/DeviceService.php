@@ -8,6 +8,7 @@ use App\Contracts\EquipmentServiceInterface;
 use App\Contracts\OrganizationServiceInterface;
 use App\Contracts\UserServiceInterface;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -66,37 +67,8 @@ class DeviceService implements DeviceServiceInterface
             ->deviceRepository
             ->getQuery();
 
-        if(isset($filter['organization_id']) && $filter['organization_id'] != 0) {
-            $query = $query->where('organization_id', $filter['organization_id']);
-        }
-
-        if(isset($filter['equipment_id']) && $filter['equipment_id'] != 0) {
-            $query = $query->where('equipment_id', $filter['equipment_id']);
-        }
-
-        if(isset($filter['hostname']) && $filter['hostname'] != 0) {
-            $query = $query->where('hostname', 'LIKE', '%' . $filter['hostname'] . '%');
-        }
-
-        if(isset($filter['model']) && $filter['model'] != 0) {
-            $query = $query->where('model', 'LIKE', '%' . $filter['model'] . '%');
-        }
-
-        if(isset($filter['operation_system']) && $filter['operation_system'] != 0) {
-            $query = $query->where('operation_system', 'LIKE', '%' . $filter['operation_system'] . '%');
-        }
-
-        if(isset($filter['description_service']) && $filter['description_service'] != 0) {
-            $query = $query->where('description_service', 'LIKE', '%' . $filter['description_service'] . '%');
-        }
-
-        if(isset($filter['cpu']) && $filter['cpu'] != 0) {
-            $query = $query->where('cpu', 'LIKE', '%' . $filter['cpu'] . '%');
-        }
-
-        if(isset($filter['comment']) && $filter['comment'] != 0) {
-            $query = $query->where('comment', 'LIKE', '%' . $filter['comment'] . '%');
-        }
+        $query = $this
+            ->setFilterForSearch($query, $filter);
 
         $query = $this
             ->deviceRepository
@@ -121,6 +93,9 @@ class DeviceService implements DeviceServiceInterface
         $query = $this
             ->deviceRepository
             ->getQuery();
+
+        $query = $this
+            ->setFilterForSearch($query, $filter);
 
         $query = $this
             ->deviceRepository
@@ -278,5 +253,48 @@ class DeviceService implements DeviceServiceInterface
                 throw new NotFoundException("User not found in database!");
             }
         }
+    }
+
+    /**
+     * Set filter by search for Eloquent builder
+     * @param Builder $query
+     * @param array $filter
+     * @return Builder
+     */
+    private function setFilterForSearch(Builder $query, array $filter): Builder
+    {
+        if(isset($filter['organization_id']) && $filter['organization_id'] != 0) {
+            $query = $query->where('organization_id', $filter['organization_id']);
+        }
+
+        if(isset($filter['equipment_id']) && $filter['equipment_id'] != 0) {
+            $query = $query->where('equipment_id', $filter['equipment_id']);
+        }
+
+        if(isset($filter['hostname']) && $filter['hostname'] != 0) {
+            $query = $query->where('hostname', 'LIKE', '%' . $filter['hostname'] . '%');
+        }
+
+        if(isset($filter['model']) && $filter['model'] != 0) {
+            $query = $query->where('model', 'LIKE', '%' . $filter['model'] . '%');
+        }
+
+        if(isset($filter['operation_system']) && $filter['operation_system'] != 0) {
+            $query = $query->where('operation_system', 'LIKE', '%' . $filter['operation_system'] . '%');
+        }
+
+        if(isset($filter['description_service']) && $filter['description_service'] != 0) {
+            $query = $query->where('description_service', 'LIKE', '%' . $filter['description_service'] . '%');
+        }
+
+        if(isset($filter['cpu']) && $filter['cpu'] != 0) {
+            $query = $query->where('cpu', 'LIKE', '%' . $filter['cpu'] . '%');
+        }
+
+        if(isset($filter['comment']) && $filter['comment'] != 0) {
+            $query = $query->where('comment', 'LIKE', '%' . $filter['comment'] . '%');
+        }
+
+        return $query;
     }
 }
