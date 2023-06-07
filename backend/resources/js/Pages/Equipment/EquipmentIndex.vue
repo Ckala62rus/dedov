@@ -101,6 +101,7 @@ export default {
                     "table-striped " +
                     "table-bordered " +
                     "table-hover ",
+                filterable: false,
             }
         }
     },
