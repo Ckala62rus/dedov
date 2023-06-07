@@ -87,7 +87,7 @@ class DevicesExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                     ->getFill()
                     ->setFillType(Fill::FILL_SOLID)
                     ->getStartColor()
-                    ->setARGB('1BC5BD');
+                    ->setARGB('217346');
             },
         ];
     }
