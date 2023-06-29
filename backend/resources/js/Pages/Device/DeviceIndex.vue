@@ -223,7 +223,7 @@ export default {
                 'hdd',
                 'ssd',
                 'address',
-                'comment_input',
+                'comment',
                 'date_buy',
                 'date_update',
                 'actions'
@@ -239,7 +239,7 @@ export default {
                     description: 'Описание',
                     created_at: 'Время создания',
                     updated_at: 'Время обновления',
-                    comment_input: 'Comment',
+                    comment: 'Comment',
                     actions: 'Действия',
                 },
                 texts: {
