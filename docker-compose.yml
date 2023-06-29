@@ -57,3 +57,14 @@ services:
       - 8085:80
     environment:
       - PMA_ARBITRARY=1
+
+  node:
+    build:
+      context: .
+      dockerfile: ./docker/node/DockerFile
+    container_name: vue
+    volumes:
+      - ./backend/:/var/www
+    tty: true
+    depends_on:
+      - backend-dedov
