@@ -45,26 +45,41 @@
                                     type="password"
                                     class="form-control"
                                     id="exampleInputPassword1"
-                                    placeholder="Your email address"
+                                    placeholder="Password"
                                     v-model="form_profile.password"
                                     :class="{'is-invalid': errors.errorPassword}"
                                 />
                                 <div class="invalid-feedback">{{errors.errorPasswordText}}</div>
                                 <div class="invalid-feedback">{{errors.errorPasswordConfirmation}}</div>
                             </div>
+
                             <div class="form-group">
                                 <label for="exampleInputPassword2">Password confirmation<span class="text-danger">*</span></label>
                                 <input
                                     type="password"
                                     class="form-control"
                                     id="exampleInputPassword2"
-                                    placeholder="Your email address"
+                                    placeholder="Password confirmation"
                                     v-model="form_profile.password_confirmation"
                                     :class="{'is-invalid': errors.errorPassword}"
                                 />
                                 <div class="invalid-feedback">{{errors.errorPasswordConfirmation}}</div>
                             </div>
-                            <label>Организация</label>
+
+                            <div class="form-group">
+                                <label>Роль<span class="text-danger">*</span></label>
+                                <el-select v-model="form_profile.role_id" class="w-100" placeholder="Select" size="large">
+                                    <el-option
+                                        v-for="item in roles"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item.id"
+                                    />
+                                </el-select>
+                                <div style="color: #F64E60" v-if="errors.errorRole">{{error_messages.role_id}}</div>
+                            </div>
+
+                            <label>Организация<span class="text-danger">*</span></label>
                             <div class="form-group select-form_group">
                                 <el-select
                                     v-model="form_profile.organization_id"
@@ -84,7 +99,7 @@
                                         :value="organization.id"
                                     />
                                 </el-select>
-                                <div style="color: #F64E60" v-if="errors.organization_id">{{error_messages.organization_id}}</div>
+                                <div style="color: #F64E60" v-if="errors.errorOrganization">{{error_messages.organization_id}}</div>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -118,6 +133,7 @@ export default {
                 password: '',
                 password_confirmation: '',
                 organization_id : null,
+                role_id: null,
             },
             errors: {
                 errorName: false,
@@ -125,8 +141,15 @@ export default {
                 errorPassword: false,
                 errorPasswordConfirmation: false,
                 errorPasswordText: '',
-                errorEmailText: ''
+                errorEmailText: '',
+                errorRole: false,
+                errorOrganization: false,
             },
+            error_messages: {
+                role_id: '',
+                organization_id: '',
+            },
+            roles: {},
             organizations: [
                 {
                     id: 0,
@@ -164,7 +187,13 @@ export default {
                            errorEmail: errors.hasOwnProperty('email'),
                            errorPassword: errors.hasOwnProperty('password'),
                            errorPasswordConfirmation: errors.hasOwnProperty('password') ? errors.password[0] : '',
-                           errorEmailText: errors.hasOwnProperty('email') ? errors.email[0] : ''
+                           errorEmailText: errors.hasOwnProperty('email') ? errors.email[0] : '',
+                           errorRole: errors.hasOwnProperty('role_id'),
+                           errorOrganization: errors.hasOwnProperty('organization_id'),
+                       };
+                       this.error_messages = {
+                           role_id: errors.hasOwnProperty('role_id') ? errors.role_id[0] : '',
+                           organization_id: errors.hasOwnProperty('organization_id') ? errors.organization_id[0] : '',
                        };
                        this.$notify({
                            title: "Ошибка",
@@ -192,7 +221,13 @@ export default {
                 errorEmail: false,
                 errorPassword: false,
                 errorEmailText: '',
-                errorPasswordConfirmation: ''
+                errorPasswordConfirmation: '',
+                errorRole: false,
+                errorOrganization: false,
+            };
+            this.error_messages = {
+                role_id: '',
+                organization_id: '',
             };
         },
 
@@ -202,10 +237,18 @@ export default {
                     this.organizations = res.data.data.organizations;
                 })
         },
+
+        getRoles(){
+            axios.get('/admin/role/all')
+                .then(response => {
+                    this.roles = response.data.data.roles
+                })
+        },
     },
 
     mounted() {
         this.getOrganizations()
+        this.getRoles()
     }
 }
 </script>
