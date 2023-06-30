@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success mr-2">Создать</button>
+                            <button type="submit" class="btn btn-success mr-2">Сохранить</button>
                             <Link :href="route('metronic.user.index')" as="button" method="get" class="btn btn-primary font-weight-bolder">Назад</Link>
                         </div>
                     </form>
