@@ -1,0 +1,2 @@
+* * * * * (cd /var/www/ && php artisan schedule:run >> /var/log/cron.log 2>&1) > /var/www/html/log.txt
+# Don't remove the empty line at the end of this file. It is required to run the cron job
