@@ -68,3 +68,12 @@ services:
     tty: true
     depends_on:
       - backend-dedov
+
+  # https://github.com/aschmelyun/laravel-scheduled-tasks-docker
+#  cron:
+#    build:
+#      context: .
+#      dockerfile: ./docker/cron/cron.dockerfile
+#    container_name: cron
+#    volumes:
+#      - ./backend/:/var/www

@@ -28,6 +28,6 @@ class TestCronCommand extends Command
      */
     public function handle()
     {
-        Log::info('test cron command!!!!!!!');
+        Log::info('new cron message');
     }
 }
