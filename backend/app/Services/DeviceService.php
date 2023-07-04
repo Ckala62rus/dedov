@@ -17,25 +17,6 @@ use Intervention\Image\Exception\NotFoundException;
 
 class DeviceService implements DeviceServiceInterface
 {
-    /**
-     * @var DeviceRepositoryInterface
-     */
-    private DeviceRepositoryInterface $deviceRepository;
-
-    /**
-     * @var OrganizationServiceInterface
-     */
-    private OrganizationServiceInterface $organizationService;
-
-    /**
-     * @var EquipmentServiceInterface
-     */
-    private EquipmentServiceInterface $equipmentService;
-
-    /**
-     * @var UserServiceInterface
-     */
-    private UserServiceInterface $userService;
 
     /**
      * @param DeviceRepositoryInterface $deviceRepository
@@ -44,16 +25,11 @@ class DeviceService implements DeviceServiceInterface
      * @param UserServiceInterface $userService
      */
     public function __construct(
-        DeviceRepositoryInterface $deviceRepository,
-        OrganizationServiceInterface $organizationService,
-        EquipmentServiceInterface $equipmentService,
-        UserServiceInterface $userService,
-    ) {
-        $this->deviceRepository = $deviceRepository;
-        $this->organizationService = $organizationService;
-        $this->equipmentService = $equipmentService;
-        $this->userService = $userService;
-    }
+        private UserServiceInterface $userService,
+        private EquipmentServiceInterface $equipmentService,
+        private OrganizationServiceInterface $organizationService,
+        private DeviceRepositoryInterface $deviceRepository,
+    ) {}
 
     /**
      * Get all devices with pagination and filters
