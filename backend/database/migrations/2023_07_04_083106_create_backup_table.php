@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('backups', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('organization_id');
             $table->string('service')->nullable();
             $table->string('owner')->nullable();
             $table->string('hostname')->nullable();
@@ -29,7 +28,20 @@ return new class extends Migration
             $table->string('storage_server')->nullable();
             $table->string('storage_long_time')->nullable();
             $table->string('description_storage_long_time')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('organization_id');
             $table->timestamps();
+
+            $table
+                ->foreign('organization_id')
+                ->references('id')
+                ->on('organizations');
+
+            $table
+                ->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->cascadeOnDelete();
         });
     }
 

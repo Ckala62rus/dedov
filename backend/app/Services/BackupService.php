@@ -4,17 +4,25 @@ namespace App\Services;
 
 use App\Contracts\Backup\BackupRepositoryInterface;
 use App\Contracts\Backup\BackupServiceInterface;
+use App\Contracts\OrganizationServiceInterface;
+use App\Contracts\UserServiceInterface;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Intervention\Image\Exception\NotFoundException;
 
 class BackupService implements BackupServiceInterface
 {
     /**
      * @param BackupRepositoryInterface $backupRepository
+     * @param UserServiceInterface $userService
+     * @param OrganizationServiceInterface $organizationService
      */
     public function __construct(
         private BackupRepositoryInterface $backupRepository,
+        private UserServiceInterface $userService,
+        private OrganizationServiceInterface $organizationService,
     ){}
 
     /**
@@ -113,5 +121,38 @@ class BackupService implements BackupServiceInterface
         return $this
             ->backupRepository
             ->deleteBackup($query, $id);
+    }
+
+    /**
+     * Check and return exception
+     * @param array $data
+     * @return void
+     * @throws Exception
+     */
+    private function checkExistForeignKeyEntity(array $data): void
+    {
+        if (isset($data['organization_id'])){
+            $organization = $this
+                ->organizationService
+                ->getOrganizationsById($data['organization_id']);
+
+            if (!$organization) {
+                throw new NotFoundException('Organization not found in database!');
+            }
+        } else {
+            throw new Exception('organization_id not found');
+        }
+
+        if (isset($data['user_id'])){
+            $user = $this
+                ->userService
+                ->getUserById($data['user_id']);
+
+            if (!$user) {
+                throw new NotFoundException("User not found in database!");
+            }
+        } else {
+            throw new Exception('user_id not found');
+        }
     }
 }
