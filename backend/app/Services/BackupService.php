@@ -10,7 +10,8 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Intervention\Image\Exception\NotFoundException;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BackupService implements BackupServiceInterface
 {
@@ -62,12 +63,17 @@ class BackupService implements BackupServiceInterface
      * Create and return created model backup
      * @param array $data
      * @return Model
+     * @throws Exception
      */
     public function createBackup(array $data): Model
     {
         $query = $this
             ->backupRepository
             ->getQuery();
+
+        $data['user_id'] = Auth::user()->id;
+
+        $this->checkExistForeignKeyEntity($data);
 
         return $this
             ->backupRepository
@@ -137,10 +143,10 @@ class BackupService implements BackupServiceInterface
                 ->getOrganizationsById($data['organization_id']);
 
             if (!$organization) {
-                throw new NotFoundException('Organization not found in database!');
+                throw new NotFoundHttpException('Organization not found in database!');
             }
         } else {
-            throw new Exception('organization_id not found');
+            throw new NotFoundHttpException('organization_id not found');
         }
 
         if (isset($data['user_id'])){
@@ -149,10 +155,10 @@ class BackupService implements BackupServiceInterface
                 ->getUserById($data['user_id']);
 
             if (!$user) {
-                throw new NotFoundException("User not found in database!");
+                throw new NotFoundHttpException("User not found in database!");
             }
         } else {
-            throw new Exception('user_id not found');
+            throw new NotFoundHttpException('user_id not found');
         }
     }
 }

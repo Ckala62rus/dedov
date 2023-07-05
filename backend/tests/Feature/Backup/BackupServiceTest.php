@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Backup;
 
+use App\Models\Backup;
 use App\Models\Organization;
 use App\Models\User;
 use App\Services\BackupService;
-use Illuminate\Database\QueryException;
+use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\TestCase;
 
 class BackupServiceTest extends TestCase
@@ -26,12 +28,14 @@ class BackupServiceTest extends TestCase
      * clear && vendor/bin/phpunit --filter=BackupServiceTest
      *
      * @return void
+     * @throws Exception
      */
     public function test_create_backup_success(): void
     {
         // arrange
         $this->withExceptionHandling();
         $user = User::factory()->create();
+        $this->actingAs($user);
         $organization = Organization::factory()->create();
 
         /** @var BackupService $service */
@@ -51,11 +55,15 @@ class BackupServiceTest extends TestCase
      * @param $data
      * @return void
      * @dataProvider invalidBackupData
+     * @throws Exception
      */
     public function test_create_backup_negative($data): void
     {
         // arrange
         $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
         /** @var BackupService $service */
         $service = $this->app->make(BackupService::class);
@@ -64,7 +72,7 @@ class BackupServiceTest extends TestCase
         // assert
         $this->assertThrows(function() use ($service, $data) {
             $service->createBackup($data);
-        }, QueryException::class);
+        }, NotFoundHttpException::class);
     }
 
     /**
@@ -95,6 +103,7 @@ class BackupServiceTest extends TestCase
         // arrange
         $this->withExceptionHandling();
         $user = User::factory()->create();
+        $this->actingAs($user);
         $organization = Organization::factory()->create();
 
         /** @var BackupService $service */
@@ -115,7 +124,47 @@ class BackupServiceTest extends TestCase
     public function test_delete_backup_success_if_exist_in_database()
     {
         // arrange
+        $this->withExceptionHandling();
+        $backups = Backup::factory(2)->create();
+
+        /** @var BackupService $service */
+        $service = $this->app->make(BackupService::class);
+
         // act
+        $isDelete = $service->deleteBackup($backups[0]->id);
+
         // assert
+        $this->assertTrue($isDelete);
+        $this->assertDatabaseCount(Backup::class, 1);
+    }
+
+    public function test_delete_backup_success_if_not_exist_in_database()
+    {
+        // arrange
+        /** @var BackupService $service */
+        $service = $this->app->make(BackupService::class);
+
+        // act
+        $isDelete = $service->deleteBackup(random_int(1, 100));
+
+        // assert
+        $this->assertFalse($isDelete);
+        $this->assertDatabaseCount(Backup::class, 0);
+    }
+
+    public function test_update_backup_success()
+    {
+        // arrange
+        $backupCreated = Backup::factory()->create();
+
+        /** @var BackupService $service */
+        $service = $this->app->make(BackupService::class);
+
+        // act
+        $backupUpdated = $service
+            ->updateBackup($backupCreated->id, ['service' => 'test test']);
+
+        // assert
+        $this->assertNotEquals($backupUpdated->service, $backupCreated->service);
     }
 }
