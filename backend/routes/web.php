@@ -1,16 +1,13 @@
 <?php
 
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ExcelController;
-use App\Http\Controllers\Front\FrontController;
-use App\Http\Controllers\LessonCategoryController;
-use App\Http\Controllers\LessonController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -99,6 +96,9 @@ Route::middleware(['auth'])->group(function () {
 
         // Export Excel
         Route::get('export', [ExcelController::class, 'exportDevice']);
+
+        // Backup
+        Route::resource('backup', BackupController::class);
     });
 
     // Permission
