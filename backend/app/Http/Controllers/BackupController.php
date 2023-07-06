@@ -47,9 +47,32 @@ class BackupController extends BaseController
         );
     }
 
-    public function show(int $id)
+    /**
+     * Get backup by id and return model or 404 error( status false )
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function show(int $id): JsonResponse
     {
-        //
+        $backup = $this
+            ->backupService
+            ->getBackupById($id);
+
+        if (!$backup) {
+            return $this->response(
+                ['backup' => []],
+                'Get backup by id:' . $id,
+                false,
+                Response::HTTP_OK
+            );
+        }
+
+        return $this->response(
+            ['backup' => BackupStoreResource::make($backup)],
+            'Get backup by id:' . $id,
+            true,
+            Response::HTTP_OK
+        );
     }
 
     public function edit($id)
@@ -62,8 +85,22 @@ class BackupController extends BaseController
         //
     }
 
-    public function destroy($id)
+    /**
+     * Delete backup by id
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $isDelete = $this
+            ->backupService
+            ->deleteBackup($id);
+
+        return $this->response(
+            ['delete' => $isDelete],
+            "Device was deleted with id:$id",
+            true,
+            Response::HTTP_OK
+        );
     }
 }

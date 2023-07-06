@@ -36,7 +36,7 @@ class BackupStoreRequest extends FormRequest
             'time_start' => 'string',
             'storage_server' => 'string',
             'storage_long_time' => 'string',
-            'organization_id' => 'integer',
+            'organization_id' => 'required|integer',
         ];
     }
 }

@@ -81,6 +81,39 @@ class BackupControllerTest extends TestCase
         ]);
     }
 
+    public function test_create_backup_fail(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $data = [
+            'service' => 'service  test',
+            'owner' => 'owner  test',
+            'hostname' => 'hostname  test',
+            'object' => 'object  test',
+            'tool' => 'tool  test',
+            'bd' => 'bd  test',
+            'restricted_point' => 'restricted_point  test',
+            'type' => 'type  test',
+            'day' => 'day  test',
+            'time_start' => 'time_start test',
+            'storage_server' => 'storage_server test',
+            'storage_long_time' => 'storage_long_time test',
+        ];
+
+        // act
+        $response = $this->post('admin/backup', $data);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonValidationErrors([
+            'organization_id' => 'The organization id field is required.',
+        ]);
+    }
+
     public function test_read_backup_by_id_success(): void
     {
         // arrange
@@ -93,7 +126,83 @@ class BackupControllerTest extends TestCase
 
         // act
         $response = $this->get('admin/backup/' . $backupCreate->id);
-        dd($response->decodeResponseJson());
+
         // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson(['message' => "Get backup by id:$backupCreate->id"]);
+        $response->assertJson([
+            'data' => [
+                'backup' => [
+                    'service' => $backupCreate->service,
+                    'user_id' => $backupCreate->user_id,
+                    'organization_id' => $backupCreate->organization_id,
+                ],
+            ],
+        ]);
+    }
+
+    public function test_read_backup_by_id_if_not_exist(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $idFromSearch = random_int(1, 100);
+
+        // act
+        $response = $this->get('admin/backup/' . $idFromSearch);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $response->assertJson(['status' => false]);
+        $response->assertJson(['message' => "Get backup by id:$idFromSearch"]);
+        $response->assertJson([
+            'data' => [
+                'backup' => [],
+            ],
+        ]);
+    }
+
+    public function test_delete_backup_success(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $backup = Backup::factory()->create();
+
+        // act
+        $response = $this->delete('admin/backup/' . $backup->id);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson([
+            'data' => [
+                'delete' => true,
+            ],
+        ]);
+    }
+
+    public function test_delete_backup_fail(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // act
+        $response = $this->delete('admin/backup/' . random_int(1,100));
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson([
+            'data' => [
+                'delete' => false,
+            ],
+        ]);
     }
 }
