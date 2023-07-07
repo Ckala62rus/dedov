@@ -24,18 +24,18 @@ class BackupStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'service' => 'string',
-            'owner' => 'string',
-            'hostname' => 'string',
-            'object' => 'string',
-            'tool' => 'string',
-            'bd' => 'string',
-            'restricted_point' => 'string',
-            'type' => 'string',
-            'day' => 'string',
-            'time_start' => 'string',
-            'storage_server' => 'string',
-            'storage_long_time' => 'string',
+            'service' => 'nullable|string',
+            'owner' => 'nullable|string',
+            'hostname' => 'nullable|string',
+            'object' => 'nullable|string',
+            'tool' => 'nullable|string',
+            'bd' => 'nullable|string',
+            'restricted_point' => 'nullable|string',
+            'type' => 'nullable|string',
+            'day' => 'nullable|string',
+            'time_start' => 'nullable|string',
+            'storage_server' => 'nullable|string',
+            'storage_long_time' => 'nullable|string',
             'organization_id' => 'required|integer',
         ];
     }

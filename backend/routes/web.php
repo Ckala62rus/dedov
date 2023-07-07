@@ -99,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Backup
         Route::resource('backups', BackupController::class);
+        Route::get('backups-all-paginate', [BackupController::class, 'getAllBackupWithPagination']);
     });
 
     // Permission

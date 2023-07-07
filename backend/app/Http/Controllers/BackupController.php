@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Backup\BackupServiceInterface;
+use App\Http\Requests\Backup\BackupCollectionRequest;
 use App\Http\Requests\Backup\BackupStoreRequest;
 use App\Http\Requests\Backup\BackupUpdateRequest;
+use App\Http\Resources\Admin\Dashboard\Backup\BackupCollectionResource;
 use App\Http\Resources\Admin\Dashboard\Backup\BackupStoreResource;
 use App\Http\Resources\Admin\Dashboard\Backup\BuckupShowResource;
 use App\Http\Resources\Admin\Dashboard\Backup\BuckupUpdateResource;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,12 +25,12 @@ class BackupController extends BaseController
 
     public function index()
     {
-        // view
+        return Inertia::render('Backup/BackupIndex');
     }
 
     public function create()
     {
-        // view
+        return Inertia::render('Backup/BackupCreate');
     }
 
     /**
@@ -119,5 +122,24 @@ class BackupController extends BaseController
             true,
             Response::HTTP_OK
         );
+    }
+
+    /**
+     * Get all backups with pagination
+     * @param BackupCollectionRequest $request
+     * @return JsonResponse
+     */
+    public function getAllBackupWithPagination(BackupCollectionRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $devices = $this
+            ->backupService
+            ->getAllBackupsWithPagination($data['limit'], $data);
+
+        return response()->json([
+            'data' => BackupCollectionResource::collection($devices),
+            'count' => $devices->total()
+        ]);
     }
 }
