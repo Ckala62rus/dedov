@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Backup\BackupServiceInterface;
 use App\Http\Requests\Backup\BackupStoreRequest;
+use App\Http\Requests\Backup\BackupUpdateRequest;
 use App\Http\Resources\Admin\Dashboard\Backup\BackupStoreResource;
-use Illuminate\Http\Request;
+use App\Http\Resources\Admin\Dashboard\Backup\BuckupShowResource;
+use App\Http\Resources\Admin\Dashboard\Backup\BuckupUpdateResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -68,7 +70,7 @@ class BackupController extends BaseController
         }
 
         return $this->response(
-            ['backup' => BackupStoreResource::make($backup)],
+            ['backup' => BuckupShowResource::make($backup)],
             'Get backup by id:' . $id,
             true,
             Response::HTTP_OK
@@ -80,9 +82,24 @@ class BackupController extends BaseController
         // view
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update backup by id
+     * @param BackupUpdateRequest $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(BackupUpdateRequest $request, int $id): JsonResponse
     {
-        //
+        $backup = $this
+            ->backupService
+            ->updateBackup($id, $request->validated());
+
+        return $this->response(
+            ['backup' => BuckupUpdateResource::make($backup)],
+            'Backup was updated',
+            true,
+            Response::HTTP_OK
+        );
     }
 
     /**

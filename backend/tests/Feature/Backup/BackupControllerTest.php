@@ -64,7 +64,7 @@ class BackupControllerTest extends TestCase
         $data = $this->getData($organization);
 
         // act
-        $response = $this->post('admin/backup', $data);
+        $response = $this->post('admin/backups', $data);
 
         // assert
         $response->assertStatus(ResponseAlias::HTTP_CREATED);
@@ -105,7 +105,7 @@ class BackupControllerTest extends TestCase
         ];
 
         // act
-        $response = $this->post('admin/backup', $data);
+        $response = $this->post('admin/backups', $data);
 
         // assert
         $response->assertStatus(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
@@ -125,7 +125,7 @@ class BackupControllerTest extends TestCase
         $backupCreate = Backup::factory()->create();
 
         // act
-        $response = $this->get('admin/backup/' . $backupCreate->id);
+        $response = $this->get('admin/backups/' . $backupCreate->id);
 
         // assert
         $response->assertStatus(ResponseAlias::HTTP_OK);
@@ -152,7 +152,7 @@ class BackupControllerTest extends TestCase
         $idFromSearch = random_int(1, 100);
 
         // act
-        $response = $this->get('admin/backup/' . $idFromSearch);
+        $response = $this->get('admin/backups/' . $idFromSearch);
 
         // assert
         $response->assertStatus(ResponseAlias::HTTP_OK);
@@ -161,6 +161,39 @@ class BackupControllerTest extends TestCase
         $response->assertJson([
             'data' => [
                 'backup' => [],
+            ],
+        ]);
+    }
+
+    public function test_update_backup_success()
+    {
+        // arrange
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $backups = Backup::factory(2)->create();
+        $newOrganization = Organization::factory()->create();
+
+        $dataForUpdate = [
+            'hostname' => 'updated hostname',
+            'organization_id' => $newOrganization->id
+        ];
+
+        // act
+        $response = $this->put('admin/backups/' . $backups[1]->id, $dataForUpdate);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson(['message' => "Backup was updated"]);
+        $response->assertJson([
+            'data' => [
+                'backup' => [
+                    'hostname' => $dataForUpdate['hostname'],
+                    'organization_id' => $dataForUpdate['organization_id'],
+                ],
             ],
         ]);
     }
@@ -174,7 +207,7 @@ class BackupControllerTest extends TestCase
         $backup = Backup::factory()->create();
 
         // act
-        $response = $this->delete('admin/backup/' . $backup->id);
+        $response = $this->delete('admin/backups/' . $backup->id);
 
         // assert
         $response->assertStatus(ResponseAlias::HTTP_OK);
@@ -194,7 +227,7 @@ class BackupControllerTest extends TestCase
         $this->actingAs($user);
 
         // act
-        $response = $this->delete('admin/backup/' . random_int(1,100));
+        $response = $this->delete('admin/backups/' . random_int(1,100));
 
         // assert
         $response->assertStatus(ResponseAlias::HTTP_OK);

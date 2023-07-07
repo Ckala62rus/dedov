@@ -98,7 +98,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('export', [ExcelController::class, 'exportDevice']);
 
         // Backup
-        Route::resource('backup', BackupController::class);
+        Route::resource('backups', BackupController::class);
     });
 
     // Permission
