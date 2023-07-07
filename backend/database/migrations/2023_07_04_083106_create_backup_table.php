@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('backups', function (Blueprint $table) {
             $table->id();
-            $table->string('service')->nullable();
+            $table->string('service');
             $table->string('owner')->nullable();
             $table->string('hostname')->nullable();
-            $table->string('object')->nullable();
+            $table->string('object');
             $table->string('tool')->nullable();
             $table->string('bd')->nullable();
             $table->string('restricted_point')->nullable();

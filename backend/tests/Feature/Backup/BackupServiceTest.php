@@ -42,6 +42,8 @@ class BackupServiceTest extends TestCase
         $service = $this->app->make(BackupService::class);
 
         $data = $this->getData($user, $organization);
+        $data['service'] = 'some service text';
+        $data['object'] = 'some object text';
 
         // act
         $backup = $service->createBackup($data);
@@ -110,6 +112,9 @@ class BackupServiceTest extends TestCase
         $service = $this->app->make(BackupService::class);
 
         $data = $this->getData($user, $organization);
+        $data['service'] = 'some service text';
+        $data['object'] = 'some object text';
+
         $backupCreated = $service->createBackup($data);
 
         // act
