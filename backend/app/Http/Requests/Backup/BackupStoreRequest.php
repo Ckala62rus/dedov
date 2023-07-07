@@ -24,10 +24,10 @@ class BackupStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'service' => 'nullable|string',
+            'service' => 'required|string',
             'owner' => 'nullable|string',
             'hostname' => 'nullable|string',
-            'object' => 'nullable|string',
+            'object' => 'required|string',
             'tool' => 'nullable|string',
             'bd' => 'nullable|string',
             'restricted_point' => 'nullable|string',

@@ -81,6 +81,52 @@ class BackupControllerTest extends TestCase
         ]);
     }
 
+    public function test_create_backup_if_field_service_is_empty_fail(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user           = User::factory()->create();
+        $organization   = Organization::factory()->create();
+
+        $this->actingAs($user);
+        $data = $this->getData($organization);
+
+        // remove required field for validation
+        unset($data['service']);
+
+        // act
+        $response = $this->post('admin/backups', $data);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonValidationErrors([
+            'service' => 'The service field is required.',
+        ]);
+    }
+
+    public function test_create_backup_if_field_object_is_empty_fail(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user           = User::factory()->create();
+        $organization   = Organization::factory()->create();
+
+        $this->actingAs($user);
+        $data = $this->getData($organization);
+
+        // remove required field for validation
+        unset($data['object']);
+
+        // act
+        $response = $this->post('admin/backups', $data);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonValidationErrors([
+            'object' => 'The object field is required.',
+        ]);
+    }
+
     public function test_create_backup_fail(): void
     {
         // arrange
