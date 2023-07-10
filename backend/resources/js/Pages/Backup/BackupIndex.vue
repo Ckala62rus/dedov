@@ -20,6 +20,108 @@
                             Создать запись о бэкапе
                         </Link>
 
+                        <button
+                            type="submit"
+                            class="btn btn-info mb-5 ml-10"
+                            @click.prevent="findByFilter"
+                        >Найти</button>
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark mb-5 ml-5"
+                            @click.prevent="clearFilter"
+                        >Сброс фильтров</button>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary mb-5 ml-5"
+                            @click="toExcel"
+                        >Выгрузить Excel</button>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Organization</label>
+                                <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="filter.organization_id"
+                                        class="m-0 select-category w-100"
+                                        placeholder="Организация"
+                                        size="large"
+                                    >
+                                        <el-option
+                                            label="All organization"
+                                            :value=0
+                                            :key=0
+                                        />
+                                        <el-option
+                                            v-for="organization in organizations"
+                                            :key="organization.id"
+                                            :label="organization.name"
+                                            :value="organization.id"
+                                        />
+                                    </el-select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Hostname</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Hostname"
+                                        v-model="filter.hostname"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Service</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Service"
+                                        v-model="filter.service"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Owner</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Owner"
+                                        v-model="filter.owner"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Object</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Object"
+                                        v-model="filter.object"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <label>Tool</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Tool"
+                                        v-model="filter.tool"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
                         <v-server-table
                                 :url="url"
                                 :columns="columns"
@@ -74,7 +176,7 @@ export default {
             urlPrepare: '/admin/backups-all-paginate?',
             url: '/admin/backups-all-paginate?',
             columns: [
-                'id',
+                'organization.name',
                 'service',
                 'owner',
                 'hostname',
@@ -98,6 +200,7 @@ export default {
                     // description: 'Описание',
                     // created_at: 'Время создания',
                     // updated_at: 'Время обновления',
+                    'organization.name': 'Organization',
                     comment: 'Comment',
                     actions: 'Actions',
                 },
@@ -129,6 +232,14 @@ export default {
                 },
             },
             organizations: null,
+            filter: {
+                organization_id: 0,
+                hostname: '',
+                service: '',
+                owner: '',
+                object: '',
+                tool: '',
+            },
         }
     },
 
@@ -182,6 +293,64 @@ export default {
                     });
                 }
             })
+        },
+
+        findByFilter(){
+            const params = new URLSearchParams();
+            let oldUrl = this.url;
+
+            if (this.filter.organization_id === 0) {
+                params.append('organization_id', 0)
+            }
+
+            if (this.filter.organization_id != null && this.filter.organization_id != '0'){
+                params.append('organization_id', this.filter.organization_id)
+            }
+
+            if (this.filter.hostname != null){
+                params.append('hostname', this.filter.hostname)
+            }
+
+            if (this.filter.service != null){
+                params.append('service', this.filter.service)
+            }
+
+            if (this.filter.owner != null){
+                params.append('owner', this.filter.owner)
+            }
+
+            if (this.filter.object != null){
+                params.append('object', this.filter.object)
+            }
+
+            if (this.filter.tool != null){
+                params.append('tool', this.filter.tool)
+            }
+
+            if (params.toString().length > 0) {
+                this.url = this.urlPrepare + params.toString();
+            }
+
+            if (this.url === oldUrl) {
+                this.$refs['backups-table'].refresh();
+            }
+        },
+
+        clearFilter(){
+            this.filter = {
+                organization_id: 0,
+                hostname: '',
+                service: '',
+                owner: '',
+                object: '',
+                tool: '',
+            };
+
+            this.url = this.urlPrepare;
+        },
+
+        toExcel(){
+            //
         },
     },
 

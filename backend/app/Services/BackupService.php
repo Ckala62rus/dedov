@@ -7,6 +7,7 @@ use App\Contracts\Backup\BackupServiceInterface;
 use App\Contracts\OrganizationServiceInterface;
 use App\Contracts\UserServiceInterface;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -37,6 +38,16 @@ class BackupService implements BackupServiceInterface
         $query = $this
             ->backupRepository
             ->getQuery();
+
+        $query = $this
+            ->setFilterForSearch($query, $filter);
+
+        $query = $this
+            ->backupRepository
+            ->withBackupRelation($query, [
+                'user',
+                'organization',
+            ]);
 
         return $this
             ->backupRepository
@@ -188,5 +199,40 @@ class BackupService implements BackupServiceInterface
         } else {
             throw new NotFoundHttpException('user_id not found');
         }
+    }
+
+    /**
+     * Set filter by search for Eloquent builder
+     * @param Builder $query
+     * @param array $filter
+     * @return Builder
+     */
+    private function setFilterForSearch(Builder $query, array $filter): Builder
+    {
+        if(isset($filter['organization_id']) && $filter['organization_id'] != 0) {
+            $query = $query->where('organization_id', $filter['organization_id']);
+        }
+
+        if(isset($filter['service']) && $filter['service'] != 0) {
+            $query = $query->where('service', 'LIKE', '%' . $filter['service'] . '%');
+        }
+
+        if(isset($filter['hostname']) && $filter['hostname'] != 0) {
+            $query = $query->where('hostname', 'LIKE', '%' . $filter['hostname'] . '%');
+        }
+
+        if(isset($filter['owner']) && $filter['owner'] != 0) {
+            $query = $query->where('owner', 'LIKE', '%' . $filter['owner'] . '%');
+        }
+
+        if(isset($filter['object']) && $filter['object'] != 0) {
+            $query = $query->where('object', 'LIKE', '%' . $filter['object'] . '%');
+        }
+
+        if(isset($filter['tool']) && $filter['tool'] != 0) {
+            $query = $query->where('tool', 'LIKE', '%' . $filter['tool'] . '%');
+        }
+
+        return $query;
     }
 }

@@ -25,6 +25,12 @@ class BackupCollectionRequest extends FormRequest
     {
         return [
             'limit' => 'required|integer',
+            "organization_id" => 'integer',
+            "hostname" => 'nullable|string',
+            "service" => 'nullable|string',
+            "owner" => 'nullable|string',
+            "object" => 'nullable|string',
+            "tool" => 'nullable|string',
         ];
     }
 }
