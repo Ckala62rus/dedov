@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success mr-2">Создать</button>
+                            <button type="submit" class="btn btn-success mr-2">Обновить</button>
                             <Link :href="route('equipments.index')" as="button" method="get" class="btn btn-primary font-weight-bolder">Назад</Link>
                         </div>
                     </form>

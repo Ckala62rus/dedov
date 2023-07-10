@@ -6,6 +6,7 @@ use App\Models\Backup;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Tests\TestCase;
 use Throwable;
@@ -224,7 +225,9 @@ class BackupControllerTest extends TestCase
 
         $dataForUpdate = [
             'hostname' => 'updated hostname',
-            'organization_id' => $newOrganization->id
+            'organization_id' => $newOrganization->id,
+            'service' => $backups[1]->service,
+            'object' => $backups[1]->object,
         ];
 
         // act
@@ -249,6 +252,7 @@ class BackupControllerTest extends TestCase
         // arrange
         $this->withExceptionHandling();
         $user = User::factory()->create();
+        $user->syncRoles(Role::create(['name'=>'super']));
         $this->actingAs($user);
         $backup = Backup::factory()->create();
 
@@ -270,6 +274,7 @@ class BackupControllerTest extends TestCase
         // arrange
         $this->withExceptionHandling();
         $user = User::factory()->create();
+        $user->syncRoles(Role::create(['name'=>'super']));
         $this->actingAs($user);
 
         // act

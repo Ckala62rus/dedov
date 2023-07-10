@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\BackupService;
 use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\TestCase;
 
@@ -132,6 +133,10 @@ class BackupServiceTest extends TestCase
         $this->withExceptionHandling();
         $backups = Backup::factory(2)->create();
 
+        $user = User::factory()->create();
+        $user->syncRoles(Role::create(['name'=>'super']));
+        $this->actingAs($user);
+
         /** @var BackupService $service */
         $service = $this->app->make(BackupService::class);
 
@@ -146,6 +151,10 @@ class BackupServiceTest extends TestCase
     public function test_delete_backup_success_if_not_exist_in_database()
     {
         // arrange
+        $user = User::factory()->create();
+        $user->syncRoles(Role::create(['name'=>'super']));
+        $this->actingAs($user);
+
         /** @var BackupService $service */
         $service = $this->app->make(BackupService::class);
 
@@ -171,5 +180,39 @@ class BackupServiceTest extends TestCase
 
         // assert
         $this->assertNotEquals($backupUpdated->service, $backupCreated->service);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function test_dont_delete_backup_if_you_didnt_create_this_backup()
+    {
+        // arrange
+        $firstOrganization = Organization::factory()->create(['name' => 'first org']);
+
+        $roleUser = Role::create(['name'=>'user']);
+
+        $userFirstOrganization = User::factory()->create(['organization_id'=> $firstOrganization->id]);
+        $userFirstOrganization->syncRoles($roleUser);
+
+        $backupCreated = Backup::factory()->create([
+            'organization_id'=> $firstOrganization->id,
+            'user_id' => $userFirstOrganization->id,
+        ]);
+
+        $secondOrganization = Organization::factory()->create(['name' => 'second org']);
+
+        $userSecondOrganization = User::factory()->create(['organization_id'=> $secondOrganization->id]);
+        $userSecondOrganization->syncRoles($roleUser);
+        $this->actingAs($userSecondOrganization);
+
+        /** @var BackupService $service */
+        $service = $this->app->make(BackupService::class);
+
+        // act
+        // assert
+        $this->assertThrows(function() use ($service, $backupCreated) {
+            $service->deleteBackup($backupCreated->id);
+        }, \InvalidArgumentException::class);
     }
 }

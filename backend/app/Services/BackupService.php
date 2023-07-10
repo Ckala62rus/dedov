@@ -117,6 +117,7 @@ class BackupService implements BackupServiceInterface
      * Delete backup by id and return boolean
      * @param int $id
      * @return bool
+     * @throws Exception
      */
     public function deleteBackup(int $id): bool
     {
@@ -124,9 +125,36 @@ class BackupService implements BackupServiceInterface
             ->backupRepository
             ->getQuery();
 
-        return $this
-            ->backupRepository
-            ->deleteBackup($query, $id);
+        $user = $this
+            ->userService
+            ->getUserById(Auth::user()->id);
+
+        $backup = $this
+            ->getBackupById($id);
+
+        if ($user->hasRole('user') && $user->organization_id == $backup->organization_id) {
+            return $this
+                ->backupRepository
+                ->deleteBackup($query, $id);
+        }
+
+        if ($user->hasRole('user') && $user->organization_id != $backup->organization_id) {
+            throw new \InvalidArgumentException(
+                'Нельзя удалить эту запись, так как вы её не создавали!
+                Удалить запись может администратор или тот пользователь,
+                который относится к этой организации'
+            );
+        }
+
+        if (count($user->roles) > 0 && $user->roles->first()->name === 'super'){
+            return $this
+                ->backupRepository
+                ->deleteBackup($query, $id);
+        }
+
+        throw new \InvalidArgumentException(
+            'У Вас отсутствуют роли, обратитесь к администратору.'
+        );
     }
 
     /**
