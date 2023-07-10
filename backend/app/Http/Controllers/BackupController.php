@@ -23,12 +23,20 @@ class BackupController extends BaseController
         private BackupServiceInterface $backupService
     ){}
 
-    public function index()
+    /**
+     * Return index backup view
+     * @return \Inertia\Response
+     */
+    public function index(): \Inertia\Response
     {
         return Inertia::render('Backup/BackupIndex');
     }
 
-    public function create()
+    /**
+     * Return create backup view
+     * @return \Inertia\Response
+     */
+    public function create(): \Inertia\Response
     {
         return Inertia::render('Backup/BackupCreate');
     }
@@ -80,9 +88,14 @@ class BackupController extends BaseController
         );
     }
 
-    public function edit($id)
+    /**
+     * Return edit backup view
+     * @param $id
+     * @return \Inertia\Response
+     */
+    public function edit($id): \Inertia\Response
     {
-        // view
+        return Inertia::render('Backup/BackupEdit', ['id' => $id]);
     }
 
     /**

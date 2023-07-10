@@ -24,11 +24,11 @@
                                 :url="url"
                                 :columns="columns"
                                 :options="options"
-                                ref="devices-table"
+                                ref="backups-table"
                             >
                                 <template v-slot:actions="{row}">
 
-                                    <Link v-if="row.can_action" :href="route('devices.edit', {id: row.id})" method="get">
+                                    <Link :href="route('backups.edit', {id: row.id})" method="get">
                                     <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -40,7 +40,7 @@
                                     </span>
                                     </Link>
 
-                                    <a href="javascript:;" @click="deleteDevice(row)" v-if="row.can_action">
+                                    <a href="javascript:;" @click="deleteBackup(row)" >
                                       <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2020-10-29-133027/theme/html/demo1/dist/../src/media/svg/icons/Home/Trash.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -74,9 +74,19 @@ export default {
             urlPrepare: '/admin/backups-all-paginate?',
             url: '/admin/backups-all-paginate?',
             columns: [
-                'organization.name',
-                'equipment.name',
+                'id',
+                'service',
+                'owner',
                 'hostname',
+                'object',
+                'tool',
+                'bd',
+                'restricted_point',
+                'type',
+                'day',
+                'time_start',
+                'storage_server',
+                'storage_long_time',
                 'actions'
             ],
             options: {
@@ -85,11 +95,11 @@ export default {
                 perPage: 500,
                 editableColumns:['text'],
                 headings: {
-                    description: 'Описание',
-                    created_at: 'Время создания',
-                    updated_at: 'Время обновления',
+                    // description: 'Описание',
+                    // created_at: 'Время создания',
+                    // updated_at: 'Время обновления',
                     comment: 'Comment',
-                    actions: 'Действия',
+                    actions: 'Actions',
                 },
                 texts: {
                     limit: 'Вывод записей',
@@ -128,6 +138,50 @@ export default {
                 .then(res => {
                     this.organizations = res.data.data.organizations;
                 })
+        },
+
+        deleteBackup(row){
+            Swal.fire({
+                title: 'Удалить бэкап?',
+                text: "Выбранный бэкап будет удален",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Да, удалить',
+                cancelButtonText: 'Отмена',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete('/admin/backups/' + row.id).then(response => {
+                        if (response.data.status === true) {
+                            this.$notify({
+                                group: 'foo',
+                                type: 'success',
+                                title: 'Удаление бэкапа',
+                                text: 'Бэкап успешно удален'
+                            });
+                            Swal.fire(
+                                'Удалено!',
+                                'Бэкап удален',
+                                'success'
+                            )
+                            this.$refs['backups-table'].refresh();
+                        }
+                        if (response.data.status === false) {
+                            this.$notify({
+                                group: 'foo',
+                                type: 'error',
+                                title: 'Удаление бэкапа',
+                            });
+                            Swal.fire(
+                                'Ошибка!',
+                                response.data.message,
+                                'error'
+                            )
+                        }
+                    });
+                }
+            })
         },
     },
 
