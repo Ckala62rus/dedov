@@ -59,7 +59,7 @@
 
                         <div class="card-footer">
                             <div class="form__button">
-                                <button type="submit" class="btn btn-success mr-2 button_width">Создать</button>
+                                <button type="submit" class="btn btn-success mr-2 button_width">Обновить</button>
                                 <Link :href="route('backups.index')" as="button" method="get" class="btn btn-primary font-weight-bolder button_width">Назад</Link>
                             </div>
                         </div>
