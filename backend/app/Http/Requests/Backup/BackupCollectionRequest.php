@@ -31,6 +31,8 @@ class BackupCollectionRequest extends FormRequest
             "owner" => 'nullable|string',
             "object" => 'nullable|string',
             "tool" => 'nullable|string',
+            "bd" => 'nullable|string',
+            "storage_server" => 'nullable|string',
         ];
     }
 }

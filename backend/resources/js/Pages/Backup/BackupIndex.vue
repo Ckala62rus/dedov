@@ -40,7 +40,6 @@
 
                         <div class="row">
                             <div class="col-md-2">
-                                <label>Organization</label>
                                 <div class="form-group select-form_group">
                                     <el-select
                                         v-model="filter.organization_id"
@@ -64,7 +63,6 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Hostname</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -75,7 +73,6 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Service</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -84,12 +81,23 @@
                                     />
                                 </div>
                             </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Storage server"
+                                        v-model="filter.storage_server"
+                                    />
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Owner</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -100,7 +108,6 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Object</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -109,14 +116,25 @@
                                     />
                                 </div>
                             </div>
+
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Tool</label>
                                     <input
                                         type="text"
                                         class="form-control"
                                         placeholder="Tool"
                                         v-model="filter.tool"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="BD"
+                                        v-model="filter.bd"
                                     />
                                 </div>
                             </div>
@@ -240,6 +258,8 @@ export default {
                 owner: '',
                 object: '',
                 tool: '',
+                bd: '',
+                storage_server: '',
             },
         }
     },
@@ -328,6 +348,14 @@ export default {
                 params.append('tool', this.filter.tool)
             }
 
+            if (this.filter.bd != null){
+                params.append('bd', this.filter.bd)
+            }
+
+            if (this.filter.storage_server != null){
+                params.append('storage_server', this.filter.storage_server)
+            }
+
             if (params.toString().length > 0) {
                 this.url = this.urlPrepare + params.toString();
             }
@@ -345,6 +373,8 @@ export default {
                 owner: '',
                 object: '',
                 tool: '',
+                bd: '',
+                storage_server: '',
             };
 
             this.url = this.urlPrepare;

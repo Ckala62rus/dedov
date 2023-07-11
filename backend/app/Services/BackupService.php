@@ -243,6 +243,14 @@ class BackupService implements BackupServiceInterface
             $query = $query->where('tool', 'LIKE', '%' . $filter['tool'] . '%');
         }
 
+        if(isset($filter['bd']) && $filter['bd'] != 0) {
+            $query = $query->where('bd', 'LIKE', '%' . $filter['bd'] . '%');
+        }
+
+        if(isset($filter['storage_server']) && $filter['storage_server'] != 0) {
+            $query = $query->where('storage_server', 'LIKE', '%' . $filter['storage_server'] . '%');
+        }
+
         return $query;
     }
 }
