@@ -195,22 +195,22 @@
                             </div>
 
                             <div class="form-group">
-                                <label>HDD, Gb <span class="text-danger">*</span></label>
+                                <label>HDD, Tb <span class="text-danger">*</span></label>
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="HDD, Gb"
+                                    placeholder="HDD, Tb"
                                     v-model="form.hdd"
                                     :class="{'is-invalid': errors.hdd}"
                                 />
                                 <div class="invalid-feedback">{{error_messages.hdd}}</div>
                             </div>
                             <div class="form-group">
-                                <label>SSD, Gb <span class="text-danger">*</span></label>
+                                <label>SSD, Tb <span class="text-danger">*</span></label>
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="SSD, Gb"
+                                    placeholder="SSD, Tb"
                                     v-model="form.ssd"
                                     :class="{'is-invalid': errors.ssd}"
                                 />

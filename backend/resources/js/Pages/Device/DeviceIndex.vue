@@ -226,6 +226,7 @@ export default {
                 perPage: 500,
                 editableColumns:['text'],
                 headings: {
+                    hostname: 'Hostname-IP',
                     'organization.name': 'Org',
                     'equipment.name': 'Type',
                     description: 'Описание',
