@@ -103,10 +103,11 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Какие сервисы развернуты <span class="text-danger">*</span></label>
-                                <input
+                                <textarea
                                     type="text"
                                     class="form-control"
-                                    placeholder="Description service"
+                                    placeholder="Comment"
+                                    rows="10"
                                     v-model="form.description_service"
                                     :class="{'is-invalid': errors.description_service}"
                                 />
@@ -171,6 +172,16 @@
                                 />
                                 <div class="invalid-feedback">{{error_messages.count_core_with_ht}}</div>
                             </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+                    <!--begin::Form-->
+                    <form @submit.prevent="createOrganization">
+                        <div class="card-body">
                             <div class="form-group">
                                 <label>Оперетивная память, Gb <span class="text-danger">*</span></label>
                                 <input
@@ -182,16 +193,7 @@
                                 />
                                 <div class="invalid-feedback">{{error_messages.memory}}</div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
 
-            <div class="col-md-4">
-                <div class="card card-flush h-md-100">
-                    <!--begin::Form-->
-                    <form @submit.prevent="createOrganization">
-                        <div class="card-body">
                             <div class="form-group">
                                 <label>HDD, Gb <span class="text-danger">*</span></label>
                                 <input
@@ -231,6 +233,7 @@
                                     type="text"
                                     class="form-control"
                                     placeholder="Comment"
+                                    rows="10"
                                     v-model="form.comment"
                                     :class="{'is-invalid': errors.comment}"
                                 />

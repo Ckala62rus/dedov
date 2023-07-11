@@ -49,17 +49,22 @@
                                 />
                                 <div class="invalid-feedback">{{error_messages.date_buy}}</div>
                             </div>
+
                             <div class="form-group">
-                                <label>Какие сервисы развернуты <span class="text-danger">*</span></label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Description service"
-                                    v-model="form.description_service"
-                                    :class="{'is-invalid': errors.description_service}"
+                                <label>Желаемый срок замены <span class="text-danger">*</span></label>
+                                <el-date-picker
+                                    v-model="form.date_update"
+                                    type="date"
+                                    placeholder="Date update"
+                                    :format="'YYYY-MM-DD'"
+                                    :value-format="'YYYY-MM-DD'"
+                                    :class="{'is-invalid': errors.date_update}"
+                                    :size="'large'"
+                                    style="width: 100%"
                                 />
-                                <div class="invalid-feedback">{{error_messages.description_service}}</div>
+                                <div class="invalid-feedback">{{error_messages.date_update}}</div>
                             </div>
+
 
                         </div>
                         <div class="card-footer">
@@ -78,18 +83,16 @@
                     <form @submit.prevent="createOrganization">
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Желаемый срок замены <span class="text-danger">*</span></label>
-                                <el-date-picker
-                                    v-model="form.date_update"
-                                    type="date"
-                                    placeholder="Date update"
-                                    :format="'YYYY-MM-DD'"
-                                    :value-format="'YYYY-MM-DD'"
-                                    :class="{'is-invalid': errors.date_update}"
-                                    :size="'large'"
-                                    style="width: 100%"
+                                <label>Какие сервисы развернуты <span class="text-danger">*</span></label>
+                                <textarea
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Comment"
+                                    rows="10"
+                                    v-model="form.description_service"
+                                    :class="{'is-invalid': errors.description_service}"
                                 />
-                                <div class="invalid-feedback">{{error_messages.date_update}}</div>
+                                <div class="invalid-feedback">{{error_messages.description_service}}</div>
                             </div>
                             <div class="form-group">
                                 <label>Операционная система <span class="text-danger">*</span></label>
@@ -196,6 +199,7 @@
                                     type="text"
                                     class="form-control"
                                     placeholder="Comment"
+                                    rows="10"
                                     v-model="form.comment"
                                     :class="{'is-invalid': errors.comment}"
                                 />
