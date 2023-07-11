@@ -189,6 +189,7 @@ export default {
                 'time_start',
                 'storage_server',
                 'storage_long_time',
+                'description_storage_long_time',
                 'actions'
             ],
             options: {
@@ -350,7 +351,25 @@ export default {
         },
 
         toExcel(){
-            //
+            let time = new Date()
+
+            axios({
+                method:'GET',
+                url: '/admin/export-backup',
+                responseType: 'blob',
+                params: this.filter
+            })
+            .then((response) => {
+                // console.log(response)
+                if (response.status === 200){
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', `excel_backups_${time.toLocaleDateString() + '_' + time.toLocaleTimeString()}.xlsx`); //or any other extension
+                    document.body.appendChild(link);
+                    link.click();
+                }
+            });
         },
     },
 

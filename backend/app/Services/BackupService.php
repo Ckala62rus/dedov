@@ -65,6 +65,16 @@ class BackupService implements BackupServiceInterface
             ->backupRepository
             ->getQuery();
 
+        $query = $this
+            ->setFilterForSearch($query, $filter);
+
+        $query = $this
+            ->backupRepository
+            ->withBackupRelation($query, [
+                'user',
+                'organization',
+            ]);
+
         return $this
             ->backupRepository
             ->getAllBackupsCollection($query);
