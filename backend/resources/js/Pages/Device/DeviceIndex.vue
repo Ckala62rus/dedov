@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-custom rdp_statistic_mg">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            Все оборудование
-                        </h3>
-                    </div>
+<!--                    <div class="card-header">-->
+<!--                        <h3 class="card-title">-->
+<!--                            Все оборудование-->
+<!--                        </h3>-->
+<!--                    </div>-->
                     <div class="card-body">
 
                         <Link
@@ -17,30 +17,29 @@
                             method="get"
                             class="btn btn-success mb-5"
                         >
-                            Создать запись оборудования
+                            Create new record
                         </Link>
 
                         <button
                             type="submit"
                             class="btn btn-info mb-5 ml-10"
                             @click.prevent="findByFilter"
-                        >Найти</button>
+                        >Find</button>
 
                         <button
                             type="submit"
                             class="btn btn-dark mb-5 ml-5"
                             @click.prevent="clearFilter"
-                        >Сброс фильтров</button>
+                        >Clear filter</button>
 
                         <button
                             type="submit"
                             class="btn btn-primary mb-5 ml-5"
                             @click="toExcel"
-                        >Выгрузить Excel</button>
+                        >Export Excel</button>
 
                         <div class="row">
                             <div class="col-md-2">
-                                <label>Организация</label>
                                 <div class="form-group select-form_group">
                                     <el-select
                                         v-model="filter.organization_id"
@@ -49,7 +48,7 @@
                                         size="large"
                                     >
                                         <el-option
-                                            label="Все организации"
+                                            label="All organization"
                                             :value=0
                                             :key=0
                                         />
@@ -63,7 +62,6 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <label>Тип оборудования</label>
                                 <div class="form-group select-form_group">
                                     <el-select
                                         v-model="filter.equipment_id"
@@ -72,7 +70,7 @@
                                         size="large"
                                     >
                                         <el-option
-                                            label="Все оборудование"
+                                            label="All equipment"
                                             :value=0
                                             :key=0
                                         />
@@ -87,7 +85,6 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Хост</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -98,7 +95,6 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Модель</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -112,7 +108,6 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Description service</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -123,7 +118,6 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>CPU</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -134,7 +128,6 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Comment</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -145,7 +138,6 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <label>Операционная система</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -426,6 +418,17 @@ export default {
                     }
                 });
         }
+    },
+
+    created() {
+      window.Echo.channel('update_device')
+          .listen('.update_device', res => {
+              console.log(res)
+          })
+    },
+
+    unmounted() {
+        Echo.leaveChannel(`update_device`);
     },
 
     mounted() {

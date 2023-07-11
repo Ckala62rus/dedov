@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-custom rdp_statistic_mg">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            Все бэкапы
-                        </h3>
-                    </div>
+<!--                    <div class="card-header">-->
+<!--                        <h3 class="card-title">-->
+<!--                            Все бэкапы-->
+<!--                        </h3>-->
+<!--                    </div>-->
                     <div class="card-body">
 
                         <Link
@@ -17,26 +17,26 @@
                             method="get"
                             class="btn btn-success mb-5"
                         >
-                            Создать запись о бэкапе
+                            Create new record
                         </Link>
 
                         <button
                             type="submit"
                             class="btn btn-info mb-5 ml-10"
                             @click.prevent="findByFilter"
-                        >Найти</button>
+                        >Find</button>
 
                         <button
                             type="submit"
                             class="btn btn-dark mb-5 ml-5"
                             @click.prevent="clearFilter"
-                        >Сброс фильтров</button>
+                        >Clear filter</button>
 
                         <button
                             type="submit"
                             class="btn btn-primary mb-5 ml-5"
                             @click="toExcel"
-                        >Выгрузить Excel</button>
+                        >Export Excel</button>
 
                         <div class="row">
                             <div class="col-md-2">
