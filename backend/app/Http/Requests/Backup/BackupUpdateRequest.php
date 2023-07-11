@@ -36,6 +36,7 @@ class BackupUpdateRequest extends FormRequest
             'time_start' => 'nullable|string',
             'storage_server' => 'nullable|string',
             'storage_long_time' => 'nullable|string',
+            'description_storage_long_time' => 'nullable|string',
             'organization_id' => 'required|integer',
         ];
     }

@@ -199,6 +199,19 @@
                             />
                             <div class="invalid-feedback">{{error_messages.storage_long_time}}</div>
                         </div>
+
+                        <div class="form-group">
+                            <label>Description storage long time<span class="text-danger">*</span></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Description storage long time"
+                                v-model="form.description_storage_long_time"
+                                :class="{'is-invalid': errors.description_storage_long_time}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.description_storage_long_time}}</div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -233,6 +246,7 @@ export default {
                 'time_start': '',
                 'storage_server': '',
                 'storage_long_time': '',
+                'description_storage_long_time': '',
                 'organization_id': '',
             },
             organizations: null,
@@ -249,6 +263,7 @@ export default {
                 time_start: false,
                 storage_server: false,
                 storage_long_time: false,
+                description_storage_long_time: false,
             },
             error_messages: {
                 service: '',
@@ -263,6 +278,7 @@ export default {
                 time_start: '',
                 storage_server: '',
                 storage_long_time: '',
+                description_storage_long_time: '',
             },
         }
     },
@@ -302,6 +318,7 @@ export default {
                             time_start: errors.hasOwnProperty('time_start'),
                             storage_server: errors.hasOwnProperty('storage_server'),
                             storage_long_time: errors.hasOwnProperty('storage_long_time'),
+                            description_storage_long_time: errors.hasOwnProperty('description_storage_long_time'),
                             organization_id: errors.hasOwnProperty('organization_id'),
                         };
 
@@ -318,6 +335,7 @@ export default {
                             time_start: errors.hasOwnProperty('time_start') ? errors.time_start[0] : '',
                             storage_server: errors.hasOwnProperty('storage_server') ? errors.storage_server[0] : '',
                             storage_long_time: errors.hasOwnProperty('storage_long_time') ? errors.storage_long_time[0] : '',
+                            description_storage_long_time: errors.hasOwnProperty('description_storage_long_time') ? errors.description_storage_long_time[0] : '',
                             organization_id: errors.hasOwnProperty('organization_id') ? errors.organization_id[0] : '',
                         };
 
@@ -346,6 +364,7 @@ export default {
                 time_start: '',
                 storage_server: '',
                 storage_long_time: '',
+                description_storage_long_time: '',
                 organization_id: '',
             };
         },
@@ -364,6 +383,7 @@ export default {
                 time_start: false,
                 storage_server: false,
                 storage_long_time: false,
+                description_storage_long_time: false,
             };
         },
 

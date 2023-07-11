@@ -23,6 +23,7 @@ class Backup extends Model
         'time_start',
         'storage_server',
         'storage_long_time',
+        'description_storage_long_time',
         'user_id',
         'organization_id',
     ];

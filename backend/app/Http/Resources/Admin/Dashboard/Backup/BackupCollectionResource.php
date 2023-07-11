@@ -33,6 +33,7 @@ class BackupCollectionResource extends JsonResource
             'time_start' => $this->time_start,
             'storage_server' => $this->storage_server,
             'storage_long_time' => $this->storage_long_time,
+            'description_storage_long_time' => $this->description_storage_long_time,
 
             'organization_id' => $this->organization_id,
             'organization' => OrganizationShowResource::make($this->organization),
