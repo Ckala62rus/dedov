@@ -421,16 +421,16 @@ export default {
         }
     },
 
-    created() {
-      window.Echo.channel('update_device')
-          .listen('.update_device', res => {
-              console.log(res)
-          })
-    },
-
-    unmounted() {
-        Echo.leaveChannel(`update_device`);
-    },
+    // created() {
+    //   window.Echo.channel('update_device')
+    //       .listen('.update_device', res => {
+    //           console.log(res)
+    //       })
+    // },
+    //
+    // unmounted() {
+    //     Echo.leaveChannel(`update_device`);
+    // },
 
     mounted() {
         this.getOrganizations();
