@@ -31,11 +31,11 @@ class BackupUpdateRequest extends FormRequest
             'tool' => 'nullable|string',
             'bd' => 'nullable|string',
             'restricted_point' => 'nullable|string',
-            'type' => 'nullable|string',
+            'description_storage' => 'nullable|string',
             'day' => 'nullable|string',
             'time_start' => 'nullable|string',
             'storage_server' => 'nullable|string',
-            'storage_long_time' => 'nullable|string',
+            'storage_server_long_time' => 'nullable|string',
             'description_storage_long_time' => 'nullable|string',
             'organization_id' => 'required|integer',
         ];

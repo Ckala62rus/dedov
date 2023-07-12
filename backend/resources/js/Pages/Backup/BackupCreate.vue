@@ -33,10 +33,11 @@
 
                             <div class="form-group">
                                 <label>Service <span class="text-danger">*</span></label>
-                                <input
+                                <textarea
                                     type="text"
                                     class="form-control"
                                     placeholder="Service"
+                                    rows="5"
                                     v-model="form.service"
                                     :class="{'is-invalid': errors.service}"
                                 />
@@ -109,27 +110,40 @@
                         </div>
 
                         <div class="form-group">
-                            <label>DB<span class="text-danger">*</span></label>
-                            <input
+                            <label>DB <span class="text-danger">*</span></label>
+                            <textarea
                                 type="text"
                                 class="form-control"
                                 placeholder="DB"
+                                rows="5"
                                 v-model="form.bd"
                                 :class="{'is-invalid': errors.bd}"
                             />
                             <div class="invalid-feedback">{{error_messages.bd}}</div>
                         </div>
 
+<!--                        <div class="form-group">-->
+<!--                            <label>Restricted point<span class="text-danger">*</span></label>-->
+<!--                            <input-->
+<!--                                type="text"-->
+<!--                                class="form-control"-->
+<!--                                placeholder="Restricted point"-->
+<!--                                v-model="form.restricted_point"-->
+<!--                                :class="{'is-invalid': errors.restricted_point}"-->
+<!--                            />-->
+<!--                            <div class="invalid-feedback">{{error_messages.restricted_point}}</div>-->
+<!--                        </div>-->
+
                         <div class="form-group">
-                            <label>Restricted point<span class="text-danger">*</span></label>
+                            <label>Storage server<span class="text-danger">*</span></label>
                             <input
                                 type="text"
                                 class="form-control"
-                                placeholder="Restricted point"
-                                v-model="form.restricted_point"
-                                :class="{'is-invalid': errors.restricted_point}"
+                                placeholder="Storage server"
+                                v-model="form.storage_server"
+                                :class="{'is-invalid': errors.storage_server}"
                             />
-                            <div class="invalid-feedback">{{error_messages.restricted_point}}</div>
+                            <div class="invalid-feedback">{{error_messages.storage_server}}</div>
                         </div>
 
                     </div>
@@ -141,15 +155,15 @@
                     <!--begin::Form-->
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Type<span class="text-danger">*</span></label>
+                            <label>Description storage<span class="text-danger">*</span></label>
                             <input
                                 type="text"
                                 class="form-control"
-                                placeholder="Type"
-                                v-model="form.type"
-                                :class="{'is-invalid': errors.type}"
+                                placeholder="Description storage"
+                                v-model="form.description_storage"
+                                :class="{'is-invalid': errors.description_storage}"
                             />
-                            <div class="invalid-feedback">{{error_messages.type}}</div>
+                            <div class="invalid-feedback">{{error_messages.description_storage}}</div>
                         </div>
 
                         <div class="form-group">
@@ -177,35 +191,24 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Storage server<span class="text-danger">*</span></label>
+                            <label>Storage server long time<span class="text-danger">*</span></label>
                             <input
                                 type="text"
                                 class="form-control"
-                                placeholder="Storage server"
-                                v-model="form.storage_server"
-                                :class="{'is-invalid': errors.storage_server}"
+                                placeholder="Storage server long time"
+                                v-model="form.storage_server_long_time"
+                                :class="{'is-invalid': errors.storage_server_long_time}"
                             />
-                            <div class="invalid-feedback">{{error_messages.storage_server}}</div>
+                            <div class="invalid-feedback">{{error_messages.storage_server_long_time}}</div>
                         </div>
 
                         <div class="form-group">
-                            <label>Storage long time<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Storage long time"
-                                v-model="form.storage_long_time"
-                                :class="{'is-invalid': errors.storage_long_time}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.storage_long_time}}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Description storage long time<span class="text-danger">*</span></label>
-                            <input
+                            <label>Description storage long time <span class="text-danger">*</span></label>
+                            <textarea
                                 type="text"
                                 class="form-control"
                                 placeholder="Description storage long time"
+                                rows="5"
                                 v-model="form.description_storage_long_time"
                                 :class="{'is-invalid': errors.description_storage_long_time}"
                             />
@@ -241,11 +244,11 @@ export default {
                 'tool': '',
                 'bd': '',
                 'restricted_point': '',
-                'type': '',
+                'description_storage': '',
                 'day': '',
                 'time_start': '',
                 'storage_server': '',
-                'storage_long_time': '',
+                'storage_server_long_time': '',
                 'description_storage_long_time': '',
                 'organization_id': '',
             },
@@ -258,11 +261,11 @@ export default {
                 tool: false,
                 bd: false,
                 restricted_point: false,
-                type: false,
+                description_storage: false,
                 day: false,
                 time_start: false,
                 storage_server: false,
-                storage_long_time: false,
+                storage_server_long_time: false,
                 description_storage_long_time: false,
             },
             error_messages: {
@@ -273,11 +276,11 @@ export default {
                 tool: '',
                 bd: '',
                 restricted_point: '',
-                type: '',
+                description_storage: '',
                 day: '',
                 time_start: '',
                 storage_server: '',
-                storage_long_time: '',
+                storage_server_long_time: '',
                 description_storage_long_time: '',
             },
         }
@@ -313,11 +316,11 @@ export default {
                             tool: errors.hasOwnProperty('tool'),
                             bd: errors.hasOwnProperty('bd'),
                             restricted_point: errors.hasOwnProperty('restricted_point'),
-                            type: errors.hasOwnProperty('type'),
+                            description_storage: errors.hasOwnProperty('description_storage'),
                             day: errors.hasOwnProperty('day'),
                             time_start: errors.hasOwnProperty('time_start'),
                             storage_server: errors.hasOwnProperty('storage_server'),
-                            storage_long_time: errors.hasOwnProperty('storage_long_time'),
+                            storage_server_long_time: errors.hasOwnProperty('storage_server_long_time'),
                             description_storage_long_time: errors.hasOwnProperty('description_storage_long_time'),
                             organization_id: errors.hasOwnProperty('organization_id'),
                         };
@@ -330,11 +333,11 @@ export default {
                             tool: errors.hasOwnProperty('tool') ? errors.tool[0] : '',
                             bd: errors.hasOwnProperty('bd') ? errors.bd[0] : '',
                             restricted_point: errors.hasOwnProperty('restricted_point') ? errors.restricted_point[0] : '',
-                            type: errors.hasOwnProperty('type') ? errors.type[0] : '',
+                            description_storage: errors.hasOwnProperty('type') ? errors.description_storage[0] : '',
                             day: errors.hasOwnProperty('day') ? errors.day[0] : '',
                             time_start: errors.hasOwnProperty('time_start') ? errors.time_start[0] : '',
                             storage_server: errors.hasOwnProperty('storage_server') ? errors.storage_server[0] : '',
-                            storage_long_time: errors.hasOwnProperty('storage_long_time') ? errors.storage_long_time[0] : '',
+                            storage_server_long_time: errors.hasOwnProperty('storage_server_long_time') ? errors.storage_server_long_time[0] : '',
                             description_storage_long_time: errors.hasOwnProperty('description_storage_long_time') ? errors.description_storage_long_time[0] : '',
                             organization_id: errors.hasOwnProperty('organization_id') ? errors.organization_id[0] : '',
                         };
@@ -359,11 +362,11 @@ export default {
                 tool: '',
                 bd: '',
                 restricted_point: '',
-                type: '',
+                description_storage: '',
                 day: '',
                 time_start: '',
                 storage_server: '',
-                storage_long_time: '',
+                storage_server_long_time: '',
                 description_storage_long_time: '',
                 organization_id: '',
             };
@@ -378,11 +381,11 @@ export default {
                 tool: false,
                 bd: false,
                 restricted_point: false,
-                type: false,
+                description_storage: false,
                 day: false,
                 time_start: false,
                 storage_server: false,
-                storage_long_time: false,
+                storage_server_long_time: false,
                 description_storage_long_time: false,
             };
         },

@@ -201,11 +201,11 @@ export default {
                 'object',
                 'tool',
                 'bd',
-                'restricted_point',
-                'type',
+                'storage_server',
+                'description_storage',
                 'day',
                 'time_start',
-                'storage_server',
+                // 'restricted_point',
                 'storage_long_time',
                 'description_storage_long_time',
                 'actions'
@@ -216,7 +216,6 @@ export default {
                 perPage: 500,
                 editableColumns:['text'],
                 headings: {
-                    // description: 'Описание',
                     // created_at: 'Время создания',
                     // updated_at: 'Время обновления',
                     'organization.name': 'Organization',
