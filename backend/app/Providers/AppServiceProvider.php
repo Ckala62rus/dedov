@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Contracts\Backup\BackupRepositoryInterface;
 use App\Contracts\Backup\BackupServiceInterface;
+use App\Contracts\BackupObject\BackupObjectRepositoryInterface;
+use App\Contracts\BackupObject\BackupObjectServiceInterface;
 use App\Contracts\DeviceRepositoryInterface;
 use App\Contracts\DeviceServiceInterface;
 use App\Contracts\EquipmentRepositoryInterface;
@@ -14,12 +16,14 @@ use App\Contracts\RoleRepositoryInterface;
 use App\Contracts\RoleServiceInterface;
 use App\Contracts\UserRepositoryInterface;
 use App\Contracts\UserServiceInterface;
+use App\Repositories\BackupObjectRepository;
 use App\Repositories\BackupRepository;
 use App\Repositories\DeviceRepository;
 use App\Repositories\EquipmentRepository;
 use App\Repositories\OrganizationRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
+use App\Services\BackupObjectService;
 use App\Services\BackupService;
 use App\Services\DeviceService;
 use App\Services\EquipmentService;
@@ -55,6 +59,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(BackupRepositoryInterface::class, BackupRepository::class);
         $this->app->bind(BackupServiceInterface::class, BackupService::class);
+
+        $this->app->bind(BackupObjectRepositoryInterface::class, BackupObjectRepository::class);
+        $this->app->bind(BackupObjectServiceInterface::class, BackupObjectService::class);
     }
 
     /**
