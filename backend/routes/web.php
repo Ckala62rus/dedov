@@ -105,6 +105,7 @@ Route::middleware(['auth'])->group(function () {
 
         // BackupObject
         Route::resource('backup-objects', BackupObjectController::class);
+        Route::get('backup-objects-all-paginate', [BackupController::class, 'getAllBackupWithPagination']);
     });
 
     // Permission

@@ -3,10 +3,8 @@
 namespace Tests\Feature\BackupObject;
 
 use App\Models\BackupObject;
-use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -147,6 +145,80 @@ class BackupObjectControllerTest extends TestCase
         $response->assertJson([
             'data' => [
                 'backupObject' => [],
+            ],
+        ]);
+    }
+
+    public function test_update_backup_object_success()
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $backupObject = BackupObject::factory()->create();
+
+        $dataForUpdate = [
+            'name' => 'updated name',
+        ];
+
+        // act
+        $response = $this->put('admin/backup-objects/' . $backupObject->id, [
+            'name' => $dataForUpdate['name'],
+        ]);
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson(['message' => 'Updated backupObject by id:' . $backupObject->id]);
+        $response->assertJson([
+            'data' => [
+                'backupObject' => [
+                    'name' => $dataForUpdate['name']
+                ],
+            ],
+        ]);
+    }
+
+    public function test_delete_backup_object_by_id_if_exist_in_database()
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $backupObject = BackupObject::factory()->create();
+
+        // act
+        $response = $this->delete('admin/backup-objects/' . $backupObject->id);
+
+        // arrange
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson(['message' => 'Delete backupObject by id:' . $backupObject->id]);
+        $response->assertJson([
+            'data' => [
+                'isDelete' => true,
+            ],
+        ]);
+    }
+
+    public function test_delete_backup_object_by_id_if_not_exist_in_database()
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $randomInteger = random_int(1, 100);
+
+        // act
+        $response = $this->delete('admin/backup-objects/' . $randomInteger);
+
+        // arrange
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson(['message' => 'Delete backupObject by id:' . $randomInteger]);
+        $response->assertJson([
+            'data' => [
+                'isDelete' => false,
             ],
         ]);
     }
