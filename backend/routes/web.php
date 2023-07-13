@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BackupController;
+use App\Http\Controllers\BackupObjectController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ExcelController;
@@ -101,6 +102,9 @@ Route::middleware(['auth'])->group(function () {
         // Backup
         Route::resource('backups', BackupController::class);
         Route::get('backups-all-paginate', [BackupController::class, 'getAllBackupWithPagination']);
+
+        // BackupObject
+        Route::resource('backup-objects', BackupObjectController::class);
     });
 
     // Permission
