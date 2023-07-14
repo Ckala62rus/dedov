@@ -10,6 +10,7 @@ use App\Http\Resources\Admin\Dashboard\BackupObject\BackupObjectCollectionResour
 use App\Http\Resources\Admin\Dashboard\BackupObject\BackupObjectShowResource;
 use App\Http\Resources\Admin\Dashboard\BackupObject\BackupObjectStoreResource;
 use App\Http\Resources\Admin\Dashboard\BackupObject\BackupObjectUpdateResource;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -21,7 +22,7 @@ class BackupObjectController extends BaseController
 
     public function index()
     {
-        // view
+        return Inertia::render('BackupObject/BackupObjectIndex');
     }
 
     public function create()
@@ -125,7 +126,7 @@ class BackupObjectController extends BaseController
      * @param BackupObjectCollectionRequest $request
      * @return JsonResponse
      */
-    public function getAllBackupWithPagination(BackupObjectCollectionRequest $request): JsonResponse
+    public function getAllBackupObjectsWithPagination(BackupObjectCollectionRequest $request): JsonResponse
     {
         $data = $request->validated();
 
