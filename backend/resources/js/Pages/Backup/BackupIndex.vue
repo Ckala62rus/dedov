@@ -46,7 +46,7 @@
                                     as="button"
                                     method="get"
                                     class="btn btn-success mb-5"
-                                >BackupObjects</Link>
+                                >Backup object types</Link>
                             </div>
                         </div>
 

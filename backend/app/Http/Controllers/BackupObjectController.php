@@ -11,6 +11,7 @@ use App\Http\Resources\Admin\Dashboard\BackupObject\BackupObjectShowResource;
 use App\Http\Resources\Admin\Dashboard\BackupObject\BackupObjectStoreResource;
 use App\Http\Resources\Admin\Dashboard\BackupObject\BackupObjectUpdateResource;
 use Inertia\Inertia;
+use Inertia\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -20,14 +21,22 @@ class BackupObjectController extends BaseController
         private BackupObjectServiceInterface $backupObjectService
     ){}
 
-    public function index()
+    /**
+     * Return page index on vue
+     * @return Response
+     */
+    public function index(): Response
     {
         return Inertia::render('BackupObject/BackupObjectIndex');
     }
 
-    public function create()
+    /**
+     * Return create page on vue
+     * @return Response
+     */
+    public function create(): Response
     {
-        // view
+        return Inertia::render('BackupObject/BackupObjectCreate');
     }
 
     /**
@@ -77,9 +86,14 @@ class BackupObjectController extends BaseController
         );
     }
 
-    public function edit(int $id)
+    /**
+     * Return edit page on vue
+     * @param int $id
+     * @return Response
+     */
+    public function edit(int $id): Response
     {
-        // view
+        return Inertia::render('BackupObject/BackupObjectEdit', ['id' => $id]);
     }
 
     /**
