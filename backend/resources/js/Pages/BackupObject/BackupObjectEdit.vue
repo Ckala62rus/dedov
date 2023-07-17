@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success mr-2">Create</button>
+                            <button type="submit" class="btn btn-success mr-2">Update</button>
                             <Link
                                 :href="route('backup-objects.index')"
                                 as="button"
