@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin\Dashboard\BackupTool;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,8 +20,8 @@ class BackupToolCollectionResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
         ];
     }
 }

@@ -23,14 +23,20 @@ class BackupToolController extends BaseController
         private BackupToolServiceInterface $backupToolService
     ){}
 
-    public function index()
+    /**
+     * @return \Inertia\Response
+     */
+    public function index(): \Inertia\Response
     {
         return Inertia::render('BackupTool/BackupToolIndex');
     }
 
-    public function create()
+    /**
+     * @return \Inertia\Response
+     */
+    public function create(): \Inertia\Response
     {
-        // view
+        return Inertia::render('BackupTool/BackupToolCreate');
     }
 
     /**
@@ -81,9 +87,13 @@ class BackupToolController extends BaseController
         );
     }
 
-    public function edit($id)
+    /**
+     * @param int $id
+     * @return \Inertia\Response
+     */
+    public function edit(int $id): \Inertia\Response
     {
-        // view
+        return Inertia::render('BackupTool/BackupToolEdit', ['id' => $id]);
     }
 
     /**

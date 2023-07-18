@@ -6,7 +6,7 @@
                 <div class="card card-custom rdp_statistic_mg">
                     <div class="card-header">
                         <h3 class="card-title">
-                            All backup tool types
+                            Backup tool
                         </h3>
                     </div>
                     <div class="card-body">
@@ -41,7 +41,7 @@
                                 ref="backups-table"
                             >
                                 <template v-slot:actions="{row}">
-                                    <Link :href="route('backup-objects.edit', {id: row.id})" method="get">
+                                    <Link :href="route('backup-tools.edit', {id: row.id})" method="get">
                                     <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -148,7 +148,7 @@ export default {
                 cancelButtonText: 'Отмена',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete('/admin/backup-objects/' + row.id).then(response => {
+                    axios.delete('/admin/backup-tools/' + row.id).then(response => {
                         if (response.data.status === true) {
                             this.$notify({
                                 group: 'foo',
