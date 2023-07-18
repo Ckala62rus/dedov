@@ -65,7 +65,7 @@ class BackupToolController extends BaseController
         if (!$tool)
         {
             return $this->response(
-                ['backupTool' => BackupToolShowResource::make($tool)],
+                ['backupTool' => []],
                 'Backup tool not found by id:' . $id,
                 false,
                 Response::HTTP_OK

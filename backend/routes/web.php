@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BackupObjectController;
+use App\Http\Controllers\BackupToolController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ExcelController;
@@ -106,6 +107,10 @@ Route::middleware(['auth'])->group(function () {
         // BackupObject
         Route::resource('backup-objects', BackupObjectController::class);
         Route::get('backup-objects-all-paginate', [BackupObjectController::class, 'getAllBackupObjectsWithPagination']);
+
+        // BackupTool
+        Route::resource('backup-tools', BackupToolController::class);
+        Route::get('backup-tools-all-paginate', [BackupToolController::class, 'getAllBackupObjectsWithPagination']);
     });
 
     // Permission
