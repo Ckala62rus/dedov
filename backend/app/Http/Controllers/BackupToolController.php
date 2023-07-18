@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\BackupTool\BackupToolServiceInterface;
+use App\Http\Requests\BackupTool\BackupToolCollectionRequest;
 use App\Http\Requests\BackupTool\BackupToolStoreRequest;
+use App\Http\Requests\BackupTool\BackupToolUpdateRequest;
+use App\Http\Resources\Admin\Dashboard\BackupTool\BackupToolCollectionResource;
 use App\Http\Resources\Admin\Dashboard\BackupTool\BackupToolShowResource;
 use App\Http\Resources\Admin\Dashboard\BackupTool\BackupToolStoreResource;
-use Illuminate\Http\Request;
+use App\Http\Resources\Admin\Dashboard\BackupTool\BackupToolUpdateResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -82,13 +85,61 @@ class BackupToolController extends BaseController
         // view
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update backup tool by id
+     * @param BackupToolUpdateRequest $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(BackupToolUpdateRequest $request, int $id): JsonResponse
     {
-        //
+        $tool = $this
+            ->backupToolService
+            ->updateBackupTool($id, $request->validated());
+
+        return $this->response(
+            ['backupTool' => BackupToolUpdateResource::make($tool)],
+            'Updated backup tool by id:' . $id,
+            true,
+            Response::HTTP_OK
+        );
     }
 
-    public function destroy($id)
+    /**
+     * Delete backup tool by id
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $isDelete = $this
+            ->backupToolService
+            ->deleteBackupTool($id);
+
+        return $this->response(
+            ['isDelete' => $isDelete],
+            'Delete backup tool by id:' . $id,
+            true,
+            Response::HTTP_OK
+        );
+    }
+
+    /**
+     * Get all backup tool with pagination
+     * @param BackupToolCollectionRequest $request
+     * @return JsonResponse
+     */
+    public function getAllBackupObjectsWithPagination(BackupToolCollectionRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $tools = $this
+            ->backupToolService
+            ->getAllBackupToolsWithPagination($data['limit'], $data);
+
+        return response()->json([
+            'data' => BackupToolCollectionResource::collection($tools),
+            'count' => $tools->total()
+        ]);
     }
 }
