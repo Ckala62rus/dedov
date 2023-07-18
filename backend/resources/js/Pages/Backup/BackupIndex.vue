@@ -45,8 +45,14 @@
                                     :href="route('backup-objects.index')"
                                     as="button"
                                     method="get"
+                                    class="btn btn-success mb-5 mr-5"
+                                >Backup object</Link>
+                                <Link
+                                    :href="route('backup-tools.index')"
+                                    as="button"
+                                    method="get"
                                     class="btn btn-success mb-5"
-                                >Backup object types</Link>
+                                >Backup tools</Link>
                             </div>
                         </div>
 

@@ -6,7 +6,7 @@
                 <div class="card card-custom rdp_statistic_mg">
                     <div class="card-header">
                         <h3 class="card-title">
-                            All backup types
+                            All backup tool types
                         </h3>
                     </div>
                     <div class="card-body">
@@ -14,7 +14,7 @@
                         <div class="row mb-5">
                             <div class="col-md-8">
                                 <Link
-                                    :href="route('backup-objects.create')"
+                                    :href="route('backup-tools.create')"
                                     as="button"
                                     method="get"
                                     class="btn btn-success"
@@ -78,7 +78,7 @@
 import {Link, usePage} from "@inertiajs/inertia-vue3";
 
 export default {
-    name: "BackupToolCreate",
+    name: "BackupToolIndex",
 
     components: {
         Link,
@@ -86,7 +86,7 @@ export default {
 
     data() {
         return {
-            url: '/admin/backup-objects-all-paginate',
+            url: '/admin/backup-tools-all-paginate?',
             columns: [
                 'id',
                 'name',
@@ -132,16 +132,6 @@ export default {
                 },
             },
             organizations: null,
-            filter: {
-                organization_id: 0,
-                hostname: '',
-                service: '',
-                owner: '',
-                object: '',
-                tool: '',
-                bd: '',
-                storage_server: '',
-            },
         }
     },
 

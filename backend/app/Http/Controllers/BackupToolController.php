@@ -10,6 +10,7 @@ use App\Http\Resources\Admin\Dashboard\BackupTool\BackupToolCollectionResource;
 use App\Http\Resources\Admin\Dashboard\BackupTool\BackupToolShowResource;
 use App\Http\Resources\Admin\Dashboard\BackupTool\BackupToolStoreResource;
 use App\Http\Resources\Admin\Dashboard\BackupTool\BackupToolUpdateResource;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,7 +25,7 @@ class BackupToolController extends BaseController
 
     public function index()
     {
-        // view
+        return Inertia::render('BackupTool/BackupToolIndex');
     }
 
     public function create()
