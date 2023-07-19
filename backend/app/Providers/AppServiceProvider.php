@@ -8,6 +8,8 @@ use App\Contracts\BackupObject\BackupObjectRepositoryInterface;
 use App\Contracts\BackupObject\BackupObjectServiceInterface;
 use App\Contracts\BackupTool\BackupToolRepositoryInterface;
 use App\Contracts\BackupTool\BackupToolServiceInterface;
+use App\Contracts\Day\BackupDayRepositoryInterface;
+use App\Contracts\Day\BackupDayServiceInterface;
 use App\Contracts\DeviceRepositoryInterface;
 use App\Contracts\DeviceServiceInterface;
 use App\Contracts\EquipmentRepositoryInterface;
@@ -18,6 +20,7 @@ use App\Contracts\RoleRepositoryInterface;
 use App\Contracts\RoleServiceInterface;
 use App\Contracts\UserRepositoryInterface;
 use App\Contracts\UserServiceInterface;
+use App\Repositories\BackupDayRepository;
 use App\Repositories\BackupObjectRepository;
 use App\Repositories\BackupRepository;
 use App\Repositories\BackupToolRepository;
@@ -26,6 +29,7 @@ use App\Repositories\EquipmentRepository;
 use App\Repositories\OrganizationRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
+use App\Services\BackupDayService;
 use App\Services\BackupObjectService;
 use App\Services\BackupService;
 use App\Services\BackupToolService;
@@ -69,6 +73,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(BackupToolRepositoryInterface::class, BackupToolRepository::class);
         $this->app->bind(BackupToolServiceInterface::class, BackupToolService::class);
+
+        $this->app->bind(BackupDayRepositoryInterface::class, BackupDayRepository::class);
+        $this->app->bind(BackupDayServiceInterface::class, BackupDayService::class);
     }
 
     /**
