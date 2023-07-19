@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Contracts\BackupTool\BackupToolRepositoryInterface;
+use App\Contracts\Day\BackupDayRepositoryInterface;
 use App\Models\BackupDay;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class BackupDayRepository extends BaseRepository implements BackupToolRepositoryInterface
+class BackupDayRepository extends BaseRepository implements BackupDayRepositoryInterface
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class BackupDayRepository extends BaseRepository implements BackupToolRepository
      * @param int $limit
      * @return LengthAwarePaginator
      */
-    public function getAllBackupToolsWithPagination(Builder $query, int $limit): LengthAwarePaginator
+    public function getAllBackupDaysWithPagination(Builder $query, int $limit): LengthAwarePaginator
     {
         return $query->paginate($limit);
     }
@@ -32,7 +32,7 @@ class BackupDayRepository extends BaseRepository implements BackupToolRepository
      * @param Builder $query
      * @return Collection
      */
-    public function getAllBackupToolsCollection(Builder $query): Collection
+    public function getAllBackupDaysCollection(Builder $query): Collection
     {
         return $query->get();
     }
@@ -43,7 +43,7 @@ class BackupDayRepository extends BaseRepository implements BackupToolRepository
      * @param array $data
      * @return Model
      */
-    public function createBackupTool(Builder $query, array $data): Model
+    public function createBackupDay(Builder $query, array $data): Model
     {
         return $query->create($data);
     }
@@ -54,7 +54,7 @@ class BackupDayRepository extends BaseRepository implements BackupToolRepository
      * @param int $id
      * @return Model|null
      */
-    public function getBackupToolById(Builder $query, int $id): ?Model
+    public function getBackupDayById(Builder $query, int $id): ?Model
     {
         return $query
             ->where('id', $id)
@@ -68,7 +68,7 @@ class BackupDayRepository extends BaseRepository implements BackupToolRepository
      * @param array $data
      * @return Model|null
      */
-    public function updateBackupTool(Builder $query, int $id, array $data): ?Model
+    public function updateBackupDay(Builder $query, int $id, array $data): ?Model
     {
         $model = $query->where('id', $id)->first();
         if (!$model) {
@@ -84,7 +84,7 @@ class BackupDayRepository extends BaseRepository implements BackupToolRepository
      * @param int $id
      * @return bool
      */
-    public function deleteBackupTool(Builder $query, int $id): bool
+    public function deleteBackupDay(Builder $query, int $id): bool
     {
         return $query
             ->where('id', $id)

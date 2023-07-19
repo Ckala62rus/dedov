@@ -15,7 +15,7 @@ class BackupDayService implements BackupDayServiceInterface
     ){}
 
     /**
-     * Get all backup day intities with pagination
+     * Get all backup day Entities with pagination
      * @param int $limit
      * @param array $filter
      * @return LengthAwarePaginator
