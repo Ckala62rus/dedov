@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BackupController;
+use App\Http\Controllers\BackupDayController;
 use App\Http\Controllers\BackupObjectController;
 use App\Http\Controllers\BackupToolController;
 use App\Http\Controllers\DeviceController;
@@ -111,6 +112,9 @@ Route::middleware(['auth'])->group(function () {
         // BackupTool
         Route::resource('backup-tools', BackupToolController::class);
         Route::get('backup-tools-all-paginate', [BackupToolController::class, 'getAllBackupObjectsWithPagination']);
+
+        // BackupDay
+        Route::resource('backup-days', BackupDayController::class);
     });
 
     // Permission
