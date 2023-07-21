@@ -241,7 +241,8 @@ export default {
                     noResults: "Ничего не нашлось",
                     loading: "Загрузка...",
                 },
-                perPageValues: [10,25,30,35,50,100],
+                // perPageValues: [10,25,30,35,50,100],
+                perPageValues: [],
                 skin: "VueTables__table " +
                     "table " +
                     "table-striped " +
