@@ -118,8 +118,22 @@ class BackupDayController extends BaseController
         );
     }
 
-    public function destroy($id)
+    /**
+     * Delete backup day entity by id
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $isDelete = $this
+            ->backupDayService
+            ->deleteBackupDay($id);
+
+        return $this->response(
+            ['isDelete' => $isDelete],
+            "Delete backupDay by id:{$id}",
+            true,
+            Response::HTTP_OK
+        );
     }
 }

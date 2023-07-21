@@ -204,4 +204,50 @@ class BackupDayControllerTest extends TestCase
             ],
         ]);
     }
+
+    public function test_delete_backup_object_by_id_if_exist_in_database(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $dayCreated = BackupDay::factory()->create();
+
+        // act
+
+        $response = $this->delete("admin/backup-days/{$dayCreated->id}");
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson(['message' => "Delete backupDay by id:{$dayCreated->id}"]);
+        $response->assertJson([
+            'data' => [
+                "isDelete" => true,
+            ],
+        ]);
+    }
+
+    public function test_delete_backup_object_by_id_if_not_exist_in_database(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $dayCreated = random_int(1, 100);
+
+        // act
+
+        $response = $this->delete("admin/backup-days/{$dayCreated}");
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson(['message' => "Delete backupDay by id:{$dayCreated}"]);
+        $response->assertJson([
+            'data' => [
+                "isDelete" => false,
+            ],
+        ]);
+    }
 }
