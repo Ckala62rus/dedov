@@ -14,7 +14,7 @@
                         <div class="row mb-5">
                             <div class="col-md-8">
                                 <Link
-                                    :href="route('backup-objects.create')"
+                                    :href="route('backup-days.create')"
                                     as="button"
                                     method="get"
                                     class="btn btn-success"
@@ -41,7 +41,7 @@
                                 ref="days-table"
                             >
                                 <template v-slot:actions="{row}">
-                                    <Link :href="route('backup-objects.edit', {id: row.id})" method="get">
+                                    <Link :href="route('backup-days.edit', {id: row.id})" method="get">
                                     <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -53,7 +53,7 @@
                                     </span>
                                     </Link>
 
-                                    <a href="javascript:;" @click="deleteBackupObject(row)">
+                                    <a href="javascript:;" @click="deleteBackupDay(row)">
                                           <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2020-10-29-133027/theme/html/demo1/dist/../src/media/svg/icons/Home/Trash.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -146,10 +146,10 @@ export default {
     },
 
     methods: {
-        deleteBackupObject(row){
+        deleteBackupDay(row){
             Swal.fire({
-                title: 'Удалить тип бэкапа?',
-                text: "Выбранный тип бэкапа будет удален",
+                title: 'Удалить тип дня бэкапа?',
+                text: "Выбранный тип дня будет удален",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

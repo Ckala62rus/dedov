@@ -22,14 +22,22 @@ class BackupDayController extends BaseController
         private BackupDayServiceInterface $backupDayService,
     ){}
 
-    public function index()
+    /**
+     * Return index backup day view
+     * @return \Inertia\Response
+     */
+    public function index(): \Inertia\Response
     {
         return Inertia::render('BackupDay/BackupDayIndex');
     }
 
-    public function create()
+    /**
+     * Return create backup day view
+     * @return \Inertia\Response
+     */
+    public function create(): \Inertia\Response
     {
-        // view
+        return Inertia::render('BackupDay/BackupDayCreate');
     }
 
     /**
