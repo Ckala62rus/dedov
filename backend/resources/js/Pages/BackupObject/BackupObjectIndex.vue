@@ -6,7 +6,7 @@
                 <div class="card card-custom rdp_statistic_mg">
                     <div class="card-header">
                         <h3 class="card-title">
-                            All backup types
+                            All backup object types
                         </h3>
                     </div>
                     <div class="card-body">

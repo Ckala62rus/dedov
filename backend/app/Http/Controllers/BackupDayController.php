@@ -91,9 +91,14 @@ class BackupDayController extends BaseController
         );
     }
 
-    public function edit($id)
+    /**
+     * Return edit backup day view
+     * @param int $id
+     * @return \Inertia\Response
+     */
+    public function edit(int $id): \Inertia\Response
     {
-        // view
+        return Inertia::render('BackupDay/BackupDayEdit', ['id' => $id]);
     }
 
     /**
