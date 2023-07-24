@@ -42,6 +42,12 @@
                             </div>
                             <div class="col-md-4">
                                 <Link
+                                    :href="route('backup-days.index')"
+                                    as="button"
+                                    method="get"
+                                    class="btn btn-success mb-5 mr-5"
+                                >Backup day</Link>
+                                <Link
                                     :href="route('backup-objects.index')"
                                     as="button"
                                     method="get"

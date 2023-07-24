@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Day\BackupDayServiceInterface;
+use App\Http\Requests\BackupDay\BackupDayCollectionRequest;
 use App\Http\Requests\BackupDay\BackupDayStoreRequest;
 use App\Http\Requests\BackupDay\BackupDayUpdateRequest;
+use App\Http\Resources\Admin\Dashboard\BackupDay\BackupDayCollectionResource;
 use App\Http\Resources\Admin\Dashboard\BackupDay\BackupDayShowResource;
 use App\Http\Resources\Admin\Dashboard\BackupDay\BackupDayStoreResource;
-use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +24,7 @@ class BackupDayController extends BaseController
 
     public function index()
     {
-        // view
+        return Inertia::render('BackupDay/BackupDayIndex');
     }
 
     public function create()
@@ -135,5 +137,24 @@ class BackupDayController extends BaseController
             true,
             Response::HTTP_OK
         );
+    }
+
+    /**
+     * Get all backup day collection with pagination
+     * @param BackupDayCollectionRequest $request
+     * @return JsonResponse
+     */
+    public function getAllBackupDaysWithPagination(BackupDayCollectionRequest $request): JsonResponse
+    {
+        $data = $request->all();
+
+        $days = $this
+            ->backupDayService
+            ->getAllBackupDaysWithPagination($data["limit"], $data);
+
+        return response()->json([
+            'data' => BackupDayCollectionResource::collection($days),
+            'count' => $days->total()
+        ]);
     }
 }
