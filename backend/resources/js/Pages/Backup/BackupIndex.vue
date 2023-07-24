@@ -70,6 +70,7 @@
                                         class="m-0 select-category w-100"
                                         placeholder="Организация"
                                         size="large"
+                                        :clearable=true
                                     >
                                         <el-option
                                             label="All organization"
@@ -346,6 +347,10 @@ export default {
 
             if (this.filter.organization_id === 0) {
                 params.append('organization_id', 0)
+            }
+
+            if (typeof this.filter.organization_id === 'string') {
+                this.filter.organization_id = 0
             }
 
             if (this.filter.organization_id != null && this.filter.organization_id != '0'){
