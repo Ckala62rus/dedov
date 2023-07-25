@@ -97,6 +97,24 @@
                             <div class="invalid-feedback">{{error_messages.object}}</div>
                         </div>
 
+                        <label>Object</label>
+                        <div class="form-group select-form_group">
+                            <el-select
+                                v-model="form.backup_object_id"
+                                class="m-0 select-category w-100"
+                                placeholder="Object"
+                                size="large"
+                            >
+                                <el-option
+                                    v-for="backupObject in backupObjects"
+                                    :key="backupObject.id"
+                                    :label="backupObject.name"
+                                    :value="backupObject.id"
+                                />
+                            </el-select>
+                            <div style="color: #F64E60" v-if="errors.backup_object_id">{{error_messages.backup_object_id}}</div>
+                        </div>
+
                         <div class="form-group">
                             <label>Tool<span class="text-danger">*</span></label>
                             <input
@@ -247,7 +265,7 @@ export default {
                 'service': '',
                 'owner': '',
                 'hostname': '',
-                'object': '',
+                'backup_object_id': '',
                 'tool': '',
                 'bd': '',
                 'restricted_point': '',
@@ -260,11 +278,12 @@ export default {
                 'organization_id': '',
             },
             organizations: null,
+            backupObjects: null,
             errors: {
                 service: false,
                 owner: false,
                 hostname: false,
-                object: false,
+                backup_object_id: false,
                 tool: false,
                 bd: false,
                 restricted_point: false,
@@ -279,7 +298,7 @@ export default {
                 service: '',
                 owner: '',
                 hostname: '',
-                object: '',
+                backup_object_id: '',
                 tool: '',
                 bd: '',
                 restricted_point: '',
@@ -318,7 +337,7 @@ export default {
                             service: errors.hasOwnProperty('service'),
                             owner: errors.hasOwnProperty('owner'),
                             hostname: errors.hasOwnProperty('hostname'),
-                            object: errors.hasOwnProperty('object'),
+                            backup_object_id: errors.hasOwnProperty('backup_object_id'),
                             tool: errors.hasOwnProperty('tool'),
                             bd: errors.hasOwnProperty('bd'),
                             restricted_point: errors.hasOwnProperty('restricted_point'),
@@ -335,7 +354,7 @@ export default {
                             service: errors.hasOwnProperty('service') ? errors.service[0] : '',
                             owner: errors.hasOwnProperty('owner') ? errors.owner[0] : '',
                             hostname: errors.hasOwnProperty('hostname') ? errors.hostname[0] : '',
-                            object: errors.hasOwnProperty('object') ? errors.object[0] : '',
+                            backup_object_id: errors.hasOwnProperty('backup_object_id') ? errors.backup_object_id[0] : '',
                             tool: errors.hasOwnProperty('tool') ? errors.tool[0] : '',
                             bd: errors.hasOwnProperty('bd') ? errors.bd[0] : '',
                             restricted_point: errors.hasOwnProperty('restricted_point') ? errors.restricted_point[0] : '',
@@ -364,7 +383,7 @@ export default {
                 service: '',
                 owner: '',
                 hostname: '',
-                object: '',
+                backup_object_id: '',
                 tool: '',
                 bd: '',
                 restricted_point: '',
@@ -383,7 +402,7 @@ export default {
                 service: false,
                 owner: false,
                 hostname: false,
-                object: false,
+                backup_object_id: false,
                 tool: false,
                 bd: false,
                 restricted_point: false,
@@ -409,11 +428,20 @@ export default {
                     this.form = res.data.data.backup;
                 })
         },
+
+        getBackupObjects(){
+            axios
+                .get('/admin/backup-objects-all-collection')
+                .then(res => {
+                    this.backupObjects = res.data.data.backupObjects
+                })
+        },
     },
 
     mounted() {
         this.getOrganizations();
         this.getBackup();
+        this.getBackupObjects();
     }
 }
 </script>

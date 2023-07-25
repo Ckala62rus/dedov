@@ -3,6 +3,7 @@
 namespace Tests\Feature\Backup;
 
 use App\Models\Backup;
+use App\Models\BackupObject;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -26,15 +27,16 @@ class BackupControllerTest extends TestCase
     /**
      * Return prepare array
      * @param Organization $organization
+     * @param BackupObject $backupObject
      * @return array
      */
-    private function getData(Organization $organization): array
+    private function getData(Organization $organization, BackupObject $backupObject): array
     {
         return [
             'service' => 'service  test',
             'owner' => 'owner  test',
             'hostname' => 'hostname  test',
-            'object' => 'object  test',
+            'backup_object_id' => $backupObject->backup_object_id,
             'tool' => 'tool  test',
             'bd' => 'bd  test',
             'restricted_point' => 'restricted_point  test',
@@ -60,9 +62,12 @@ class BackupControllerTest extends TestCase
         $this->withExceptionHandling();
         $user           = User::factory()->create();
         $organization   = Organization::factory()->create();
+        $backupObject   = BackupObject::factory()->create();
 
         $this->actingAs($user);
-        $data = $this->getData($organization);
+        $data = $this->getData($organization, $backupObject);
+
+        $data['backup_object_id'] = $backupObject->id;
 
         // act
         $response = $this->post('admin/backups', $data);
@@ -88,9 +93,10 @@ class BackupControllerTest extends TestCase
         $this->withExceptionHandling();
         $user           = User::factory()->create();
         $organization   = Organization::factory()->create();
+        $backupObject   = BackupObject::factory()->create();
 
         $this->actingAs($user);
-        $data = $this->getData($organization);
+        $data = $this->getData($organization, $backupObject);
 
         // remove required field for validation
         unset($data['service']);
@@ -105,18 +111,19 @@ class BackupControllerTest extends TestCase
         ]);
     }
 
-    public function test_create_backup_if_field_object_is_empty_fail(): void
+    public function test_create_backup_if_field_backup_object_id_is_empty_fail(): void
     {
         // arrange
         $this->withExceptionHandling();
         $user           = User::factory()->create();
         $organization   = Organization::factory()->create();
+        $backupObject   = BackupObject::factory()->create();
 
         $this->actingAs($user);
-        $data = $this->getData($organization);
+        $data = $this->getData($organization, $backupObject);
 
         // remove required field for validation
-        unset($data['object']);
+        unset($data['backup_object_id']);
 
         // act
         $response = $this->post('admin/backups', $data);
@@ -124,7 +131,7 @@ class BackupControllerTest extends TestCase
         // assert
         $response->assertStatus(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertJsonValidationErrors([
-            'object' => 'The object field is required.',
+            'backup_object_id' => 'The backup object id field is required.',
         ]);
     }
 
@@ -227,7 +234,7 @@ class BackupControllerTest extends TestCase
             'hostname' => 'updated hostname',
             'organization_id' => $newOrganization->id,
             'service' => $backups[1]->service,
-            'object' => $backups[1]->object,
+            'backup_object_id' => $backups[1]->backup_object_id,
         ];
 
         // act

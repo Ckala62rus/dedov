@@ -90,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
         // BackupObject
         Route::resource('backup-objects', BackupObjectController::class);
         Route::get('backup-objects-all-paginate', [BackupObjectController::class, 'getAllBackupObjectsWithPagination']);
+        Route::get('backup-objects-all-collection', [BackupObjectController::class, 'getAllBackupObjectCollection']);
 
         // BackupTool
         Route::resource('backup-tools', BackupToolController::class);

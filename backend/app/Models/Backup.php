@@ -14,7 +14,7 @@ class Backup extends Model
         'service',
         'owner',
         'hostname',
-        'object',
+        'backup_object_id',
         'tool',
         'bd',
         'restricted_point',
@@ -44,5 +44,14 @@ class Backup extends Model
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * Get backup object model via relation
+     * @return HasOne
+     */
+    public function backupObject(): HasOne
+    {
+        return $this->hasOne(BackupObject::class, 'id', 'backup_object_id');
     }
 }

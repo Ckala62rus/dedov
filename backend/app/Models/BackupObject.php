@@ -12,5 +12,6 @@ class BackupObject extends Model
     protected $fillable = [
         'name',
         'description',
+        'backup_object_id',
     ];
 }

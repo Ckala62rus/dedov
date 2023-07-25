@@ -153,4 +153,22 @@ class BackupObjectController extends BaseController
             'count' => $backupObjects->total()
         ]);
     }
+
+    /**
+     * Get all backup objects collection
+     * @return JsonResponse
+     */
+    public function getAllBackupObjectCollection(): JsonResponse
+    {
+        $objects = $this
+            ->backupObjectService
+            ->getAllBackupObjectsCollection([]);
+
+        return $this->response(
+            ['backupObjects' => BackupObjectCollectionResource::collection($objects)],
+            'BackupObjects collection',
+            true,
+            ResponseAlias::HTTP_OK
+        );
+    }
 }
