@@ -71,6 +71,7 @@
                                         placeholder="Организация"
                                         size="large"
                                         :clearable=true
+                                        @clear="eventClear"
                                     >
                                         <el-option
                                             label="All organization"
@@ -429,6 +430,10 @@ export default {
                     link.click();
                 }
             });
+        },
+
+        eventClear(){
+            this.filter.organization_id = 0
         },
     },
 
