@@ -196,6 +196,24 @@
                             <div class="invalid-feedback">{{error_messages.day}}</div>
                         </div>
 
+                        <label>Day</label>
+                        <div class="form-group select-form_group">
+                            <el-select
+                                v-model="form.backup_day_id"
+                                class="m-0 select-category w-100"
+                                placeholder="Object"
+                                size="large"
+                            >
+                                <el-option
+                                    v-for="backupDay in backupDays"
+                                    :key="backupDay.id"
+                                    :label="backupDay.name"
+                                    :value="backupDay.id"
+                                />
+                            </el-select>
+                            <div style="color: #F64E60" v-if="errors.backup_day_id">{{error_messages.backup_day_id}}</div>
+                        </div>
+
                         <div class="form-group">
                             <label>Time start<span class="text-danger">*</span></label>
                             <input
@@ -246,7 +264,7 @@
 import {Link, usePage} from "@inertiajs/inertia-vue3";
 
 export default {
-    name: "BackupCreate",
+    name: "BackupDay",
 
     components: {
         Link
@@ -270,7 +288,7 @@ export default {
                 'bd': '',
                 'restricted_point': '',
                 'description_storage': '',
-                'day': '',
+                'backup_day_id': '',
                 'time_start': '',
                 'storage_server': '',
                 'storage_long_time': '',
@@ -279,6 +297,7 @@ export default {
             },
             organizations: null,
             backupObjects: null,
+            backupDays: null,
             errors: {
                 service: false,
                 owner: false,
@@ -436,12 +455,21 @@ export default {
                     this.backupObjects = res.data.data.backupObjects
                 })
         },
+
+        getBackupDays(){
+            axios
+                .get('/admin/backup-days-all-collection')
+                .then(res => {
+                    this.backupDays = res.data.data.backupDays
+                })
+        },
     },
 
     mounted() {
         this.getOrganizations();
         this.getBackup();
         this.getBackupObjects();
+        this.getBackupDays();
     }
 }
 </script>

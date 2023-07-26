@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Backup;
+use App\Models\BackupDay;
 use App\Models\BackupObject;
 use App\Models\Organization;
 use App\Models\User;
@@ -31,7 +32,7 @@ class BackupFactory extends Factory
             'bd' => fake()->slug,
             'restricted_point' => fake()->slug,
             'description_storage' => fake()->slug,
-            'day' => fake()->slug,
+            'backup_day_id' => BackupDay::factory()->create(),
             'time_start' =>  fake()->date(),
             'storage_server' => fake()->slug,
             'storage_server_long_time' => fake()->date(),

@@ -29,7 +29,7 @@ class BackupCollectionResource extends JsonResource
             'bd' => $this->bd,
             'restricted_point' => $this->restricted_point,
             'description_storage' => $this->description_storage,
-            'day' => $this->day,
+            'day' => $this->backupDay->name,
             'time_start' => $this->time_start,
             'storage_server' => $this->storage_server,
             'storage_server_long_time' => $this->storage_server_long_time,

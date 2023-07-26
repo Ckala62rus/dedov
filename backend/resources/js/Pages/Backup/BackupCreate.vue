@@ -85,18 +85,6 @@
                             <div class="invalid-feedback">{{error_messages.hostname}}</div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Object<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Object"
-                                v-model="form.object"
-                                :class="{'is-invalid': errors.object}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.object}}</div>
-                        </div>
-
                         <label>Object</label>
                         <div class="form-group select-form_group">
                             <el-select
@@ -196,6 +184,24 @@
                             <div class="invalid-feedback">{{error_messages.day}}</div>
                         </div>
 
+                        <label>Day</label>
+                        <div class="form-group select-form_group">
+                            <el-select
+                                v-model="form.backup_day_id"
+                                class="m-0 select-category w-100"
+                                placeholder="Object"
+                                size="large"
+                            >
+                                <el-option
+                                    v-for="backupDay in backupDays"
+                                    :key="backupDay.id"
+                                    :label="backupDay.name"
+                                    :value="backupDay.id"
+                                />
+                            </el-select>
+                            <div style="color: #F64E60" v-if="errors.backup_day_id">{{error_messages.backup_day_id}}</div>
+                        </div>
+
                         <div class="form-group">
                             <label>Time start<span class="text-danger">*</span></label>
                             <input
@@ -262,7 +268,7 @@ export default {
                 'bd': '',
                 'restricted_point': '',
                 'description_storage': '',
-                'day': '',
+                'backup_day_id': '',
                 'time_start': '',
                 'storage_server': '',
                 'storage_server_long_time': '',
@@ -272,6 +278,7 @@ export default {
             },
             organizations: null,
             backupObjects: null,
+            backupDays: null,
             errors: {
                 service: false,
                 owner: false,
@@ -281,7 +288,7 @@ export default {
                 bd: false,
                 restricted_point: false,
                 description_storage: false,
-                day: false,
+                backup_day_id: false,
                 time_start: false,
                 storage_server: false,
                 storage_server_long_time: false,
@@ -296,7 +303,7 @@ export default {
                 bd: '',
                 restricted_point: '',
                 description_storage: '',
-                day: '',
+                backup_day_id: '',
                 time_start: '',
                 storage_server: '',
                 storage_server_long_time: '',
@@ -336,7 +343,7 @@ export default {
                             bd: errors.hasOwnProperty('bd'),
                             restricted_point: errors.hasOwnProperty('restricted_point'),
                             description_storage: errors.hasOwnProperty('description_storage'),
-                            day: errors.hasOwnProperty('day'),
+                            backup_day_id: errors.hasOwnProperty('backup_day_id'),
                             time_start: errors.hasOwnProperty('time_start'),
                             storage_server: errors.hasOwnProperty('storage_server'),
                             storage_server_long_time: errors.hasOwnProperty('storage_server_long_time'),
@@ -377,8 +384,8 @@ export default {
                                 ? errors.description_storage[0]
                                 : '',
 
-                            day: errors.hasOwnProperty('day')
-                                ? errors.day[0]
+                            backup_day_id: errors.hasOwnProperty('backup_day_id')
+                                ? errors.backup_day_id[0]
                                 : '',
 
                             time_start: errors.hasOwnProperty('time_start')
@@ -423,7 +430,7 @@ export default {
                 bd: '',
                 restricted_point: '',
                 description_storage: '',
-                day: '',
+                backup_day_id: '',
                 time_start: '',
                 storage_server: '',
                 storage_server_long_time: '',
@@ -442,7 +449,7 @@ export default {
                 bd: false,
                 restricted_point: false,
                 description_storage: false,
-                day: false,
+                backup_day_id: false,
                 time_start: false,
                 storage_server: false,
                 storage_server_long_time: false,
@@ -464,11 +471,20 @@ export default {
                     this.backupObjects = res.data.data.backupObjects
                 })
         },
+
+        getBackupDays(){
+            axios
+                .get('/admin/backup-days-all-collection')
+                .then(res => {
+                    this.backupDays = res.data.data.backupDays
+                })
+        },
     },
 
     mounted() {
         this.getOrganizations();
         this.getBackupObjects();
+        this.getBackupDays();
     }
 }
 </script>

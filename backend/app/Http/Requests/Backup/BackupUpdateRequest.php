@@ -32,7 +32,7 @@ class BackupUpdateRequest extends FormRequest
             'bd' => 'nullable|string',
             'restricted_point' => 'nullable|string',
             'description_storage' => 'nullable|string',
-            'day' => 'nullable|string',
+            'backup_day_id' => 'nullable|integer',
             'time_start' => 'nullable|string',
             'storage_server' => 'nullable|string',
             'storage_server_long_time' => 'nullable|string',

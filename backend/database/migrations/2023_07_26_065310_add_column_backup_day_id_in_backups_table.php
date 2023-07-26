@@ -14,17 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::table('backups', function (Blueprint $table) {
-            $table->dropColumn('object');
+            $table->dropColumn('day');
 
             $table
-                ->unsignedBigInteger('backup_object_id')
+                ->unsignedBigInteger('backup_day_id')
                 ->nullable()
-                ->after('hostname');
+                ->after('description_storage');
 
             $table
-                ->foreign('backup_object_id')
+                ->foreign('backup_day_id')
                 ->references('id')
-                ->on('backup_objects')
+                ->on('backup_days')
                 ->nullOnDelete();
         });
     }
@@ -37,9 +37,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('backups', function (Blueprint $table) {
-            $table->string('object')->nullable();
-            $table->dropForeign('backups_backup_object_id_foreign');
-            $table->dropColumn('backup_object_id');
+            $table->string('day')->nullable();
+            $table->dropForeign('backups_backup_day_id_foreign');
+            $table->dropColumn('backup_day_id');
         });
     }
 };

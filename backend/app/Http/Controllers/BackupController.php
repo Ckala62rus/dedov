@@ -90,10 +90,10 @@ class BackupController extends BaseController
 
     /**
      * Return edit backup view
-     * @param $id
+     * @param int $id
      * @return \Inertia\Response
      */
-    public function edit($id): \Inertia\Response
+    public function edit(int $id): \Inertia\Response
     {
         return Inertia::render('Backup/BackupEdit', ['id' => $id]);
     }

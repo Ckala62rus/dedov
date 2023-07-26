@@ -6,6 +6,7 @@ use App\Contracts\Day\BackupDayServiceInterface;
 use App\Http\Requests\BackupDay\BackupDayCollectionRequest;
 use App\Http\Requests\BackupDay\BackupDayStoreRequest;
 use App\Http\Requests\BackupDay\BackupDayUpdateRequest;
+use App\Http\Requests\BackupTool\BackupToolCollectionRequest;
 use App\Http\Resources\Admin\Dashboard\BackupDay\BackupDayCollectionResource;
 use App\Http\Resources\Admin\Dashboard\BackupDay\BackupDayShowResource;
 use App\Http\Resources\Admin\Dashboard\BackupDay\BackupDayStoreResource;
@@ -169,5 +170,23 @@ class BackupDayController extends BaseController
             'data' => BackupDayCollectionResource::collection($days),
             'count' => $days->total()
         ]);
+    }
+
+    /**
+     * Get all backup day collection
+     * @return JsonResponse
+     */
+    public function getAllBackupDayCollection(): JsonResponse
+    {
+        $days = $this
+            ->backupDayService
+            ->getAllBackupDaysCollection([]);
+
+        return $this->response(
+            ['backupDays' => BackupDayCollectionResource::collection($days)],
+            'BackupDays collection',
+            true,
+            Response::HTTP_OK
+        );
     }
 }

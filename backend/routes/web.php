@@ -99,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
         // BackupDay
         Route::resource('backup-days', BackupDayController::class);
         Route::get('backup-days-all-paginate', [BackupDayController::class, 'getAllBackupDaysWithPagination']);
+        Route::get('backup-days-all-collection', [BackupDayController::class, 'getAllBackupDayCollection']);
     });
 
     // Permission

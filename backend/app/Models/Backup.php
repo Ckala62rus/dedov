@@ -19,7 +19,7 @@ class Backup extends Model
         'bd',
         'restricted_point',
         'description_storage',
-        'day',
+        'backup_day_id',
         'time_start',
         'storage_server',
         'storage_server_long_time',
@@ -53,5 +53,14 @@ class Backup extends Model
     public function backupObject(): HasOne
     {
         return $this->hasOne(BackupObject::class, 'id', 'backup_object_id');
+    }
+
+    /**
+     * Get backup day model via relation
+     * @return HasOne
+     */
+    public function backupDay(): HasOne
+    {
+        return $this->hasOne(BackupDay::class, 'id', 'backup_day_id');
     }
 }
