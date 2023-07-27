@@ -30,7 +30,7 @@ class BackupCollectionRequest extends FormRequest
             "service" => 'nullable|string',
             "owner" => 'nullable|string',
             "backup_object_id" => 'nullable|integer',
-            "tool" => 'nullable|string',
+            "backup_tool_id" => 'nullable|integer',
             "bd" => 'nullable|string',
             "storage_server" => 'nullable|string',
         ];

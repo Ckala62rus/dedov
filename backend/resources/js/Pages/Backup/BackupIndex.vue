@@ -132,16 +132,6 @@
                                     />
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group select-form_group">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        placeholder="Object"
-                                        v-model="filter.object"
-                                    />
-                                </div>
-                            </div>
 
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
@@ -170,12 +160,26 @@
 
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        placeholder="Tool"
-                                        v-model="filter.tool"
-                                    />
+                                    <el-select
+                                        v-model="filter.backup_tool_id"
+                                        class="m-0 select-category w-100"
+                                        placeholder="All tools"
+                                        size="large"
+                                        :clearable=true
+                                        @clear="eventClearTool"
+                                    >
+                                        <el-option
+                                            label="All tools"
+                                            :value=0
+                                            :key=0
+                                        />
+                                        <el-option
+                                            v-for="backupTool in backupTools"
+                                            :key="backupTool.id"
+                                            :label="backupTool.name"
+                                            :value="backupTool.id"
+                                        />
+                                    </el-select>
                                 </div>
                             </div>
 
@@ -303,13 +307,14 @@ export default {
             },
             organizations: null,
             backupObjects: null,
+            backupTools: null,
             filter: {
                 organization_id: 0,
+                backup_object_id: 0,
+                backup_tool_id: 0,
                 hostname: '',
                 service: '',
                 owner: '',
-                backup_object_id: 0,
-                tool: '',
                 bd: '',
                 storage_server: '',
             },
@@ -400,8 +405,8 @@ export default {
                 params.append('backup_object_id', this.filter.backup_object_id)
             }
 
-            if (this.filter.tool != null){
-                params.append('tool', this.filter.tool)
+            if (this.filter.backup_tool_id != null){
+                params.append('backup_tool_id', this.filter.backup_tool_id)
             }
 
             if (this.filter.bd != null){
@@ -466,6 +471,10 @@ export default {
             this.filter.backup_object_id = 0
         },
 
+        eventClearTool(){
+            this.filter.backup_tool_id = 0
+        },
+
         getBackupObjects(){
             axios
                 .get('/admin/backup-objects-all-collection')
@@ -473,11 +482,20 @@ export default {
                     this.backupObjects = res.data.data.backupObjects
                 })
         },
+
+        getBackupTools(){
+            axios
+                .get('/admin/backup-tools-all-collection')
+                .then(res => {
+                    this.backupTools = res.data.data.backupTools
+                })
+        },
     },
 
     mounted() {
         this.getOrganizations();
         this.getBackupObjects();
+        this.getBackupTools();
     }
 }
 </script>
