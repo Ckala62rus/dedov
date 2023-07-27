@@ -103,16 +103,23 @@
                             <div style="color: #F64E60" v-if="errors.backup_object_id">{{error_messages.backup_object_id}}</div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Tool<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
+                        <label>Tool</label>
+                        <div class="form-group select-form_group">
+                            <el-select
+                                v-model="form.backup_tool_id"
+                                class="m-0 select-category w-100"
                                 placeholder="Tool"
-                                v-model="form.tool"
-                                :class="{'is-invalid': errors.tool}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.tool}}</div>
+                                size="large"
+                                :clearable=true
+                            >
+                                <el-option
+                                    v-for="backupTool in backupTools"
+                                    :key="backupTool.id"
+                                    :label="backupTool.name"
+                                    :value="backupTool.id"
+                                />
+                            </el-select>
+                            <div style="color: #F64E60" v-if="errors.backup_tool_id">{{error_messages.backup_tool_id}}</div>
                         </div>
 
                         <div class="form-group">
@@ -177,8 +184,9 @@
                             <el-select
                                 v-model="form.backup_day_id"
                                 class="m-0 select-category w-100"
-                                placeholder="Object"
+                                placeholder="Day"
                                 size="large"
+                                :clearable=true
                             >
                                 <el-option
                                     v-for="backupDay in backupDays"
@@ -260,7 +268,7 @@ export default {
                 'owner': '',
                 'hostname': '',
                 'backup_object_id': '',
-                'tool': '',
+                'backup_tool_id': '',
                 'bd': '',
                 'restricted_point': '',
                 'description_storage': '',
@@ -274,12 +282,13 @@ export default {
             organizations: null,
             backupObjects: null,
             backupDays: null,
+            backupTools: null,
             errors: {
                 service: false,
                 owner: false,
                 hostname: false,
                 backup_object_id: false,
-                tool: false,
+                backup_tool_id: false,
                 bd: false,
                 restricted_point: false,
                 description_storage: false,
@@ -294,7 +303,7 @@ export default {
                 owner: '',
                 hostname: '',
                 backup_object_id: '',
-                tool: '',
+                backup_tool_id: '',
                 bd: '',
                 restricted_point: '',
                 description_storage: '',
@@ -333,7 +342,7 @@ export default {
                             owner: errors.hasOwnProperty('owner'),
                             hostname: errors.hasOwnProperty('hostname'),
                             backup_object_id: errors.hasOwnProperty('backup_object_id'),
-                            tool: errors.hasOwnProperty('tool'),
+                            backup_tool_id: errors.hasOwnProperty('backup_tool_id'),
                             bd: errors.hasOwnProperty('bd'),
                             restricted_point: errors.hasOwnProperty('restricted_point'),
                             description_storage: errors.hasOwnProperty('description_storage'),
@@ -350,7 +359,7 @@ export default {
                             owner: errors.hasOwnProperty('owner') ? errors.owner[0] : '',
                             hostname: errors.hasOwnProperty('hostname') ? errors.hostname[0] : '',
                             backup_object_id: errors.hasOwnProperty('backup_object_id') ? errors.backup_object_id[0] : '',
-                            tool: errors.hasOwnProperty('tool') ? errors.tool[0] : '',
+                            backup_tool_id: errors.hasOwnProperty('backup_tool_id') ? errors.backup_tool_id[0] : '',
                             bd: errors.hasOwnProperty('bd') ? errors.bd[0] : '',
                             restricted_point: errors.hasOwnProperty('restricted_point') ? errors.restricted_point[0] : '',
                             description_storage: errors.hasOwnProperty('description_storage') ? errors.description_storage[0] : '',
@@ -379,7 +388,7 @@ export default {
                 owner: '',
                 hostname: '',
                 backup_object_id: '',
-                tool: '',
+                backup_tool_id: '',
                 bd: '',
                 restricted_point: '',
                 description_storage: '',
@@ -398,7 +407,7 @@ export default {
                 owner: false,
                 hostname: false,
                 backup_object_id: false,
-                tool: false,
+                backup_tool_id: false,
                 bd: false,
                 restricted_point: false,
                 description_storage: false,
@@ -439,6 +448,14 @@ export default {
                     this.backupDays = res.data.data.backupDays
                 })
         },
+
+        getBackupTools(){
+            axios
+                .get('/admin/backup-tools-all-collection')
+                .then(res => {
+                    this.backupTools = res.data.data.backupTools
+                })
+        },
     },
 
     mounted() {
@@ -446,6 +463,7 @@ export default {
         this.getBackup();
         this.getBackupObjects();
         this.getBackupDays();
+        this.getBackupTools();
     }
 }
 </script>

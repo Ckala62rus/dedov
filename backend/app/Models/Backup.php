@@ -15,7 +15,7 @@ class Backup extends Model
         'owner',
         'hostname',
         'backup_object_id',
-        'tool',
+        'backup_tool_id',
         'bd',
         'restricted_point',
         'description_storage',
@@ -62,5 +62,14 @@ class Backup extends Model
     public function backupDay(): HasOne
     {
         return $this->hasOne(BackupDay::class, 'id', 'backup_day_id');
+    }
+
+    /**
+     * Get backup tool model via relation
+     * @return HasOne
+     */
+    public function backupTool(): HasOne
+    {
+        return $this->hasOne(BackupTool::class, 'id', 'backup_tool_id');
     }
 }

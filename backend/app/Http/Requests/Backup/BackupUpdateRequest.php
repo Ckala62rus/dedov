@@ -28,7 +28,7 @@ class BackupUpdateRequest extends FormRequest
             'owner' => 'nullable|string',
             'hostname' => 'nullable|string',
             'backup_object_id' => 'required|integer',
-            'tool' => 'nullable|string',
+            'backup_tool_id' => 'nullable|integer',
             'bd' => 'nullable|string',
             'restricted_point' => 'nullable|string',
             'description_storage' => 'nullable|string',

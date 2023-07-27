@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Backup;
 use App\Models\BackupDay;
 use App\Models\BackupObject;
+use App\Models\BackupTool;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -28,7 +29,7 @@ class BackupFactory extends Factory
             'owner' => fake()->text(10),
             'hostname' => fake()->slug,
             'backup_object_id' => BackupObject::factory()->create(),
-            'tool' => fake()->slug,
+            'backup_tool_id' => BackupTool::factory()->create(),
             'bd' => fake()->slug,
             'restricted_point' => fake()->slug,
             'description_storage' => fake()->slug,

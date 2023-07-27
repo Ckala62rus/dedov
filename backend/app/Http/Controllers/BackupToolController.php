@@ -153,4 +153,22 @@ class BackupToolController extends BaseController
             'count' => $tools->total()
         ]);
     }
+
+    /**
+     * Get all backup tools collection
+     * @return JsonResponse
+     */
+    public function getAllBackupToolCollection(): JsonResponse
+    {
+        $objects = $this
+            ->backupToolService
+            ->getAllBackupToolsCollection([]);
+
+        return $this->response(
+            ['backupTools' => BackupToolCollectionResource::collection($objects)],
+            'BackupTools collection',
+            true,
+            Response::HTTP_OK
+        );
+    }
 }
