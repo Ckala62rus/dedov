@@ -235,8 +235,8 @@ class BackupService implements BackupServiceInterface
             $query = $query->where('owner', 'LIKE', '%' . $filter['owner'] . '%');
         }
 
-        if(isset($filter['object']) && $filter['object'] != 0) {
-            $query = $query->where('object', 'LIKE', '%' . $filter['object'] . '%');
+        if(isset($filter['backup_object_id']) && $filter['backup_object_id']) {
+            $query = $query->where('backup_object_id', $filter['backup_object_id']);
         }
 
         if(isset($filter['tool']) && $filter['tool'] != 0) {

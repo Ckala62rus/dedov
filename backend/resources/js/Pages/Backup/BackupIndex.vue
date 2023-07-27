@@ -145,6 +145,31 @@
 
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="filter.backup_object_id"
+                                        class="m-0 select-category w-100"
+                                        placeholder="Object"
+                                        size="large"
+                                        :clearable=true
+                                        @clear="eventClearObject"
+                                    >
+                                        <el-option
+                                            label="All objects"
+                                            :value=0
+                                            :key=0
+                                        />
+                                        <el-option
+                                            v-for="backupObject in backupObjects"
+                                            :key="backupObject.id"
+                                            :label="backupObject.name"
+                                            :value="backupObject.id"
+                                        />
+                                    </el-select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
                                     <input
                                         type="text"
                                         class="form-control"
@@ -277,12 +302,13 @@ export default {
                 },
             },
             organizations: null,
+            backupObjects: null,
             filter: {
                 organization_id: 0,
                 hostname: '',
                 service: '',
                 owner: '',
-                object: '',
+                backup_object_id: 0,
                 tool: '',
                 bd: '',
                 storage_server: '',
@@ -370,8 +396,8 @@ export default {
                 params.append('owner', this.filter.owner)
             }
 
-            if (this.filter.object != null){
-                params.append('object', this.filter.object)
+            if (this.filter.backup_object_id != null){
+                params.append('backup_object_id', this.filter.backup_object_id)
             }
 
             if (this.filter.tool != null){
@@ -401,7 +427,7 @@ export default {
                 hostname: '',
                 service: '',
                 owner: '',
-                object: '',
+                backup_object_id: 0,
                 tool: '',
                 bd: '',
                 storage_server: '',
@@ -435,10 +461,23 @@ export default {
         eventClear(){
             this.filter.organization_id = 0
         },
+
+        eventClearObject(){
+            this.filter.backup_object_id = 0
+        },
+
+        getBackupObjects(){
+            axios
+                .get('/admin/backup-objects-all-collection')
+                .then(res => {
+                    this.backupObjects = res.data.data.backupObjects
+                })
+        },
     },
 
     mounted() {
         this.getOrganizations();
+        this.getBackupObjects();
     }
 }
 </script>
