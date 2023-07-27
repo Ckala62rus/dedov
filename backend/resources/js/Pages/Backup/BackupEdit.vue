@@ -85,18 +85,6 @@
                             <div class="invalid-feedback">{{error_messages.hostname}}</div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Object<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Object"
-                                v-model="form.object"
-                                :class="{'is-invalid': errors.object}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.object}}</div>
-                        </div>
-
                         <label>Object</label>
                         <div class="form-group select-form_group">
                             <el-select
@@ -182,18 +170,6 @@
                                 :class="{'is-invalid': errors.description_storage}"
                             />
                             <div class="invalid-feedback">{{error_messages.description_storage}}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Day<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Day"
-                                v-model="form.day"
-                                :class="{'is-invalid': errors.day}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.day}}</div>
                         </div>
 
                         <label>Day</label>
