@@ -188,8 +188,8 @@
                                     <input
                                         type="text"
                                         class="form-control"
-                                        placeholder="BD"
-                                        v-model="filter.bd"
+                                        placeholder="Comment"
+                                        v-model="filter.comment"
                                     />
                                 </div>
                             </div>
@@ -273,7 +273,7 @@ export default {
                 headings: {
                     // created_at: 'Время создания',
                     // updated_at: 'Время обновления',
-                    'organization.name': 'Organization',
+                    'organization.name': 'Org',
                     comment: 'Comment',
                     actions: 'Actions',
                 },
@@ -315,7 +315,7 @@ export default {
                 hostname: '',
                 service: '',
                 owner: '',
-                bd: '',
+                comment: '',
                 storage_server: '',
             },
         }
@@ -409,8 +409,8 @@ export default {
                 params.append('backup_tool_id', this.filter.backup_tool_id)
             }
 
-            if (this.filter.bd != null){
-                params.append('bd', this.filter.bd)
+            if (this.filter.comment != null){
+                params.append('comment', this.filter.comment)
             }
 
             if (this.filter.storage_server != null){
@@ -434,7 +434,7 @@ export default {
                 owner: '',
                 backup_object_id: 0,
                 tool: '',
-                bd: '',
+                comment: '',
                 storage_server: '',
             };
 

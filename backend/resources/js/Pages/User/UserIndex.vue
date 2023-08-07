@@ -10,14 +10,25 @@
                     </div>
                     <div class="card-body">
 
-                        <Link
-                            :href="route('metronic.user.create')"
-                            as="button"
-                            method="get"
-                            class="btn btn-success mb-5"
-                        >
-                            Создать пользователя
-                        </Link>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <Link
+                                    :href="route('metronic.user.create')"
+                                    as="button"
+                                    method="get"
+                                    class="btn btn-success mb-5"
+                                >
+                                    Create user
+                                </Link>
+
+                                <Link
+                                    :href="route('metronic.role.index')"
+                                    as="button"
+                                    method="get"
+                                    class="btn btn-info ml-5 mb-5 mr-5"
+                                >User roles</Link>
+                            </div>
+                        </div>
 
                         <v-server-table
                             :url="url"

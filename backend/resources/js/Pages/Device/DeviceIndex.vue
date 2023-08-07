@@ -57,6 +57,8 @@
                                         class="m-0 select-category w-100"
                                         placeholder="Организация"
                                         size="large"
+                                        :clearable=true
+                                        @clear="eventClearOrganization"
                                     >
                                         <el-option
                                             label="All organization"
@@ -72,6 +74,7 @@
                                     </el-select>
                                 </div>
                             </div>
+
                             <div class="col-md-2">
                                 <div class="form-group select-form_group">
                                     <el-select
@@ -79,6 +82,8 @@
                                         class="m-0 select-category w-100"
                                         placeholder="Тип оборудования"
                                         size="large"
+                                        :clearable=true
+                                        @clear="eventClearEquipment"
                                     >
                                         <el-option
                                             label="All equipment"
@@ -430,7 +435,15 @@ export default {
                         link.click();
                     }
                 });
-        }
+        },
+
+        eventClearOrganization(){
+            this.filter.organization_id = 0
+        },
+
+        eventClearEquipment(){
+            this.filter.equipment_id = 0
+        },
     },
 
     // created() {
