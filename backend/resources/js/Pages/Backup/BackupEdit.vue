@@ -6,14 +6,13 @@
 
                     <div class="card-header">
                         <h3 class="card-title d-flex flex-center">
-                            Редактирование бэкапа
+                            Edit backup
                         </h3>
                     </div>
 
                     <!--begin::Form-->
-                    <form @submit.prevent="createOrganization">
-                        <div class="card-body">
-                            <label>Организация</label>
+                    <div class="card-body">
+                            <label>Organization</label>
                             <div class="form-group select-form_group">
                                 <el-select
                                     v-model="form.organization_id"
@@ -32,7 +31,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Service <span class="text-danger">*</span></label>
+                                <label>Service <span class="text-danger"></span></label>
                                 <textarea
                                     type="text"
                                     class="form-control"
@@ -45,7 +44,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Owner<span class="text-danger">*</span></label>
+                                <label>Owner + date approve<span class="text-danger"></span></label>
                                 <input
                                     type="text"
                                     class="form-control"
@@ -56,16 +55,19 @@
                                 <div class="invalid-feedback">{{error_messages.owner}}</div>
                             </div>
 
-                        </div>
-
-                        <div class="card-footer">
-                            <div class="form__button">
-                                <button type="submit" class="btn btn-success mr-2 button_width">Обновить</button>
-                                <Link :href="route('backups.index')" as="button" method="get" class="btn btn-primary font-weight-bolder button_width">Назад</Link>
+                            <div class="form-group">
+                                <label>Hostname<span class="text-danger"></span></label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Hostname"
+                                    v-model="form.hostname"
+                                    :class="{'is-invalid': errors.hostname}"
+                                />
+                                <div class="invalid-feedback">{{error_messages.hostname}}</div>
                             </div>
-                        </div>
 
-                    </form>
+                        </div>
                 </div>
             </div>
 
@@ -73,18 +75,6 @@
                 <div class="card card-flush h-md-100">
                     <!--begin::Form-->
                     <div class="card-body">
-                        <div class="form-group">
-                            <label>Hostname<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Hostname"
-                                v-model="form.hostname"
-                                :class="{'is-invalid': errors.hostname}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.hostname}}</div>
-                        </div>
-
                         <label>Object</label>
                         <div class="form-group select-form_group">
                             <el-select
@@ -122,17 +112,47 @@
                             <div style="color: #F64E60" v-if="errors.backup_tool_id">{{error_messages.backup_tool_id}}</div>
                         </div>
 
+                        <label>Day</label>
+                        <div class="form-group select-form_group">
+                            <el-select
+                                v-model="form.backup_day_id"
+                                class="m-0 select-category w-100"
+                                placeholder="Day"
+                                size="large"
+                                :clearable=true
+                            >
+                                <el-option
+                                    v-for="backupDay in backupDays"
+                                    :key="backupDay.id"
+                                    :label="backupDay.name"
+                                    :value="backupDay.id"
+                                />
+                            </el-select>
+                            <div style="color: #F64E60" v-if="errors.backup_day_id">{{error_messages.backup_day_id}}</div>
+                        </div>
+
                         <div class="form-group">
-                            <label>DB <span class="text-danger">*</span></label>
-                            <textarea
+                            <label>Time start<span class="text-danger"></span></label>
+                            <input
                                 type="text"
                                 class="form-control"
-                                placeholder="DB"
-                                rows="5"
-                                v-model="form.bd"
-                                :class="{'is-invalid': errors.bd}"
+                                placeholder="Time start"
+                                v-model="form.time_start"
+                                :class="{'is-invalid': errors.time_start}"
                             />
-                            <div class="invalid-feedback">{{error_messages.bd}}</div>
+                            <div class="invalid-feedback">{{error_messages.time_start}}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description storage policy<span class="text-danger"></span></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Description storage"
+                                v-model="form.description_storage"
+                                :class="{'is-invalid': errors.description_storage}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.description_storage}}</div>
                         </div>
 
 <!--                        <div class="form-group">-->
@@ -167,51 +187,9 @@
                 <div class="card card-flush h-md-100">
                     <!--begin::Form-->
                     <div class="card-body">
-                        <div class="form-group">
-                            <label>Description storage<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Description storage"
-                                v-model="form.description_storage"
-                                :class="{'is-invalid': errors.description_storage}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.description_storage}}</div>
-                        </div>
-
-                        <label>Day</label>
-                        <div class="form-group select-form_group">
-                            <el-select
-                                v-model="form.backup_day_id"
-                                class="m-0 select-category w-100"
-                                placeholder="Day"
-                                size="large"
-                                :clearable=true
-                            >
-                                <el-option
-                                    v-for="backupDay in backupDays"
-                                    :key="backupDay.id"
-                                    :label="backupDay.name"
-                                    :value="backupDay.id"
-                                />
-                            </el-select>
-                            <div style="color: #F64E60" v-if="errors.backup_day_id">{{error_messages.backup_day_id}}</div>
-                        </div>
 
                         <div class="form-group">
-                            <label>Time start<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Time start"
-                                v-model="form.time_start"
-                                :class="{'is-invalid': errors.time_start}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.time_start}}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Storage server long time<span class="text-danger">*</span></label>
+                            <label>Storage server long time<span class="text-danger"></span></label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -223,7 +201,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Description storage long time <span class="text-danger">*</span></label>
+                            <label>Description storage long time policy<span class="text-danger"></span></label>
                             <textarea
                                 type="text"
                                 class="form-control"
@@ -235,8 +213,29 @@
                             <div class="invalid-feedback">{{error_messages.description_storage_long_time}}</div>
                         </div>
 
+                        <div class="form-group">
+                            <label>Comment <span class="text-danger"></span></label>
+                            <textarea
+                                type="text"
+                                class="form-control"
+                                placeholder="Comment"
+                                rows="5"
+                                v-model="form.comment"
+                                :class="{'is-invalid': errors.comment}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.comment}}</div>
+                        </div>
+
                     </div>
 
+                    <div class="card-footer">
+                        <form @submit.prevent="createOrganization">
+                            <div class="form__button">
+                                <button type="submit" class="btn btn-success mr-2 button_width">Update</button>
+                                <Link :href="route('backups.index')" as="button" method="get" class="btn btn-primary font-weight-bolder button_width">Back</Link>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -269,7 +268,7 @@ export default {
                 'hostname': '',
                 'backup_object_id': '',
                 'backup_tool_id': '',
-                'bd': '',
+                'comment': '',
                 'restricted_point': '',
                 'description_storage': '',
                 'backup_day_id': '',
@@ -289,7 +288,7 @@ export default {
                 hostname: false,
                 backup_object_id: false,
                 backup_tool_id: false,
-                bd: false,
+                comment: false,
                 restricted_point: false,
                 description_storage: false,
                 day: false,
@@ -304,7 +303,7 @@ export default {
                 hostname: '',
                 backup_object_id: '',
                 backup_tool_id: '',
-                bd: '',
+                comment: '',
                 restricted_point: '',
                 description_storage: '',
                 day: '',
@@ -343,7 +342,7 @@ export default {
                             hostname: errors.hasOwnProperty('hostname'),
                             backup_object_id: errors.hasOwnProperty('backup_object_id'),
                             backup_tool_id: errors.hasOwnProperty('backup_tool_id'),
-                            bd: errors.hasOwnProperty('bd'),
+                            comment: errors.hasOwnProperty('comment'),
                             restricted_point: errors.hasOwnProperty('restricted_point'),
                             description_storage: errors.hasOwnProperty('description_storage'),
                             day: errors.hasOwnProperty('day'),
@@ -360,7 +359,7 @@ export default {
                             hostname: errors.hasOwnProperty('hostname') ? errors.hostname[0] : '',
                             backup_object_id: errors.hasOwnProperty('backup_object_id') ? errors.backup_object_id[0] : '',
                             backup_tool_id: errors.hasOwnProperty('backup_tool_id') ? errors.backup_tool_id[0] : '',
-                            bd: errors.hasOwnProperty('bd') ? errors.bd[0] : '',
+                            comment: errors.hasOwnProperty('comment') ? errors.comment[0] : '',
                             restricted_point: errors.hasOwnProperty('restricted_point') ? errors.restricted_point[0] : '',
                             description_storage: errors.hasOwnProperty('description_storage') ? errors.description_storage[0] : '',
                             day: errors.hasOwnProperty('day') ? errors.day[0] : '',
@@ -389,7 +388,7 @@ export default {
                 hostname: '',
                 backup_object_id: '',
                 backup_tool_id: '',
-                bd: '',
+                comment: '',
                 restricted_point: '',
                 description_storage: '',
                 day: '',
@@ -408,7 +407,7 @@ export default {
                 hostname: false,
                 backup_object_id: false,
                 backup_tool_id: false,
-                bd: false,
+                comment: false,
                 restricted_point: false,
                 description_storage: false,
                 day: false,

@@ -6,75 +6,57 @@
 
                     <div class="card-header">
                         <h3 class="card-title d-flex flex-center">
-                            Создание бэкапа
+                            Create backup
                         </h3>
                     </div>
 
                     <!--begin::Form-->
-                    <form @submit.prevent="createOrganization">
-                        <div class="card-body">
-                            <label>Организация</label>
-                            <div class="form-group select-form_group">
-                                <el-select
-                                    v-model="form.organization_id"
-                                    class="m-0 select-category w-100"
-                                    placeholder="Организация"
-                                    size="large"
-                                >
-                                    <el-option
-                                        v-for="organization in organizations"
-                                        :key="organization.id"
-                                        :label="organization.name"
-                                        :value="organization.id"
-                                    />
-                                </el-select>
-                                <div style="color: #F64E60" v-if="errors.organization_id">{{error_messages.organization_id}}</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Service <span class="text-danger">*</span></label>
-                                <textarea
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Service"
-                                    rows="5"
-                                    v-model="form.service"
-                                    :class="{'is-invalid': errors.service}"
-                                />
-                                <div class="invalid-feedback">{{error_messages.service}}</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Owner<span class="text-danger">*</span></label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Owner"
-                                    v-model="form.owner"
-                                    :class="{'is-invalid': errors.owner}"
-                                />
-                                <div class="invalid-feedback">{{error_messages.owner}}</div>
-                            </div>
-
-                        </div>
-
-                        <div class="card-footer">
-                            <div class="form__button">
-                                <button type="submit" class="btn btn-success mr-2 button_width">Создать</button>
-                                <Link :href="route('backups.index')" as="button" method="get" class="btn btn-primary font-weight-bolder button_width">Назад</Link>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card card-flush h-md-100">
-                    <!--begin::Form-->
                     <div class="card-body">
+                        <label>Organization</label>
+                        <div class="form-group select-form_group">
+                            <el-select
+                                v-model="form.organization_id"
+                                class="m-0 select-category w-100"
+                                placeholder="Organization"
+                                size="large"
+                            >
+                                <el-option
+                                    v-for="organization in organizations"
+                                    :key="organization.id"
+                                    :label="organization.name"
+                                    :value="organization.id"
+                                />
+                            </el-select>
+                            <div style="color: #F64E60" v-if="errors.organization_id">{{error_messages.organization_id}}</div>
+                        </div>
+
                         <div class="form-group">
-                            <label>Hostname<span class="text-danger">*</span></label>
+                            <label>Service <span class="text-danger"></span></label>
+                            <textarea
+                                type="text"
+                                class="form-control"
+                                placeholder="Service"
+                                rows="5"
+                                v-model="form.service"
+                                :class="{'is-invalid': errors.service}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.service}}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Owner + date approve<span class="text-danger"></span></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Owner"
+                                v-model="form.owner"
+                                :class="{'is-invalid': errors.owner}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.owner}}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hostname<span class="text-danger"></span></label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -84,6 +66,15 @@
                             />
                             <div class="invalid-feedback">{{error_messages.hostname}}</div>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+                    <!--begin::Form-->
+                    <div class="card-body">
 
                         <label>Object</label>
                         <div class="form-group select-form_group">
@@ -122,63 +113,6 @@
                             <div style="color: #F64E60" v-if="errors.backup_tool_id">{{error_messages.backup_tool_id}}</div>
                         </div>
 
-                        <div class="form-group">
-                            <label>DB <span class="text-danger">*</span></label>
-                            <textarea
-                                type="text"
-                                class="form-control"
-                                placeholder="DB"
-                                rows="5"
-                                v-model="form.bd"
-                                :class="{'is-invalid': errors.bd}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.bd}}</div>
-                        </div>
-
-<!--                        <div class="form-group">-->
-<!--                            <label>Restricted point<span class="text-danger">*</span></label>-->
-<!--                            <input-->
-<!--                                type="text"-->
-<!--                                class="form-control"-->
-<!--                                placeholder="Restricted point"-->
-<!--                                v-model="form.restricted_point"-->
-<!--                                :class="{'is-invalid': errors.restricted_point}"-->
-<!--                            />-->
-<!--                            <div class="invalid-feedback">{{error_messages.restricted_point}}</div>-->
-<!--                        </div>-->
-
-                        <div class="form-group">
-                            <label>Storage server<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Storage server"
-                                v-model="form.storage_server"
-                                :class="{'is-invalid': errors.storage_server}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.storage_server}}</div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card card-flush h-md-100">
-                    <!--begin::Form-->
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label>Description storage<span class="text-danger">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Description storage"
-                                v-model="form.description_storage"
-                                :class="{'is-invalid': errors.description_storage}"
-                            />
-                            <div class="invalid-feedback">{{error_messages.description_storage}}</div>
-                        </div>
-
                         <label>Day</label>
                         <div class="form-group select-form_group">
                             <el-select
@@ -199,7 +133,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Time start<span class="text-danger">*</span></label>
+                            <label>Time start<span class="text-danger"></span></label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -211,7 +145,52 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Storage server long time<span class="text-danger">*</span></label>
+                            <label>Description storage policy<span class="text-danger"></span></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Description storage"
+                                v-model="form.description_storage"
+                                :class="{'is-invalid': errors.description_storage}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.description_storage}}</div>
+                        </div>
+
+<!--                        <div class="form-group">-->
+<!--                            <label>Restricted point<span class="text-danger">*</span></label>-->
+<!--                            <input-->
+<!--                                type="text"-->
+<!--                                class="form-control"-->
+<!--                                placeholder="Restricted point"-->
+<!--                                v-model="form.restricted_point"-->
+<!--                                :class="{'is-invalid': errors.restricted_point}"-->
+<!--                            />-->
+<!--                            <div class="invalid-feedback">{{error_messages.restricted_point}}</div>-->
+<!--                        </div>-->
+
+                        <div class="form-group">
+                            <label>Storage server<span class="text-danger"></span></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Storage server"
+                                v-model="form.storage_server"
+                                :class="{'is-invalid': errors.storage_server}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.storage_server}}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+                    <!--begin::Form-->
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label>Storage server long time<span class="text-danger"></span></label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -223,7 +202,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Description storage long time <span class="text-danger">*</span></label>
+                            <label>Description storage long time policy<span class="text-danger"></span></label>
                             <textarea
                                 type="text"
                                 class="form-control"
@@ -235,6 +214,27 @@
                             <div class="invalid-feedback">{{error_messages.description_storage_long_time}}</div>
                         </div>
 
+                        <div class="form-group">
+                            <label>Comment <span class="text-danger"></span></label>
+                            <textarea
+                                type="text"
+                                class="form-control"
+                                placeholder="Comment"
+                                rows="5"
+                                v-model="form.comment"
+                                :class="{'is-invalid': errors.comment}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.comment}}</div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <form @submit.prevent="createOrganization">
+                            <div class="form__button">
+                                <button type="submit" class="btn btn-success mr-2 button_width">Add</button>
+                                <Link :href="route('backups.index')" as="button" method="get" class="btn btn-primary font-weight-bolder button_width">Back</Link>
+                            </div>
+                        </form>
                     </div>
 
                 </div>
@@ -261,7 +261,7 @@ export default {
                 'owner': '',
                 'hostname': '',
                 'backup_tool_id': '',
-                'bd': '',
+                'comment': '',
                 'restricted_point': '',
                 'description_storage': '',
                 'backup_day_id': '',
@@ -282,7 +282,7 @@ export default {
                 hostname: false,
                 backup_object_id: false,
                 backup_tool_id: false,
-                bd: false,
+                comment: false,
                 restricted_point: false,
                 description_storage: false,
                 backup_day_id: false,
@@ -297,7 +297,7 @@ export default {
                 hostname: '',
                 backup_object_id: '',
                 backup_tool_id: '',
-                bd: '',
+                comment: '',
                 restricted_point: '',
                 description_storage: '',
                 backup_day_id: '',
@@ -337,7 +337,7 @@ export default {
                             hostname: errors.hasOwnProperty('hostname'),
                             backup_object_id: errors.hasOwnProperty('backup_object_id'),
                             backup_tool_id: errors.hasOwnProperty('backup_tool_id'),
-                            bd: errors.hasOwnProperty('bd'),
+                            comment: errors.hasOwnProperty('comment'),
                             restricted_point: errors.hasOwnProperty('restricted_point'),
                             description_storage: errors.hasOwnProperty('description_storage'),
                             backup_day_id: errors.hasOwnProperty('backup_day_id'),
@@ -369,8 +369,8 @@ export default {
                                 ? errors.backup_tool_id[0]
                                 : '',
 
-                            bd: errors.hasOwnProperty('bd')
-                                ? errors.bd[0]
+                            comment: errors.hasOwnProperty('comment')
+                                ? errors.comment[0]
                                 : '',
 
                             restricted_point: errors.hasOwnProperty('restricted_point')
@@ -424,7 +424,7 @@ export default {
                 hostname: '',
                 backup_object_id: '',
                 backup_tool_id: '',
-                bd: '',
+                comment: '',
                 restricted_point: '',
                 description_storage: '',
                 backup_day_id: '',
@@ -443,7 +443,7 @@ export default {
                 hostname: false,
                 backup_object_id: false,
                 backup_tool_id: false,
-                bd: false,
+                comment: false,
                 restricted_point: false,
                 description_storage: false,
                 backup_day_id: false,

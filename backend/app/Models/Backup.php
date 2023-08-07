@@ -16,7 +16,7 @@ class Backup extends Model
         'hostname',
         'backup_object_id',
         'backup_tool_id',
-        'bd',
+        'comment',
         'restricted_point',
         'description_storage',
         'backup_day_id',

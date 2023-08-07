@@ -255,7 +255,6 @@ export default {
                 'hostname',
                 'object',
                 'tool',
-                'bd',
                 'storage_server',
                 'description_storage',
                 'day',
@@ -263,6 +262,7 @@ export default {
                 // 'restricted_point',
                 'storage_server_long_time',
                 'description_storage_long_time',
+                'comment',
                 'actions'
             ],
             options: {

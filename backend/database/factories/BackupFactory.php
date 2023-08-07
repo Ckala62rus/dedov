@@ -30,7 +30,7 @@ class BackupFactory extends Factory
             'hostname' => fake()->slug,
             'backup_object_id' => BackupObject::factory()->create(),
             'backup_tool_id' => BackupTool::factory()->create(),
-            'bd' => fake()->slug,
+            'comment' => fake()->slug,
             'restricted_point' => fake()->slug,
             'description_storage' => fake()->slug,
             'backup_day_id' => BackupDay::factory()->create(),

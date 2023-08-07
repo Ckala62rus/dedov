@@ -26,7 +26,7 @@ class BackupCollectionResource extends JsonResource
             'hostname' => $this->hostname,
             'object' => $this->backupObject ? $this->backupObject->name : '',
             'tool' => $this->backupTool ? $this->backupTool->name : '',
-            'bd' => $this->bd,
+            'comment' => $this->comment,
             'restricted_point' => $this->restricted_point,
             'description_storage' => $this->description_storage,
             'day' => $this->backupDay ? $this->backupDay->name : '',

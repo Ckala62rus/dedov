@@ -29,7 +29,7 @@ class BackupStoreRequest extends FormRequest
             'hostname' => 'nullable|string',
             'backup_object_id' => 'required|integer',
             'backup_tool_id' => 'nullable|integer',
-            'bd' => 'nullable|string',
+            'comment' => 'nullable|string',
             'restricted_point' => 'nullable|string',
             'description_storage' => 'nullable|string',
             'backup_day_id' => 'nullable|integer',
