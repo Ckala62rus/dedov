@@ -9,15 +9,28 @@
                         </h3>
                     </div>
                     <div class="card-body">
-
-                        <Link
-                            :href="route('equipments.create')"
-                            as="button"
-                            method="get"
-                            class="btn btn-success mb-5"
-                        >
-                            Добавить тип оборудования
-                        </Link>
+                        <div class="row mb-5">
+                            <div class="col-md-8">
+                                <Link
+                                    :href="route('equipments.create')"
+                                    as="button"
+                                    method="get"
+                                    class="btn btn-success mb-5"
+                                >
+                                    Добавить тип оборудования
+                                </Link>
+                            </div>
+                            <div class="col-md-4">
+                                <Link
+                                    :href="route('devices.index')"
+                                    as="button"
+                                    method="get"
+                                    class="btn btn-primary w-100"
+                                >
+                                    Back to devices page
+                                </Link>
+                            </div>
+                        </div>
 
                         <v-server-table
                             :url="url"
