@@ -261,7 +261,7 @@ export default {
                 'day',
                 'time_start',
                 // 'restricted_point',
-                'storage_long_time',
+                'storage_server_long_time',
                 'description_storage_long_time',
                 'actions'
             ],

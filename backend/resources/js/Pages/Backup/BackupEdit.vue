@@ -211,15 +211,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Storage long time<span class="text-danger">*</span></label>
+                            <label>Storage server long time<span class="text-danger">*</span></label>
                             <input
                                 type="text"
                                 class="form-control"
                                 placeholder="Storage long time"
-                                v-model="form.storage_long_time"
-                                :class="{'is-invalid': errors.storage_long_time}"
+                                v-model="form.storage_server_long_time"
+                                :class="{'is-invalid': errors.storage_server_long_time}"
                             />
-                            <div class="invalid-feedback">{{error_messages.storage_long_time}}</div>
+                            <div class="invalid-feedback">{{error_messages.storage_server_long_time}}</div>
                         </div>
 
                         <div class="form-group">
