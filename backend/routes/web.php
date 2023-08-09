@@ -7,6 +7,7 @@ use App\Http\Controllers\BackupToolController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ExcelController;
+use App\Http\Controllers\InternetSpeedController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
@@ -101,6 +102,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('backup-days', BackupDayController::class);
         Route::get('backup-days-all-paginate', [BackupDayController::class, 'getAllBackupDaysWithPagination']);
         Route::get('backup-days-all-collection', [BackupDayController::class, 'getAllBackupDayCollection']);
+
+        // InternetSpeed
+        Route::resource('internet-speed', InternetSpeedController::class);
     });
 
     // Permission
