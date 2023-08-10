@@ -8,6 +8,8 @@ use App\Contracts\BackupObject\BackupObjectRepositoryInterface;
 use App\Contracts\BackupObject\BackupObjectServiceInterface;
 use App\Contracts\BackupTool\BackupToolRepositoryInterface;
 use App\Contracts\BackupTool\BackupToolServiceInterface;
+use App\Contracts\ChannelType\ChannelTypeRepositoryInterface;
+use App\Contracts\ChannelType\ChannelTypeServiceInterface;
 use App\Contracts\Day\BackupDayRepositoryInterface;
 use App\Contracts\Day\BackupDayServiceInterface;
 use App\Contracts\DeviceRepositoryInterface;
@@ -26,6 +28,7 @@ use App\Repositories\BackupDayRepository;
 use App\Repositories\BackupObjectRepository;
 use App\Repositories\BackupRepository;
 use App\Repositories\BackupToolRepository;
+use App\Repositories\ChannelTypeRepository;
 use App\Repositories\DeviceRepository;
 use App\Repositories\EquipmentRepository;
 use App\Repositories\InternetSpeedRepository;
@@ -36,6 +39,7 @@ use App\Services\BackupDayService;
 use App\Services\BackupObjectService;
 use App\Services\BackupService;
 use App\Services\BackupToolService;
+use App\Services\ChannelTypeService;
 use App\Services\DeviceService;
 use App\Services\EquipmentService;
 use App\Services\InternetSpeedService;
@@ -83,6 +87,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(InternetSpeedRepositoryInterface::class, InternetSpeedRepository::class);
         $this->app->bind(InternetSpeedServiceInterface::class, InternetSpeedService::class);
+
+        $this->app->bind(ChannelTypeRepositoryInterface::class, ChannelTypeRepository::class);
+        $this->app->bind(ChannelTypeServiceInterface::class, ChannelTypeService::class);
     }
 
     /**
