@@ -144,6 +144,54 @@ class InternetSpeedControllerTest extends TestCase
         ]);
     }
 
+    public function test_controller_method_update_success(): void
+    {
+        // arrange
+        $modelCreated = InternetSpeed::factory()->create();
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $dataForUpdate = [
+            'name' => 'update name',
+            'description' => 'update description',
+        ];
+
+        // act
+        $response = $this->put('admin/internet-speed/' . $modelCreated->id, $dataForUpdate);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson([
+            'data' => [
+                'internet-speed' => [
+                    'name' => $dataForUpdate['name'],
+                    'description' => $dataForUpdate['description'],
+                ],
+            ]
+        ]);
+    }
+
+    public function test_controller_method_update_field_required_fail(): void
+    {
+        // arrange
+        $modelCreated = InternetSpeed::factory()->create();
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // act
+        $response = $this->put('admin/internet-speed/' . $modelCreated->id, []);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonValidationErrors([
+            'name' => 'The name field is required.',
+        ]);
+    }
+
     public function test_controller_method_destroy_if_exist_database_success(): void
     {
         // arrange

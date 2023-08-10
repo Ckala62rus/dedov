@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Contracts\InternetSpeed\InternetSpeedServiceInterface;
 use App\Http\Requests\InternetSpeed\InternetSpeedStoreRequest;
+use App\Http\Requests\InternetSpeed\InternetSpeedUpdateRequest;
+use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedShowResource;
 use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedStoreResource;
-use Illuminate\Http\Request;
+use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedUpdateResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class InternetSpeedController extends BaseController
 {
+    /**
+     * @param InternetSpeedServiceInterface $internetSpeedService
+     */
     public function __construct(
         private InternetSpeedServiceInterface $internetSpeedService
     ){}
@@ -67,7 +72,7 @@ class InternetSpeedController extends BaseController
         }
 
         return $this->response(
-            ['internet-speed' => InternetSpeedStoreResource::make($model)],
+            ['internet-speed' => InternetSpeedShowResource::make($model)],
             "Find internet-speed by id:$id",
             true,
             Response::HTTP_OK
@@ -79,9 +84,26 @@ class InternetSpeedController extends BaseController
         // return view
     }
 
-    public function update(Request $request, int $id)
+    /**
+     * Update internet speed entity by id
+     * @param InternetSpeedUpdateRequest $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(InternetSpeedUpdateRequest $request, int $id): JsonResponse
     {
-        //
+        $data = $request->validated();
+
+        $model = $this
+            ->internetSpeedService
+            ->updateInternetSpeed($id, $data);
+
+        return $this->response(
+            ['internet-speed' => InternetSpeedUpdateResource::make($model)],
+            "Update internet-speed by id:$id",
+            true,
+            Response::HTTP_OK
+        );
     }
 
     /**
