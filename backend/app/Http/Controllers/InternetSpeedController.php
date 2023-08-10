@@ -46,9 +46,32 @@ class InternetSpeedController extends BaseController
         );
     }
 
-    public function show(int $id)
+    /**
+     * Get internet speed entity by id
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function show(int $id): JsonResponse
     {
-        //
+        $model = $this
+            ->internetSpeedService
+            ->getInternetSpeedById($id);
+
+        if (!$model) {
+            return $this->response(
+                ['internet-speed' => []],
+                'Get internet-speed entity by id:' . $id,
+                false,
+                Response::HTTP_OK
+            );
+        }
+
+        return $this->response(
+            ['internet-speed' => InternetSpeedStoreResource::make($model)],
+            "Find internet-speed by id:$id",
+            true,
+            Response::HTTP_OK
+        );
     }
 
     public function edit(int $id)
@@ -61,8 +84,22 @@ class InternetSpeedController extends BaseController
         //
     }
 
+    /**
+     * Delete internet-speed intity by id
+     * @param int $id
+     * @return JsonResponse
+     */
     public function destroy(int $id)
     {
-        //
+        $isDelete = $this
+            ->internetSpeedService
+            ->deleteInternetSpeed($id);
+
+        return $this->response(
+            ['delete' => $isDelete],
+            "Internet-speed was deleted with id:$id",
+            true,
+            Response::HTTP_OK
+        );
     }
 }
