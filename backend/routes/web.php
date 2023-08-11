@@ -4,6 +4,7 @@ use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BackupDayController;
 use App\Http\Controllers\BackupObjectController;
 use App\Http\Controllers\BackupToolController;
+use App\Http\Controllers\ChannelTypeController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ExcelController;
@@ -105,6 +106,11 @@ Route::middleware(['auth'])->group(function () {
 
         // InternetSpeed
         Route::resource('internet-speed', InternetSpeedController::class);
+        Route::get('internet-speed-all-paginate', [InternetSpeedController::class, 'getAllInternetSpeedWithPagination']);
+        Route::get('internet-speed-all-internet-speed', [InternetSpeedController::class, 'getAllInternetSpeedCollection']);
+
+        // ChannelType
+        Route::resource('channel-types', ChannelTypeController::class);
     });
 
     // Permission

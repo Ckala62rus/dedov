@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\InternetSpeed\InternetSpeedServiceInterface;
+use App\Http\Requests\InternetSpeed\InternetSpeedCollectionRequest;
 use App\Http\Requests\InternetSpeed\InternetSpeedStoreRequest;
 use App\Http\Requests\InternetSpeed\InternetSpeedUpdateRequest;
+use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedCollectionResource;
 use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedShowResource;
 use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedStoreResource;
 use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedUpdateResource;
@@ -120,6 +122,43 @@ class InternetSpeedController extends BaseController
         return $this->response(
             ['delete' => $isDelete],
             "Internet-speed was deleted with id:$id",
+            true,
+            Response::HTTP_OK
+        );
+    }
+
+    /**
+     * Get all internet speed entity with collection
+     * @param InternetSpeedCollectionRequest $request
+     * @return JsonResponse
+     */
+    public function getAllInternetSpeedWithPagination(InternetSpeedCollectionRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $models = $this
+            ->internetSpeedService
+            ->getAllInternetSpeedsWithPagination($data['limit'], $data);
+
+        return response()->json([
+            'data' => InternetSpeedCollectionResource::collection($models),
+            'count' => $models->total()
+        ]);
+    }
+
+    /**
+     * Get all internet speed collection
+     * @return JsonResponse
+     */
+    public function getAllInternetSpeedCollection(): JsonResponse
+    {
+        $models = $this
+            ->internetSpeedService
+            ->getAllInternetSpeedsCollection([]);
+
+        return $this->response(
+            ['internet-speed' => InternetSpeedCollectionResource::collection($models)],
+            'Internet-speed collection',
             true,
             Response::HTTP_OK
         );
