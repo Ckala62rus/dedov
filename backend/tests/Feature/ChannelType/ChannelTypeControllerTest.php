@@ -94,4 +94,86 @@ class ChannelTypeControllerTest extends TestCase
             ]
         ]);
     }
+
+    public function test_controller_show_channel_type_by_id_if_not_exist_fail(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $this->actingAs(User::factory()->create());
+
+        // act
+        $response = $this->get('admin/channel-types/' . random_int(1, 100));
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => false]);
+        $response->assertJson([
+            'data' => [
+                'channel-type' => []
+            ]
+        ]);
+    }
+
+    public function test_controller_channel_type_update_success(): void
+    {
+        // arrange
+        $channelTypeCreated = ChannelType::factory()->create();
+        $this->withExceptionHandling();
+        $this->actingAs(User::factory()->create());
+        $dataForUpdate = ['name' => 'updated name'];
+
+        // act
+        $response = $this->put('admin/channel-types/' . $channelTypeCreated->id, $dataForUpdate);
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson([
+            'data' => [
+                'channel-type' => [
+                    'name' => $dataForUpdate['name'],
+                    'description' => $channelTypeCreated->description,
+                ]
+            ]
+        ]);
+    }
+
+    public function test_controller_channel_type_delete_success(): void
+    {
+        // arrange
+        $channelTypeCreated = ChannelType::factory()->create();
+        $this->withExceptionHandling();
+        $this->actingAs(User::factory()->create());
+
+        // act
+        $response = $this->delete('admin/channel-types/' . $channelTypeCreated->id);
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson([
+            'data' => [
+                'delete' => true
+            ],
+        ]);
+    }
+
+    public function test_controller_channel_type_delete_if_not_exist_fail(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $this->actingAs(User::factory()->create());
+
+        // act
+        $response = $this->delete('admin/channel-types/' . random_int(1, 100));
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson([
+            'data' => [
+                'delete' => false
+            ],
+        ]);
+    }
 }

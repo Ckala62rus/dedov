@@ -109,7 +109,7 @@ class InternetSpeedController extends BaseController
     }
 
     /**
-     * Delete internet-speed intity by id
+     * Delete internet-speed entity by id
      * @param int $id
      * @return JsonResponse
      */

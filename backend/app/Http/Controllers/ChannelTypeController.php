@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Contracts\ChannelType\ChannelTypeServiceInterface;
 use App\Http\Requests\ChannelType\ChannelTypeStoreRequest;
+use App\Http\Requests\ChannelType\ChannelTypeUpdateRequest;
 use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeShowResource;
 use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeStoreResource;
-use Illuminate\Http\Request;
+use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeUpdateResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -50,7 +51,12 @@ class ChannelTypeController extends BaseController
         );
     }
 
-    public function show(int $id)
+    /**
+     * Get channel type entity by id
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function show(int $id): JsonResponse
     {
         $model = $this
             ->channelTypeService
@@ -78,13 +84,42 @@ class ChannelTypeController extends BaseController
         // view
     }
 
-    public function update(Request $request, int $id)
+    /**
+     * Update channel type entity by id
+     * @param ChannelTypeUpdateRequest $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(ChannelTypeUpdateRequest $request, int $id): JsonResponse
     {
-        //
+        $model = $this
+            ->channelTypeService
+            ->updateChannelType($id, $request->validated());
+
+        return $this->response(
+            ['channel-type' => ChannelTypeUpdateResource::make($model)],
+            "Update channel-type by id:$id",
+            true,
+            Response::HTTP_OK
+        );
     }
 
-    public function destroy(int $id)
+    /**
+     * Delete channel type by id
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $isDelete = $this
+            ->channelTypeService
+            ->deleteChannelType($id);
+
+        return $this->response(
+            ['delete' => $isDelete],
+            "Channel type was deleted with id:$id",
+            true,
+            Response::HTTP_OK
+        );
     }
 }
