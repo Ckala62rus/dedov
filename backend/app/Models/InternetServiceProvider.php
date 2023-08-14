@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class InternetServiceProvider extends Model
 {
@@ -25,4 +26,36 @@ class InternetServiceProvider extends Model
         'organization_id',
         'user_id',
     ];
+
+    /**
+     * @return HasOne
+     */
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function organization(): HasOne
+    {
+        return $this->hasOne(Organization::class, 'id', 'organization_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function channel_type(): HasOne
+    {
+        return $this->hasOne(ChannelType::class, 'id', 'channel_type_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function internet_speed(): HasOne
+    {
+        return $this->hasOne(InternetSpeed::class, 'id', 'internet_speed_id');
+    }
 }

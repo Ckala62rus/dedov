@@ -15,5 +15,6 @@ interface InternetServiceProviderRepositoryInterface
     public function getInternetServiceProviderById(Builder $query, int $id): ?Model;
     public function updateInternetServiceProvider(Builder $query, int $id, array $data): ?Model;
     public function deleteInternetServiceProvider(Builder $query, int $id): bool;
+    public function relationsInternetServiceProvider(Builder $query, array $data): Builder;
     public function getQuery(): Builder;
 }

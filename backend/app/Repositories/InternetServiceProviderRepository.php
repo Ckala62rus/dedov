@@ -101,4 +101,15 @@ class InternetServiceProviderRepository extends BaseRepository implements Intern
             ->model
             ->newQuery();
     }
+
+    /**
+     * Set relationship
+     * @param Builder $query
+     * @param array $data
+     * @return Builder
+     */
+    public function relationsInternetServiceProvider(Builder $query, array $data): Builder
+    {
+        return $query->with($data);
+    }
 }

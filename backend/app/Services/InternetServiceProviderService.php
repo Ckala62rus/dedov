@@ -61,6 +61,15 @@ class InternetServiceProviderService implements InternetServiceProviderServiceIn
             ->internetServiceProviderRepository
             ->getQuery();
 
+        $query = $this
+            ->internetServiceProviderRepository
+            ->relationsInternetServiceProvider($query, [
+                'user',
+                'organization',
+                'channel_type',
+                'internet_speed',
+            ]);
+
         return $this
             ->internetServiceProviderRepository
             ->createInternetServiceProvider($query, $data);
@@ -76,6 +85,15 @@ class InternetServiceProviderService implements InternetServiceProviderServiceIn
         $query = $this
             ->internetServiceProviderRepository
             ->getQuery();
+
+        $query = $this
+            ->internetServiceProviderRepository
+            ->relationsInternetServiceProvider($query, [
+                'user',
+                'organization',
+                'channel_type',
+                'internet_speed',
+            ]);
 
         return $this
             ->internetServiceProviderRepository
