@@ -16,6 +16,8 @@ use App\Contracts\DeviceRepositoryInterface;
 use App\Contracts\DeviceServiceInterface;
 use App\Contracts\EquipmentRepositoryInterface;
 use App\Contracts\EquipmentServiceInterface;
+use App\Contracts\InternetServiceProvider\InternetServiceProviderRepositoryInterface;
+use App\Contracts\InternetServiceProvider\InternetServiceProviderServiceInterface;
 use App\Contracts\InternetSpeed\InternetSpeedRepositoryInterface;
 use App\Contracts\InternetSpeed\InternetSpeedServiceInterface;
 use App\Contracts\OrganizationRepositoryInterface;
@@ -31,6 +33,7 @@ use App\Repositories\BackupToolRepository;
 use App\Repositories\ChannelTypeRepository;
 use App\Repositories\DeviceRepository;
 use App\Repositories\EquipmentRepository;
+use App\Repositories\InternetServiceProviderRepository;
 use App\Repositories\InternetSpeedRepository;
 use App\Repositories\OrganizationRepository;
 use App\Repositories\RoleRepository;
@@ -42,6 +45,7 @@ use App\Services\BackupToolService;
 use App\Services\ChannelTypeService;
 use App\Services\DeviceService;
 use App\Services\EquipmentService;
+use App\Services\InternetServiceProviderService;
 use App\Services\InternetSpeedService;
 use App\Services\OrganizationsService;
 use App\Services\RoleService;
@@ -90,6 +94,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ChannelTypeRepositoryInterface::class, ChannelTypeRepository::class);
         $this->app->bind(ChannelTypeServiceInterface::class, ChannelTypeService::class);
+
+        $this->app->bind(InternetServiceProviderRepositoryInterface::class, InternetServiceProviderRepository::class);
+        $this->app->bind(InternetServiceProviderServiceInterface::class, InternetServiceProviderService::class);
     }
 
     /**
