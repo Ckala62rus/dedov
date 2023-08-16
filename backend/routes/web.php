@@ -8,6 +8,7 @@ use App\Http\Controllers\ChannelTypeController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ExcelController;
+use App\Http\Controllers\InternetServiceProviderController;
 use App\Http\Controllers\InternetSpeedController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
@@ -111,6 +112,9 @@ Route::middleware(['auth'])->group(function () {
 
         // ChannelType
         Route::resource('channel-types', ChannelTypeController::class);
+
+        // InternetServiceProvider (ISP)
+        Route::resource('isp', InternetServiceProviderController::class);
     });
 
     // Permission

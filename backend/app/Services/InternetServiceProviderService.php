@@ -4,9 +4,11 @@ namespace App\Services;
 
 use App\Contracts\InternetServiceProvider\InternetServiceProviderRepositoryInterface;
 use App\Contracts\InternetServiceProvider\InternetServiceProviderServiceInterface;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class InternetServiceProviderService implements InternetServiceProviderServiceInterface
 {
@@ -54,12 +56,20 @@ class InternetServiceProviderService implements InternetServiceProviderServiceIn
      * Create internet service provider and return created model
      * @param array $data
      * @return Model
+     * @throws Exception
      */
     public function createInternetServiceProvider(array $data): Model
     {
         $query = $this
             ->internetServiceProviderRepository
             ->getQuery();
+
+        if (!Auth::user())
+        {
+            throw new Exception('User not authenticated! Method -> createInternetServiceProvider');
+        }
+
+        $data['user_id'] = Auth::user()->id;
 
         $query = $this
             ->internetServiceProviderRepository
