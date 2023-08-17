@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\ChannelType\ChannelTypeServiceInterface;
+use App\Http\Requests\ChannelType\ChannelTypeCollectionRequest;
 use App\Http\Requests\ChannelType\ChannelTypeStoreRequest;
 use App\Http\Requests\ChannelType\ChannelTypeUpdateRequest;
+use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeCollectionResource;
 use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeShowResource;
 use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeStoreResource;
 use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeUpdateResource;
@@ -118,6 +120,44 @@ class ChannelTypeController extends BaseController
         return $this->response(
             ['delete' => $isDelete],
             "Channel type was deleted with id:$id",
+            true,
+            Response::HTTP_OK
+        );
+    }
+
+    /**
+     * Get all channel type with pagination
+     * @param ChannelTypeCollectionRequest $request
+     * @return JsonResponse
+     */
+    public function getAllChannelTypeWithPagination(ChannelTypeCollectionRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $isp = $this
+            ->channelTypeService
+            ->getAllChannelTypesWithPagination($data['limit'], $data);
+
+        return response()->json([
+            'data' => ChannelTypeCollectionResource::collection($isp),
+            'count' => $isp->total()
+        ]);
+    }
+
+    /**
+     * Get all channel type collection
+     * @param ChannelTypeCollectionRequest $request
+     * @return JsonResponse
+     */
+    public function getAllChannelTypeCollection(ChannelTypeCollectionRequest $request): JsonResponse
+    {
+        $days = $this
+            ->channelTypeService
+            ->getAllChannelTypesCollection($request->validated());
+
+        return $this->response(
+            ['channel-type' => ChannelTypeCollectionResource::collection($days)],
+            'Channel type collection',
             true,
             Response::HTTP_OK
         );

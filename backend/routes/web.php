@@ -112,6 +112,8 @@ Route::middleware(['auth'])->group(function () {
 
         // ChannelType
         Route::resource('channel-types', ChannelTypeController::class);
+        Route::get('channel-type-all-paginate', [ChannelTypeController::class, 'getAllChannelTypeWithPagination']);
+        Route::get('channel-type-all-internet-speed', [ChannelTypeController::class, 'getAllChannelTypeCollection']);
 
         // InternetServiceProvider (ISP)
         Route::resource('isp', InternetServiceProviderController::class);
