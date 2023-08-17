@@ -8,6 +8,7 @@ use App\Models\InternetSpeed;
 use App\Models\Organization;
 use App\Models\User;
 use App\Services\InternetServiceProviderService;
+use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -16,7 +17,7 @@ class InternetServiceProviderServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    private function getData(): array
+    private function getData(User $user = null): array
     {
         return [
             'organization_id' => Organization::factory()->create(['name' => 'my organization'])->id, // required
@@ -32,7 +33,7 @@ class InternetServiceProviderServiceTest extends TestCase
             'cost_participant_5' => fake()->text(255),
             'cost_participant_6' => fake()->text(255),
             'comment' => fake()->text(255),
-            'user_id' => User::factory()->create()->id,
+            'user_id' => $user ?? User::factory()->create()->id,
         ];
     }
 
@@ -41,11 +42,15 @@ class InternetServiceProviderServiceTest extends TestCase
      * clear && vendor/bin/phpunit --filter=InternetServiceProviderServiceTest
      *
      * @return void
+     * @throws Exception
      */
     public function test_create_internet_service_provider_success(): void
     {
         // arrange
-        $data = $this->getData();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $data = $this->getData($user);
 
         /** @var InternetServiceProviderService $service */
         $service = $this->app->make(InternetServiceProviderService::class);
@@ -55,7 +60,7 @@ class InternetServiceProviderServiceTest extends TestCase
 
         // assert
         $this->assertEquals($data['organization_id'], $isp->organization->id);
-        $this->assertEquals($data['user_id'], $isp->user->id);
+        $this->assertEquals($user->id, $isp->user->id);
         $this->assertEquals($data['channel_type_id'], $isp->channel_type->id);
         $this->assertEquals($data['internet_speed_id'], $isp->internet_speed->id);
     }
@@ -63,7 +68,10 @@ class InternetServiceProviderServiceTest extends TestCase
     public function test_create_internet_service_provider_without_organization_id_field_fail(): void
     {
         // arrange
-        $data = $this->getData();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $data = $this->getData($user);
         unset($data['organization_id']);
 
         /** @var InternetServiceProviderService $service */
@@ -80,7 +88,10 @@ class InternetServiceProviderServiceTest extends TestCase
     public function test_create_internet_service_provider_without_address_field_fail(): void
     {
         // arrange
-        $data = $this->getData();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $data = $this->getData($user);
         unset($data['address']);
 
         /** @var InternetServiceProviderService $service */
@@ -97,7 +108,10 @@ class InternetServiceProviderServiceTest extends TestCase
     public function test_create_internet_service_provider_without_channel_type_id_field_fail(): void
     {
         // arrange
-        $data = $this->getData();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $data = $this->getData($user);
         unset($data['channel_type_id']);
 
         /** @var InternetServiceProviderService $service */

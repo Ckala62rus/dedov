@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Tests\TestCase;
+use Throwable;
 
 class InternetServiceProviderControllerTest extends TestCase
 {
@@ -26,7 +27,7 @@ class InternetServiceProviderControllerTest extends TestCase
      * clear && vendor/bin/phpunit --filter=InternetServiceProviderControllerTest
      *
      * @return void
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function test_controller_store_isp_success(): void
     {
@@ -67,5 +68,81 @@ class InternetServiceProviderControllerTest extends TestCase
         ]);
     }
 
+    public function test_controller_store_isp_without_organization_id_fail(): void
+    {
+        // arrange
+        $address        = '123100, Москва, Пресненская набережная, дом 12 Башня Федерация'; // required
+        $channelType    = ChannelType::factory()->create(['name' => 'some channel type']); // required
 
+        $data = [
+            'address' => $address,
+            'channel_type_id' => $channelType->id,
+        ];
+
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // act
+        $response = $this->post('admin/isp', $data);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonValidationErrors([
+            'organization_id' => 'The organization id field is required.',
+        ]);
+    }
+
+    public function test_controller_store_isp_without_address_id_fail(): void
+    {
+        // arrange
+        $organization   = Organization::factory()->create(['name' => 'my organization']); // required
+        $channelType    = ChannelType::factory()->create(['name' => 'some channel type']); // required
+
+        $data = [
+            'organization_id' => $organization->id,
+            'channel_type_id' => $channelType->id,
+        ];
+
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // act
+        $response = $this->post('admin/isp', $data);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonValidationErrors([
+            'address' => 'The address field is required.',
+        ]);
+    }
+
+    public function test_controller_store_isp_without_channel_type_id_fail(): void
+    {
+        // arrange
+        $organization   = Organization::factory()->create(['name' => 'my organization']); // required
+        $address        = '123100, Москва, Пресненская набережная, дом 12 Башня Федерация'; // required
+
+        $data = [
+            'organization_id' => $organization->id,
+            'address' => $address,
+        ];
+
+        $this->withExceptionHandling();
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // act
+        $response = $this->post('admin/isp', $data);
+
+        // assert
+        $response->assertStatus(ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonValidationErrors([
+            'channel_type_id' => 'The channel type id field is required.',
+        ]);
+    }
 }
