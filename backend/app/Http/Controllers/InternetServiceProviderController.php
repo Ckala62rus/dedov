@@ -60,9 +60,19 @@ class InternetServiceProviderController extends BaseController
             ->internetServiceProviderService
             ->getInternetServiceProviderById($id);
 
+        if (!$model)
+        {
+            return $this->response(
+                ['isp' => []],
+                'Internet service provider not found',
+                false,
+                Response::HTTP_OK
+            );
+        }
+
         return $this->response(
             ['isp' => InternetServiceProviderShowResource::make($model)],
-            'Internet service provider was created',
+            'Internet service provider by id:' . $id,
             true,
             Response::HTTP_OK
         );
