@@ -13,7 +13,7 @@ class InternetServiceProviderUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,19 @@ class InternetServiceProviderUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'organization_id' => 'sometimes|integer',
+            'channel_type_id' => 'sometimes|integer',
+            'address' => 'sometimes|string',
+            'static_ip_address' => 'string',
+            'schema_org_channel_provider' => 'string',
+            'cost_participant_1' => 'string',
+            'cost_participant_2' => 'string',
+            'cost_participant_3' => 'string',
+            'cost_participant_4' => 'string',
+            'cost_participant_5' => 'string',
+            'cost_participant_6' => 'string',
+            'comment' => 'string',
+            'internet_speed_id' => 'nullable|integer',
         ];
     }
 }

@@ -115,7 +115,7 @@ class InternetServiceProviderController extends BaseController
             ->deleteInternetServiceProvider($id);
 
         return $this->response(
-            ['delete' => $isDelete],
+            ['isDelete' => $isDelete],
             "Internet service provider was deleted with id:$id",
             true,
             Response::HTTP_OK
