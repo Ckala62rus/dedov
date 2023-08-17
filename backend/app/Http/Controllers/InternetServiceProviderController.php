@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\InternetServiceProvider\InternetServiceProviderServiceInterface;
+use App\Http\Requests\Backup\BackupCollectionRequest;
+use App\Http\Requests\InternetServiceProvider\InternetServiceProviderCollectionRequest;
 use App\Http\Requests\InternetServiceProvider\InternetServiceProviderStoreRequest;
 use App\Http\Requests\InternetServiceProvider\InternetServiceProviderUpdateRequest;
+use App\Http\Resources\Admin\Dashboard\InternetServiceProvider\InternetServiceProviderCollectionResource;
 use App\Http\Resources\Admin\Dashboard\InternetServiceProvider\InternetServiceProviderShowResource;
 use App\Http\Resources\Admin\Dashboard\InternetServiceProvider\InternetServiceProviderStoreResource;
 use App\Http\Resources\Admin\Dashboard\InternetServiceProvider\InternetServiceProviderUpdateResource;
@@ -120,5 +123,24 @@ class InternetServiceProviderController extends BaseController
             true,
             Response::HTTP_OK
         );
+    }
+
+    /**
+     * Get all internet service provider with pagination
+     * @param InternetServiceProviderCollectionRequest $request
+     * @return JsonResponse
+     */
+    public function getAllIspWithPagination(InternetServiceProviderCollectionRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $isp = $this
+            ->internetServiceProviderService
+            ->getAllInternetServiceProvidersWithPagination($data['limit'], $data);
+
+        return response()->json([
+            'data' => InternetServiceProviderCollectionResource::collection($isp),
+            'count' => $isp->total()
+        ]);
     }
 }

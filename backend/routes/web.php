@@ -115,6 +115,7 @@ Route::middleware(['auth'])->group(function () {
 
         // InternetServiceProvider (ISP)
         Route::resource('isp', InternetServiceProviderController::class);
+        Route::get('isp-all-paginate', [InternetServiceProviderController::class, 'getAllIspWithPagination']);
     });
 
     // Permission
