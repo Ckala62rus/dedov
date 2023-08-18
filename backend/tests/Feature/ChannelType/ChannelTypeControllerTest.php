@@ -41,7 +41,7 @@ class ChannelTypeControllerTest extends TestCase
         $response->assertJson(['status' => true]);
         $response->assertJson([
             'data' => [
-                'channel-type' => [
+                'channelType' => [
                     'name' => $data['name'],
                     'description' => null
                 ]
@@ -64,7 +64,7 @@ class ChannelTypeControllerTest extends TestCase
         $response->assertJson(['status' => true]);
         $response->assertJson([
             'data' => [
-                'channel-type' => [
+                'channelType' => [
                     'name' => $data['name'],
                     'description' => $data['description']
                 ]
@@ -87,7 +87,7 @@ class ChannelTypeControllerTest extends TestCase
         $response->assertJson(['status' => true]);
         $response->assertJson([
             'data' => [
-                'channel-type' => [
+                'channelType' => [
                     'name' => $channelTypeCreated->name,
                     'description' => $channelTypeCreated->description
                 ]
@@ -109,7 +109,7 @@ class ChannelTypeControllerTest extends TestCase
         $response->assertJson(['status' => false]);
         $response->assertJson([
             'data' => [
-                'channel-type' => []
+                'channelType' => []
             ]
         ]);
     }
@@ -130,7 +130,7 @@ class ChannelTypeControllerTest extends TestCase
         $response->assertJson(['status' => true]);
         $response->assertJson([
             'data' => [
-                'channel-type' => [
+                'channelType' => [
                     'name' => $dataForUpdate['name'],
                     'description' => $channelTypeCreated->description,
                 ]
