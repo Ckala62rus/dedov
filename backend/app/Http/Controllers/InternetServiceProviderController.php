@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\InternetServiceProvider\InternetServiceProviderServiceInterface;
-use App\Http\Requests\Backup\BackupCollectionRequest;
 use App\Http\Requests\InternetServiceProvider\InternetServiceProviderCollectionRequest;
 use App\Http\Requests\InternetServiceProvider\InternetServiceProviderStoreRequest;
 use App\Http\Requests\InternetServiceProvider\InternetServiceProviderUpdateRequest;
@@ -11,6 +10,7 @@ use App\Http\Resources\Admin\Dashboard\InternetServiceProvider\InternetServicePr
 use App\Http\Resources\Admin\Dashboard\InternetServiceProvider\InternetServiceProviderShowResource;
 use App\Http\Resources\Admin\Dashboard\InternetServiceProvider\InternetServiceProviderStoreResource;
 use App\Http\Resources\Admin\Dashboard\InternetServiceProvider\InternetServiceProviderUpdateResource;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,9 +23,12 @@ class InternetServiceProviderController extends BaseController
         private InternetServiceProviderServiceInterface $internetServiceProviderService
     ){}
 
-    public function index()
+    /**
+     * @return \Inertia\Response
+     */
+    public function index(): \Inertia\Response
     {
-        // view
+        return Inertia::render('InternetServiceProvider/InternetServiceProviderIndex');
     }
 
     public function create()

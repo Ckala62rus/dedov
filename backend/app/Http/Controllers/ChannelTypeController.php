@@ -10,6 +10,7 @@ use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeCollectionResource
 use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeShowResource;
 use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeStoreResource;
 use App\Http\Resources\Admin\Dashboard\ChannelType\ChannelTypeUpdateResource;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,14 +23,22 @@ class ChannelTypeController extends BaseController
         private ChannelTypeServiceInterface $channelTypeService
     ){}
 
-    public function index()
+    /**
+     * Return index channel type view
+     * @return \Inertia\Response
+     */
+    public function index(): \Inertia\Response
     {
-        // view
+        return Inertia::render('ChannelType/ChannelTypeIndex');
     }
 
-    public function create()
+    /**
+     * Return create view
+     * @return \Inertia\Response
+     */
+    public function create(): \Inertia\Response
     {
-        // view
+        return Inertia::render('ChannelType/ChannelTypeCreate');
     }
 
     /**
@@ -46,7 +55,7 @@ class ChannelTypeController extends BaseController
             ->createChannelType($data);
 
         return $this->response(
-            ['channel-type' => ChannelTypeStoreResource::make($channelType)],
+            ['channelType' => ChannelTypeStoreResource::make($channelType)],
             'Channel type was created',
             true,
             Response::HTTP_CREATED
@@ -66,7 +75,7 @@ class ChannelTypeController extends BaseController
 
         if (!$model) {
             return $this->response(
-                ['channel-type' => []],
+                ['channelType' => []],
                 'Get channel-type entity by id:' . $id,
                 false,
                 Response::HTTP_OK
@@ -74,16 +83,21 @@ class ChannelTypeController extends BaseController
         }
 
         return $this->response(
-            ['channel-type' => ChannelTypeShowResource::make($model)],
+            ['channelType' => ChannelTypeShowResource::make($model)],
             'Channel type was created',
             true,
             Response::HTTP_OK
         );
     }
 
-    public function edit(int $id)
+    /**
+     * Return edit channel type view
+     * @param int $id
+     * @return \Inertia\Response
+     */
+    public function edit(int $id): \Inertia\Response
     {
-        // view
+        return Inertia::render('ChannelType/ChannelTypeEdit', ['id' => $id]);
     }
 
     /**
@@ -99,7 +113,7 @@ class ChannelTypeController extends BaseController
             ->updateChannelType($id, $request->validated());
 
         return $this->response(
-            ['channel-type' => ChannelTypeUpdateResource::make($model)],
+            ['channelType' => ChannelTypeUpdateResource::make($model)],
             "Update channel-type by id:$id",
             true,
             Response::HTTP_OK
@@ -156,7 +170,7 @@ class ChannelTypeController extends BaseController
             ->getAllChannelTypesCollection($request->validated());
 
         return $this->response(
-            ['channel-type' => ChannelTypeCollectionResource::collection($days)],
+            ['channelType' => ChannelTypeCollectionResource::collection($days)],
             'Channel type collection',
             true,
             Response::HTTP_OK
