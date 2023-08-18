@@ -10,6 +10,7 @@ use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedCollectionReso
 use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedShowResource;
 use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedStoreResource;
 use App\Http\Resources\Admin\Dashboard\InternetSpeed\InternetSpeedUpdateResource;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,14 +23,22 @@ class InternetSpeedController extends BaseController
         private InternetSpeedServiceInterface $internetSpeedService
     ){}
 
-    public function index()
+    /**
+     * Return internet speed view
+     * @return \Inertia\Response
+     */
+    public function index(): \Inertia\Response
     {
-        // return view
+        return Inertia::render('InternetSpeed/InternetSpeedIndex');
     }
 
-    public function create()
+    /**
+     * Return internet speed view
+     * @return \Inertia\Response
+     */
+    public function create(): \Inertia\Response
     {
-        // return view
+        return Inertia::render('InternetSpeed/InternetSpeedCreate');
     }
 
     /**
@@ -46,7 +55,7 @@ class InternetSpeedController extends BaseController
             ->createInternetSpeed($data);
 
         return $this->response(
-            ['internet-speed' => InternetSpeedStoreResource::make($model)],
+            ['internetSpeed' => InternetSpeedStoreResource::make($model)],
             'Internet-speed was created',
             true,
             Response::HTTP_CREATED
@@ -66,7 +75,7 @@ class InternetSpeedController extends BaseController
 
         if (!$model) {
             return $this->response(
-                ['internet-speed' => []],
+                ['internetSpeed' => []],
                 'Get internet-speed entity by id:' . $id,
                 false,
                 Response::HTTP_OK
@@ -74,16 +83,21 @@ class InternetSpeedController extends BaseController
         }
 
         return $this->response(
-            ['internet-speed' => InternetSpeedShowResource::make($model)],
+            ['internetSpeed' => InternetSpeedShowResource::make($model)],
             "Find internet-speed by id:$id",
             true,
             Response::HTTP_OK
         );
     }
 
-    public function edit(int $id)
+    /**
+     * Return internet speed view
+     * @param int $id
+     * @return \Inertia\Response
+     */
+    public function edit(int $id): \Inertia\Response
     {
-        // return view
+        return Inertia::render('InternetSpeed/InternetSpeedEdit', ['id' => $id]);
     }
 
     /**
@@ -101,7 +115,7 @@ class InternetSpeedController extends BaseController
             ->updateInternetSpeed($id, $data);
 
         return $this->response(
-            ['internet-speed' => InternetSpeedUpdateResource::make($model)],
+            ['internetSpeed' => InternetSpeedUpdateResource::make($model)],
             "Update internet-speed by id:$id",
             true,
             Response::HTTP_OK
@@ -113,7 +127,7 @@ class InternetSpeedController extends BaseController
      * @param int $id
      * @return JsonResponse
      */
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
         $isDelete = $this
             ->internetSpeedService
@@ -157,7 +171,7 @@ class InternetSpeedController extends BaseController
             ->getAllInternetSpeedsCollection([]);
 
         return $this->response(
-            ['internet-speed' => InternetSpeedCollectionResource::collection($models)],
+            ['internetSpeed' => InternetSpeedCollectionResource::collection($models)],
             'Internet-speed collection',
             true,
             Response::HTTP_OK
