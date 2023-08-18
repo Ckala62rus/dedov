@@ -40,6 +40,12 @@
                                     method="get"
                                     class="btn btn-success mb-5 mr-5"
                                 >Channel types</Link>
+                                <Link
+                                    :href="route('internet-speed.index')"
+                                    as="button"
+                                    method="get"
+                                    class="btn btn-success mb-5 mr-5"
+                                >Internet Speed</Link>
 <!--                                <Link-->
 <!--                                    :href="route('backup-objects.index')"-->
 <!--                                    as="button"-->

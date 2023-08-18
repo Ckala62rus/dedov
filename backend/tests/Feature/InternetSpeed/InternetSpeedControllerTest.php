@@ -46,7 +46,7 @@ class InternetSpeedControllerTest extends TestCase
         $response->assertJson(['status' => true]);
         $response->assertJson([
             'data' => [
-                'internet-speed' => [
+                'internetSpeed' => [
                     'name' => $data['name'],
                     'description' => null
                 ]
@@ -71,7 +71,7 @@ class InternetSpeedControllerTest extends TestCase
         $response->assertJson(['status' => true]);
         $response->assertJson([
             'data' => [
-                'internet-speed' => [
+                'internetSpeed' => [
                     'name' => $data['name'],
                     'description' => $data['description']
                 ]
@@ -115,7 +115,7 @@ class InternetSpeedControllerTest extends TestCase
         $response->assertJson(['status' => true]);
         $response->assertJson([
             'data' => [
-                'internet-speed' => [
+                'internetSpeed' => [
                     'name' => $model->name,
                     'description' => $model->description
                 ]
@@ -139,7 +139,7 @@ class InternetSpeedControllerTest extends TestCase
         $response->assertJson(['status' => false]);
         $response->assertJson([
             'data' => [
-                'internet-speed' => [],
+                'internetSpeed' => [],
             ]
         ]);
     }
@@ -165,7 +165,7 @@ class InternetSpeedControllerTest extends TestCase
         $response->assertJson(['status' => true]);
         $response->assertJson([
             'data' => [
-                'internet-speed' => [
+                'internetSpeed' => [
                     'name' => $dataForUpdate['name'],
                     'description' => $dataForUpdate['description'],
                 ],
