@@ -108,12 +108,12 @@ Route::middleware(['auth'])->group(function () {
         // InternetSpeed
         Route::resource('internet-speed', InternetSpeedController::class);
         Route::get('internet-speed-all-paginate', [InternetSpeedController::class, 'getAllInternetSpeedWithPagination']);
-        Route::get('internet-speed-all-internet-speed', [InternetSpeedController::class, 'getAllInternetSpeedCollection']);
+        Route::get('internet-speed-all-collection', [InternetSpeedController::class, 'getAllInternetSpeedCollection']);
 
         // ChannelType
         Route::resource('channel-types', ChannelTypeController::class);
         Route::get('channel-types-all-paginate', [ChannelTypeController::class, 'getAllChannelTypeWithPagination']);
-        Route::get('channel-types-all-internet-speed', [ChannelTypeController::class, 'getAllChannelTypeCollection']);
+        Route::get('channel-types-all-collection', [ChannelTypeController::class, 'getAllChannelTypeCollection']);
 
         // InternetServiceProvider (ISP)
         Route::resource('isp', InternetServiceProviderController::class);

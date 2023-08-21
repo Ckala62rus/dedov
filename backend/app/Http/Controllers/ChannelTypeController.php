@@ -160,14 +160,13 @@ class ChannelTypeController extends BaseController
 
     /**
      * Get all channel type collection
-     * @param ChannelTypeCollectionRequest $request
      * @return JsonResponse
      */
-    public function getAllChannelTypeCollection(ChannelTypeCollectionRequest $request): JsonResponse
+    public function getAllChannelTypeCollection(): JsonResponse
     {
         $days = $this
             ->channelTypeService
-            ->getAllChannelTypesCollection($request->validated());
+            ->getAllChannelTypesCollection([]);
 
         return $this->response(
             ['channelType' => ChannelTypeCollectionResource::collection($days)],

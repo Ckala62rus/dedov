@@ -33,7 +33,7 @@ class InternetServiceProviderController extends BaseController
 
     public function create()
     {
-        // view
+        return Inertia::render('InternetServiceProvider/InternetServiceProviderCreate');
     }
 
     /**

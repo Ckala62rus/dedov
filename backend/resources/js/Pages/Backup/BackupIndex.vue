@@ -4,13 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-custom rdp_statistic_mg">
-<!--                    <div class="card-header">-->
-<!--                        <h3 class="card-title">-->
-<!--                            Все бэкапы-->
-<!--                        </h3>-->
-<!--                    </div>-->
                     <div class="card-body">
-
                         <div class="row">
                             <div class="col-md-8">
                                 <Link
