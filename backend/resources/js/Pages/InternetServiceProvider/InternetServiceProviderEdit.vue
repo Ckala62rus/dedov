@@ -6,7 +6,7 @@
 
                     <div class="card-header">
                         <h3 class="card-title d-flex flex-center">
-                            Create ISP
+                            Update ISP
                         </h3>
                     </div>
 
@@ -45,7 +45,7 @@
                                     :value="speed.id"
                                 />
                             </el-select>
-                            <div style="color: #F64E60" v-if="errors.internet_speed_id">{{error_messages.internet_speed_id}}</div>
+                            <div style="color: #F64E60" v-if="errors.organization_id">{{error_messages.organization_id}}</div>
                         </div>
 
                         <div class="form-group">
@@ -55,9 +55,9 @@
                                 class="form-control"
                                 placeholder="Address"
                                 v-model="form.address"
-                                :class="{'is-invalid': errors.address}"
+                                :class="{'is-invalid': errors.owner}"
                             />
-                            <div class="invalid-feedback">{{error_messages.address}}</div>
+                            <div class="invalid-feedback">{{error_messages.service}}</div>
                         </div>
 
                         <label>Channel type</label>
@@ -75,7 +75,7 @@
                                     :value="channel.id"
                                 />
                             </el-select>
-                            <div style="color: #F64E60" v-if="errors.channel_type_id">{{error_messages.channel_type_id}}</div>
+                            <div style="color: #F64E60" v-if="errors.organization_id">{{error_messages.organization_id}}</div>
                         </div>
 
 
@@ -208,9 +208,9 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <form @submit.prevent="createOrganization">
+                        <form @submit.prevent="updateISP">
                             <div class="form__button">
-                                <button type="submit" class="btn btn-success mr-2 button_width">Add</button>
+                                <button type="submit" class="btn btn-success mr-2 button_width">Update</button>
                                 <Link :href="route('isp.index')" as="button" method="get" class="btn btn-primary font-weight-bolder button_width">Back</Link>
                             </div>
                         </form>
@@ -231,6 +231,13 @@ export default {
 
     components: {
         Link
+    },
+
+    props: {
+        id: {
+            type: Number,
+            required: true,
+        },
     },
 
     data() {
@@ -254,54 +261,52 @@ export default {
             internetSpeed: null,
             channelType: null,
             errors: {
-                organization_id: false,
-                internet_speed_id: false,
-                address: false,
-                channel_type_id: false,
-                static_ip_address: false,
-                schema_org_channel_provider: false,
-                cost_participant_1: false,
-                cost_participant_2: false,
-                cost_participant_3: false,
-                cost_participant_4: false,
-                cost_participant_5: false,
-                cost_participant_6: false,
+                service: false,
+                owner: false,
+                hostname: false,
+                backup_object_id: false,
+                backup_tool_id: false,
                 comment: false,
+                restricted_point: false,
+                description_storage: false,
+                backup_day_id: false,
+                time_start: false,
+                storage_server: false,
+                storage_server_long_time: false,
+                description_storage_long_time: false,
             },
             error_messages: {
-                organization_id: '',
-                internet_speed_id: '',
-                address: '',
-                channel_type_id: '',
-                static_ip_address: '',
-                schema_org_channel_provider: '',
-                cost_participant_1: '',
-                cost_participant_2: '',
-                cost_participant_3: '',
-                cost_participant_4: '',
-                cost_participant_5: '',
-                cost_participant_6: '',
+                service: '',
+                owner: '',
+                hostname: '',
+                backup_object_id: '',
+                backup_tool_id: '',
                 comment: '',
+                restricted_point: '',
+                description_storage: '',
+                backup_day_id: '',
+                time_start: '',
+                storage_server: '',
+                storage_server_long_time: '',
+                description_storage_long_time: '',
             },
         }
     },
 
     methods: {
-        createOrganization() {
+        updateISP() {
             this.resetErrors()
 
-            axios.post('/admin/isp', this.form)
+            axios.put('/admin/isp/' + this.id, this.form)
                 .then(res => {
-                    if (res.status === 201){
+                    if (res.status === 200){
                         this.$notify({
-                            title: "Создание ISP",
-                            text: "Строка ISP создана!",
+                            title: "Обновление ISP",
+                            text: "Строка ISP обновлена!",
                             speed: 1000,
                             duration: 1000,
                             type: 'success'
                         });
-
-                        this.resetForm();
                     }
                 })
                 .catch(err => {
@@ -309,79 +314,85 @@ export default {
 
                     if (err.response.status === 422) {
                         this.errors = {
-                            organization_id: errors.hasOwnProperty('organization_id'),
-                            internet_speed_id: errors.hasOwnProperty('internet_speed_id'),
-                            address: errors.hasOwnProperty('address'),
-                            channel_type_id: errors.hasOwnProperty('channel_type_id'),
-                            static_ip_address: errors.hasOwnProperty('static_ip_address'),
-                            schema_org_channel_provider: errors.hasOwnProperty('schema_org_channel_provider'),
-                            cost_participant_1: errors.hasOwnProperty('cost_participant_1'),
-                            cost_participant_2: errors.hasOwnProperty('cost_participant_2'),
-                            cost_participant_3: errors.hasOwnProperty('cost_participant_3'),
-                            cost_participant_4: errors.hasOwnProperty('cost_participant_4'),
-                            cost_participant_5: errors.hasOwnProperty('cost_participant_5'),
+                            service: errors.hasOwnProperty('service'),
+                            owner: errors.hasOwnProperty('owner'),
+                            hostname: errors.hasOwnProperty('hostname'),
+                            backup_object_id: errors.hasOwnProperty('backup_object_id'),
+                            backup_tool_id: errors.hasOwnProperty('backup_tool_id'),
                             comment: errors.hasOwnProperty('comment'),
+                            restricted_point: errors.hasOwnProperty('restricted_point'),
+                            description_storage: errors.hasOwnProperty('description_storage'),
+                            backup_day_id: errors.hasOwnProperty('backup_day_id'),
+                            time_start: errors.hasOwnProperty('time_start'),
+                            storage_server: errors.hasOwnProperty('storage_server'),
+                            storage_server_long_time: errors.hasOwnProperty('storage_server_long_time'),
+                            description_storage_long_time: errors.hasOwnProperty('description_storage_long_time'),
+                            organization_id: errors.hasOwnProperty('organization_id'),
                         };
 
                         this.error_messages = {
-                            organization_id: errors.hasOwnProperty('organization_id')
-                                ? errors.organization_id[0]
+                            service: errors.hasOwnProperty('service')
+                                ? errors.service[0]
                                 : '',
 
-                            internet_speed_id: errors.hasOwnProperty('internet_speed_id')
-                                ? errors.internet_speed_id[0]
+                            owner: errors.hasOwnProperty('owner')
+                                ? errors.owner[0]
                                 : '',
 
-                            address: errors.hasOwnProperty('address')
-                                ? errors.address[0]
+                            hostname: errors.hasOwnProperty('hostname')
+                                ? errors.hostname[0]
                                 : '',
 
-                            channel_type_id: errors.hasOwnProperty('channel_type_id')
-                                ? errors.channel_type_id[0]
+                            backup_object_id: errors.hasOwnProperty('backup_object_id')
+                                ? errors.backup_object_id[0]
                                 : '',
 
-                            static_ip_address: errors.hasOwnProperty('static_ip_address')
-                                ? errors.static_ip_address[0]
+                            backup_tool_id: errors.hasOwnProperty('backup_tool_id')
+                                ? errors.backup_tool_id[0]
                                 : '',
 
                             comment: errors.hasOwnProperty('comment')
                                 ? errors.comment[0]
                                 : '',
 
-                            schema_org_channel_provider: errors.hasOwnProperty('schema_org_channel_provider')
-                                ? errors.schema_org_channel_provider[0]
+                            restricted_point: errors.hasOwnProperty('restricted_point')
+                                ? errors.restricted_point[0]
                                 : '',
 
-                            cost_participant_1: errors.hasOwnProperty('cost_participant_1')
-                                ? errors.cost_participant_1[0]
+                            description_storage: errors.hasOwnProperty('type')
+                                ? errors.description_storage[0]
                                 : '',
 
-                            cost_participant_2: errors.hasOwnProperty('cost_participant_2')
-                                ? errors.cost_participant_1[0]
+                            backup_day_id: errors.hasOwnProperty('backup_day_id')
+                                ? errors.backup_day_id[0]
                                 : '',
 
-                            cost_participant_3: errors.hasOwnProperty('cost_participant_3')
-                                ? errors.cost_participant_1[0]
+                            time_start: errors.hasOwnProperty('time_start')
+                                ? errors.time_start[0]
                                 : '',
 
-                            cost_participant_4: errors.hasOwnProperty('cost_participant_4')
-                                ? errors.cost_participant_1[0]
+                            storage_server: errors.hasOwnProperty('storage_server')
+                                ? errors.storage_server[0]
                                 : '',
 
-                            cost_participant_5: errors.hasOwnProperty('cost_participant_5')
-                                ? errors.cost_participant_1[0]
+                            storage_server_long_time: errors.hasOwnProperty('storage_server_long_time')
+                                ? errors.storage_server_long_time[0]
                                 : '',
 
-                            cost_participant_6: errors.hasOwnProperty('cost_participant_6')
-                                ? errors.cost_participant_1[0]
+                            description_storage_long_time: errors.hasOwnProperty('description_storage_long_time')
+                                ? errors.description_storage_long_time[0]
+                                : '',
+
+                            organization_id: errors.hasOwnProperty('organization_id')
+                                ? errors.organization_id[0]
                                 : '',
                         };
 
                         this.$notify({
-                            title: "Ошибка в заполнении полей",
+                            title: "Ошибка",
                             text: "Ошибка в заполнении полей",
                             speed: 1000,
-                            duration: 2000,
+                            duration: 1000,
                             type: 'error'
                         });
                     }
@@ -447,12 +458,21 @@ export default {
                     this.channelType = res.data.data.channelType
                 })
         },
+
+        getIspById(){
+            axios
+                .get('/admin/isp/' + this.id)
+                .then(res => {
+                    this.form = res.data.data.isp
+                })
+        },
     },
 
     mounted() {
         this.getOrganizations();
         this.getInternetSpeed();
         this.getChannelTypes();
+        this.getIspById();
     }
 }
 </script>

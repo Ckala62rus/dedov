@@ -50,7 +50,7 @@
                                     </svg><!--end::Svg Icon-->
                                 </span>
                             </span>
-                            <span class="menu-text">ВЫХОД</span>
+                            <span class="menu-text">EXIT</span>
                         </a>
                     </li>
 
@@ -72,7 +72,7 @@
                                 </svg><!--end::Svg Icon-->
                             </span>
                         </span>
-                            <span class="menu-text">Мой профиль</span>
+                            <span class="menu-text">My profile</span>
                         </Link>
                     </li>
 
@@ -89,7 +89,7 @@
                                 </svg><!--end::Svg Icon-->
                             </span>
                         </span>
-                            <span class="menu-text">Пользователи</span>
+                            <span class="menu-text">Users</span>
                         </Link>
                     </li>
 
@@ -106,7 +106,7 @@
                                 </svg><!--end::Svg Icon-->
                             </span>
                         </span>
-                            <span class="menu-text">Организации</span>
+                            <span class="menu-text">Organizations</span>
                         </Link>
                     </li>
 
@@ -146,7 +146,7 @@
                                 </svg><!--end::Svg Icon-->
                             </span>
                         </span>
-                            <span class="menu-text">Все оборудование</span>
+                            <span class="menu-text">Devices</span>
                         </Link>
                     </li>
 
@@ -163,24 +163,24 @@
                                 </svg><!--end::Svg Icon-->
                             </span>
                         </span>
-                            <span class="menu-text">Бэкапы</span>
+                            <span class="menu-text">Backup</span>
                         </Link>
                     </li>
 
                     <li class="menu-item" aria-haspopup="true">
                         <Link :href="route('isp.index')" class="menu-link ">
                         <span class="svg-icon menu-icon"><!--begin::Svg Icon | path:media/svg/icons/Design/Layers.svg-->
-                            <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo2/dist/../src/media/svg/icons/General/Shield-protected.svg-->
+                            <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo2/dist/../src/media/svg/icons/Electric/Outlet.svg-->
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24"/>
-                                        <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3"/>
-                                        <path d="M14.5,11 C15.0522847,11 15.5,11.4477153 15.5,12 L15.5,15 C15.5,15.5522847 15.0522847,16 14.5,16 L9.5,16 C8.94771525,16 8.5,15.5522847 8.5,15 L8.5,12 C8.5,11.4477153 8.94771525,11 9.5,11 L9.5,10.5 C9.5,9.11928813 10.6192881,8 12,8 C13.3807119,8 14.5,9.11928813 14.5,10.5 L14.5,11 Z M12,9 C11.1715729,9 10.5,9.67157288 10.5,10.5 L10.5,11 L13.5,11 L13.5,10.5 C13.5,9.67157288 12.8284271,9 12,9 Z" fill="#000000"/>
+                                        <path d="M15,4 C15.5522847,4 16,4.44771525 16,5 L16,9 L14,9 L14,5 C14,4.44771525 14.4477153,4 15,4 Z M9,4 C9.55228475,4 10,4.44771525 10,5 L10,9 L8,9 L8,5 C8,4.44771525 8.44771525,4 9,4 Z" fill="#000000" opacity="0.3"/>
+                                        <path d="M13,16.9291111 L13,22 L11,22 L11,16.9291111 C7.60770586,16.4438815 5,13.5264719 5,10 L5,9 L19,9 L19,10 C19,13.5264719 16.3922941,16.4438815 13,16.9291111 Z" fill="#000000"/>
                                     </g>
                                 </svg><!--end::Svg Icon-->
                             </span>
                         </span>
-                            <span class="menu-text">Internet Service Provider</span>
+                            <span class="menu-text">ISP</span>
                         </Link>
                     </li>
 
@@ -197,7 +197,7 @@
                                 </svg><!--end::Svg Icon-->
                             </span>
                         </span>
-                            <span class="menu-text">Логирование</span>
+                            <span class="menu-text">Logging</span>
                         </a>
                     </li>
 

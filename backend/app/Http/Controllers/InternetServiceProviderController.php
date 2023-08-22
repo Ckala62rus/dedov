@@ -31,7 +31,10 @@ class InternetServiceProviderController extends BaseController
         return Inertia::render('InternetServiceProvider/InternetServiceProviderIndex');
     }
 
-    public function create()
+    /**
+     * @return \Inertia\Response
+     */
+    public function create(): \Inertia\Response
     {
         return Inertia::render('InternetServiceProvider/InternetServiceProviderCreate');
     }
@@ -84,9 +87,14 @@ class InternetServiceProviderController extends BaseController
         );
     }
 
-    public function edit($id)
+    /**
+     * Return edit isp page view
+     * @param int $id
+     * @return \Inertia\Response
+     */
+    public function edit(int $id): \Inertia\Response
     {
-        // view
+        return Inertia::render('InternetServiceProvider/InternetServiceProviderEdit', ['id' => $id]);
     }
 
     /**
