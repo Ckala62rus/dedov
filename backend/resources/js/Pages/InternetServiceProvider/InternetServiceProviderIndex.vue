@@ -53,11 +53,12 @@
                             :url="url"
                             :columns="columns"
                             :options="options"
-                            ref="backups-table"
+                            ref="isp-table"
                         >
                             <template v-slot:actions="{row}">
 
-                                <Link :href="route('backups.edit', {id: row.id})" method="get" v-if="row.can_action">
+                                <div class="action__isp">
+                                    <Link :href="route('backups.edit', {id: row.id})" method="get" v-if="row.can_action">
                                     <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -67,9 +68,9 @@
                                             </g>
                                         </svg><!--end::Svg Icon-->
                                     </span>
-                                </Link>
+                                    </Link>
 
-                                <a href="javascript:;" @click="deleteBackup(row)" v-if="row.can_action">
+                                    <a href="javascript:;" @click="deleteIsp(row)" v-if="row.can_action">
                                       <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2020-10-29-133027/theme/html/demo1/dist/../src/media/svg/icons/Home/Trash.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -79,7 +80,9 @@
                                                 </g>
                                             </svg><!--end::Svg Icon-->
                                       </span>
-                                </a>
+                                    </a>
+                                </div>
+
                             </template>
                         </v-server-table>
                     </div>
@@ -104,19 +107,18 @@ export default {
             urlPrepare: '/admin/isp-all-paginate?',
             url: '/admin/isp-all-paginate?',
             columns: [
-                'organization.name',
-                'service',
-                'owner',
-                'hostname',
-                'object',
-                'tool',
-                'storage_server',
-                'description_storage',
-                'day',
-                'time_start',
-                // 'restricted_point',
-                'storage_server_long_time',
-                'description_storage_long_time',
+                'id',
+                'organization',
+                'internet_speed_name',
+                'channel_type',
+                'static_ip_address',
+                'schema_org_channel_provider',
+                'cost_participant_1',
+                'cost_participant_2',
+                'cost_participant_3',
+                'cost_participant_4',
+                'cost_participant_5',
+                'cost_participant_6',
                 'comment',
                 'actions'
             ],
@@ -126,9 +128,15 @@ export default {
                 perPage: 500,
                 editableColumns:['text'],
                 headings: {
-                    // created_at: 'Время создания',
-                    // updated_at: 'Время обновления',
-                    'organization.name': 'Org',
+                    id: 'id',
+                    organization: 'Org',
+                    internet_speed_name: 'Internet speed',
+                    channel_type: 'Channel type',
+                    static_ip_address: 'Static ip address',
+                    schema_org_channel_provider: 'Schema org channel provider',
+
+                    created_at: 'Время создания',
+                    updated_at: 'Время обновления',
                     comment: 'Comment',
                     actions: 'Actions',
                 },
@@ -162,9 +170,59 @@ export default {
             },
         }
     },
+
+    methods: {
+        deleteIsp(row){
+            Swal.fire({
+                title: 'Удалить ISP?',
+                text: "Выбранный ISP будет удален",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Да, удалить',
+                cancelButtonText: 'Отмена',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete('/admin/isp/' + row.id).then(response => {
+                        if (response.data.status === true) {
+                            this.$notify({
+                                group: 'foo',
+                                type: 'success',
+                                title: 'Удаление ISP',
+                                text: 'ISP успешно удален'
+                            });
+                            Swal.fire(
+                                'Удалено!',
+                                'ISP удален',
+                                'success'
+                            )
+                            this.$refs['isp-table'].refresh();
+                        }
+                        if (response.data.status === false) {
+                            this.$notify({
+                                group: 'foo',
+                                type: 'error',
+                                title: 'Удаление ISP',
+                            });
+                            Swal.fire(
+                                'Ошибка!',
+                                response.data.message,
+                                'error'
+                            )
+                        }
+                    });
+                }
+            })
+        },
+    },
 }
 </script>
 
 <style scoped>
+
+.action__isp {
+    width: 52px;
+}
 
 </style>
