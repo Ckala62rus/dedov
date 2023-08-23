@@ -23,7 +23,7 @@ class InternetServiceProviderCollectionResource extends JsonResource
             'organization_id' => $this->organization_id,
             'organization' => $this->organization->name,
             'internet_speed_id' => $this->internet_speed_id,
-            'internet_speed_name' => $this->internet_speed->name,
+            'internet_speed_name' => $this->internet_speed ? $this->internet_speed->name : null,
             'address' => $this->address,
             'comment' => $this->comment,
             'channel_type_id' => $this->channel_type_id,
@@ -48,7 +48,6 @@ class InternetServiceProviderCollectionResource extends JsonResource
 
     private function can_delete_or_update_current_user($backup): bool
     {
-
         $user = Auth::user();
 
         if ($user->roles->first()->name === 'super') {
