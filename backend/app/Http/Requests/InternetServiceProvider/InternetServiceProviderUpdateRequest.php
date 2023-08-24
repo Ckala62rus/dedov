@@ -29,6 +29,7 @@ class InternetServiceProviderUpdateRequest extends FormRequest
             'address' => 'sometimes|string',
             'static_ip_address' => 'nullable|string',
             'schema_org_channel_provider' => 'nullable|string',
+            'cost' => 'nullable|string',
             'cost_participant_1' => 'nullable|string',
             'cost_participant_2' => 'nullable|string',
             'cost_participant_3' => 'nullable|string',

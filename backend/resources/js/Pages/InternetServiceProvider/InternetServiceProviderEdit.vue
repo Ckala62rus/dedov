@@ -163,14 +163,6 @@
                             <div class="invalid-feedback">{{error_messages.cost_participant_5}}</div>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card card-flush h-md-100">
-                    <!--begin::Form-->
-                    <div class="card-body">
                         <div class="form-group">
                             <label>Стоимость участник 6<span class="text-danger"></span></label>
                             <input
@@ -183,6 +175,14 @@
                             <div class="invalid-feedback">{{error_messages.cost_participant_6}}</div>
                         </div>
 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+                    <!--begin::Form-->
+                    <div class="card-body">
                         <div class="form-group">
                             <label>Схема организации канала провайдера<span class="text-danger"></span></label>
                             <input
@@ -193,6 +193,18 @@
                                 :class="{'is-invalid': errors.schema_org_channel_provider}"
                             />
                             <div class="invalid-feedback">{{error_messages.schema_org_channel_provider}}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Cost<span class="text-danger"></span></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Cost"
+                                v-model="form.cost"
+                                :class="{'is-invalid': errors.cost}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.cost}}</div>
                         </div>
 
                         <div class="form-group">
@@ -256,6 +268,7 @@ export default {
                 'cost_participant_5': '',
                 'cost_participant_6': '',
                 'comment': '',
+                'cost': '',
             },
             organizations: null,
             internetSpeed: null,
@@ -267,6 +280,7 @@ export default {
                 backup_object_id: false,
                 backup_tool_id: false,
                 comment: false,
+                cost: false,
                 restricted_point: false,
                 description_storage: false,
                 backup_day_id: false,
@@ -282,6 +296,7 @@ export default {
                 backup_object_id: '',
                 backup_tool_id: '',
                 comment: '',
+                cost: '',
                 restricted_point: '',
                 description_storage: '',
                 backup_day_id: '',
@@ -328,6 +343,7 @@ export default {
                             storage_server_long_time: errors.hasOwnProperty('storage_server_long_time'),
                             description_storage_long_time: errors.hasOwnProperty('description_storage_long_time'),
                             organization_id: errors.hasOwnProperty('organization_id'),
+                            cost: errors.hasOwnProperty('cost'),
                         };
 
                         this.error_messages = {
@@ -386,6 +402,10 @@ export default {
                             organization_id: errors.hasOwnProperty('organization_id')
                                 ? errors.organization_id[0]
                                 : '',
+
+                            cost: errors.hasOwnProperty('cost')
+                                ? errors.cost[0]
+                                : '',
                         };
 
                         this.$notify({
@@ -407,6 +427,7 @@ export default {
                 backup_object_id: '',
                 backup_tool_id: '',
                 comment: '',
+                cost: '',
                 restricted_point: '',
                 description_storage: '',
                 backup_day_id: '',
@@ -426,6 +447,7 @@ export default {
                 backup_object_id: false,
                 backup_tool_id: false,
                 comment: false,
+                cost: false,
                 restricted_point: false,
                 description_storage: false,
                 backup_day_id: false,

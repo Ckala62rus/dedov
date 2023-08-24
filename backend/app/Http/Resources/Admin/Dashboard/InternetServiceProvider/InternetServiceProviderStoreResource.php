@@ -20,6 +20,8 @@ class InternetServiceProviderStoreResource extends JsonResource
             'address' => $this->address,
             'static_ip_address' => $this->static_ip_address,
             'schema_org_channel_provider' => $this->schema_org_channel_provider,
+            'cost' => $this->cost,
+
             'cost_participant_1' => $this->cost_participant_1,
             'cost_participant_2' => $this->cost_participant_2,
             'cost_participant_3' => $this->cost_participant_3,

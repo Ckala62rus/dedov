@@ -25,6 +25,7 @@ class InternetServiceProvider extends Model
         'channel_type_id',
         'organization_id',
         'user_id',
+        'cost',
     ];
 
     /**

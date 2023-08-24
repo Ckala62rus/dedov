@@ -35,6 +35,7 @@ class InternetServiceProviderFactory extends Factory
             'cost_participant_6' => fake()->text('255'),
             'comment' => fake()->text('255'),
             'user_id' => User::factory()->create(),
+            'cost' => fake()->text(255),
         ];
     }
 }

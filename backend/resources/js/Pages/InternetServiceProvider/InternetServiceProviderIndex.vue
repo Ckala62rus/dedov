@@ -113,6 +113,7 @@ export default {
                 'channel_type',
                 'static_ip_address',
                 'schema_org_channel_provider',
+                'cost',
                 'cost_participant_1',
                 'cost_participant_2',
                 'cost_participant_3',
@@ -134,6 +135,7 @@ export default {
                     channel_type: 'Channel type',
                     static_ip_address: 'Static ip address',
                     schema_org_channel_provider: 'Schema org channel provider',
+                    cost: 'Cost',
 
                     created_at: 'Время создания',
                     updated_at: 'Время обновления',
