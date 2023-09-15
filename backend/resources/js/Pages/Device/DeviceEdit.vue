@@ -5,8 +5,8 @@
                 <div class="card card-flush h-md-100">
 
                     <div class="card-header">
-                        <h3 class="card-title">
-                            Создание оборудования
+                        <h3 class="card-title d-flex flex-center">
+                            Edit device
                         </h3>
                     </div>
 
@@ -245,8 +245,8 @@
 
                         <div class="card-footer">
                             <div class="form__button">
-                                <button type="submit" class="btn btn-success mr-2 button_width">Обновить</button>
-                                <Link :href="route('devices.index')" as="button" method="get" class="btn btn-primary font-weight-bolder button_width">Назад</Link>
+                                <button type="submit" class="btn btn-success mr-2 button_width">Update</button>
+                                <Link :href="route('devices.index')" as="button" method="get" class="btn btn-primary font-weight-bolder button_width">Back</Link>
                             </div>
                         </div>
                     </form>
