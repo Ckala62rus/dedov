@@ -411,6 +411,8 @@ export default {
                 params.append('storage_server', this.filter.storage_server)
             }
 
+            this.setCacheFilter();
+
             if (params.toString().length > 0) {
                 this.url = this.urlPrepare + params.toString();
             }
@@ -418,6 +420,25 @@ export default {
             if (this.url === oldUrl) {
                 this.$refs['backups-table'].refresh();
             }
+        },
+
+        setCacheFilter(){
+            localStorage.setItem('backup', JSON.stringify(this.filter))
+        },
+
+        retrieveCacheFilterData(cache){
+            this.filter = {
+                backup_tool_id: cache.backup_tool_id,
+                owner: cache.owner,
+                backup_object_id: cache.backup_object_id,
+                service: cache.service,
+                organization_id: cache.organization_id,
+                hostname: cache.hostname,
+                comment: cache.comment,
+                storage_server: cache.storage_server
+            };
+
+            this.findByFilter()
         },
 
         clearFilter(){
@@ -433,6 +454,8 @@ export default {
             };
 
             this.url = this.urlPrepare;
+
+            localStorage.removeItem('backup')
         },
 
         toExcel(){
@@ -487,6 +510,9 @@ export default {
     },
 
     mounted() {
+        if (localStorage.getItem('backup') !== null) {
+            this.retrieveCacheFilterData(JSON.parse(localStorage.getItem('backup')));
+        }
         this.getOrganizations();
         this.getBackupObjects();
         this.getBackupTools();
