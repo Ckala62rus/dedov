@@ -392,6 +392,8 @@ export default {
                 params.append('comment', this.filter.comment)
             }
 
+            this.setCacheFilter();
+
             if (params.toString().length > 0) {
                 this.url = this.urlPrepare + params.toString();
             }
@@ -399,6 +401,25 @@ export default {
             if (this.url === oldUrl) {
                 this.$refs['devices-table'].refresh();
             }
+        },
+
+        setCacheFilter(){
+            localStorage.setItem('device', JSON.stringify(this.filter))
+        },
+
+        retrieveCacheFilterData(cache){
+            this.filter = {
+                organization_id:  cache.organization_id,
+                equipment_id:  cache.equipment_id,
+                hostname:  cache.hostname,
+                model:  cache.model,
+                operation_system:  cache.operation_system,
+                description_service:  cache.description_service,
+                cpu:  cache.cpu,
+                comment:  cache.comment,
+            };
+
+            this.findByFilter()
         },
 
         clearFilter(){
@@ -414,6 +435,8 @@ export default {
             };
 
             this.url = this.urlPrepare;
+
+            localStorage.removeItem('device')
         },
 
         toExcel(){
@@ -458,6 +481,9 @@ export default {
     // },
 
     mounted() {
+        if (localStorage.getItem('device') !== null) {
+            this.retrieveCacheFilterData(JSON.parse(localStorage.getItem('device')));
+        }
         this.getOrganizations();
         this.getEquipments();
     }
