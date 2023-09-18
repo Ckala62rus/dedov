@@ -417,6 +417,8 @@ export default {
                 params.append('comment', this.filter.comment)
             }
 
+            this.setCacheFilter();
+
             if (params.toString().length > 0) {
                 this.url = this.urlPrepare + params.toString();
             }
@@ -424,6 +426,23 @@ export default {
             if (this.url === oldUrl) {
                 this.$refs['isp-table'].refresh();
             }
+        },
+
+        setCacheFilter(){
+            localStorage.setItem('isp', JSON.stringify(this.filter))
+        },
+
+        retrieveCacheFilterData(cache){
+            this.filter = {
+                organization_id:  cache.organization_id,
+                channel_type_id:  cache.channel_type_id,
+                internet_speed_id:  cache.internet_speed_id,
+                cost:  cache.cost,
+                static_ip_address:  cache.static_ip_address,
+                comment:  cache.comment,
+            };
+
+            this.findByFilter()
         },
 
         clearFilter(){
@@ -437,6 +456,8 @@ export default {
             }
 
             this.url = this.urlPrepare;
+
+            localStorage.removeItem('isp')
         },
 
     },
@@ -445,6 +466,9 @@ export default {
         this.getOrganizations();
         this.getInternetSpeed();
         this.getChannelTypes();
+        if (localStorage.getItem('isp') !== null) {
+            this.retrieveCacheFilterData(JSON.parse(localStorage.getItem('isp')));
+        }
     }
 }
 </script>
