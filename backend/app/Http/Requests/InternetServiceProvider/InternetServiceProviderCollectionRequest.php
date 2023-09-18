@@ -25,6 +25,9 @@ class InternetServiceProviderCollectionRequest extends FormRequest
     {
         return [
             'limit' => 'required|integer',
+            "organization_id" => 'integer',
+            "internet_speed_id" => 'integer',
+            "channel_type_id" => 'integer',
         ];
     }
 }

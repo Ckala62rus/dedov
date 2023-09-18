@@ -49,6 +49,83 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="filter.organization_id"
+                                        class="m-0 select-category w-100"
+                                        placeholder="Организация"
+                                        size="large"
+                                        :clearable=true
+                                        @clear="eventClearOrganization"
+                                    >
+                                        <el-option
+                                            label="All organization"
+                                            :value=0
+                                            :key=0
+                                        />
+                                        <el-option
+                                            v-for="organization in organizations"
+                                            :key="organization.id"
+                                            :label="organization.name"
+                                            :value="organization.id"
+                                        />
+                                    </el-select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="filter.internet_speed_id"
+                                        class="m-0 select-category w-100"
+                                        placeholder="Internet Speed"
+                                        size="large"
+                                        :clearable=true
+                                        @clear="eventClearInternetSpeed"
+                                    >
+                                        <el-option
+                                            label="All Internet speed"
+                                            :value=0
+                                            :key=0
+                                        />
+                                        <el-option
+                                            v-for="internet_speed in internet_speeds"
+                                            :key="internet_speed.id"
+                                            :label="internet_speed.name"
+                                            :value="internet_speed.id"
+                                        />
+                                    </el-select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="filter.channel_type_id"
+                                        class="m-0 select-category w-100"
+                                        placeholder="Channel type"
+                                        size="large"
+                                        :clearable=true
+                                        @clear="eventClearChannelType"
+                                    >
+                                        <el-option
+                                            label="All channel types"
+                                            :value=0
+                                            :key=0
+                                        />
+                                        <el-option
+                                            v-for="channel_type in channel_types"
+                                            :key="channel_type.id"
+                                            :label="channel_type.name"
+                                            :value="channel_type.id"
+                                        />
+                                    </el-select>
+                                </div>
+                            </div>
+                        </div>
+
                         <v-server-table
                             :url="url"
                             :columns="columns"
@@ -170,6 +247,15 @@ export default {
                     };
                 },
             },
+            organizations: null,
+            internet_speeds: null,
+            channel_types: null,
+            filter: {
+                organization_id: 0,
+                internet_speed_id: 0,
+                channel_type_id: 0,
+                comment: '',
+            },
         }
     },
 
@@ -217,7 +303,90 @@ export default {
                 }
             })
         },
+
+        eventClearOrganization(){
+            this.filter.organization_id = 0
+        },
+
+        eventClearInternetSpeed(){
+            this.filter.internet_speed_id = 0
+        },
+
+        eventClearChannelType(){
+            this.filter.channel_type_id = 0
+        },
+
+        getOrganizations(){
+            axios.get('/admin/organization-all-collection')
+                .then(res => {
+                    this.organizations = res.data.data.organizations;
+                })
+        },
+
+        getInternetSpeed(){
+            axios.get('/admin/internet-speed-all-collection')
+                .then(res => {
+                    this.internet_speeds = res.data.data.internetSpeed
+                    ;
+                })
+        },
+
+        getChannelTypes(){
+            axios.get('/admin/channel-types-all-collection')
+                .then(res => {
+                    this.channel_types = res.data.data.channelType
+                    ;
+                })
+        },
+
+        findByFilter(){
+            const params = new URLSearchParams();
+            let oldUrl = this.url;
+
+            if (this.filter.organization_id === 0) {
+                params.append('organization_id', 0)
+            }
+
+            if (this.filter.organization_id != null && this.filter.organization_id !== '0'){
+                params.append('organization_id', this.filter.organization_id)
+            }
+
+            if (this.filter.internet_speed_id === 0) {
+                params.append('internet_speed_id', 0)
+            }
+
+            if (this.filter.internet_speed_id != null && this.filter.internet_speed_id !== '0'){
+                params.append('internet_speed_id', this.filter.internet_speed_id)
+            }
+
+            if (this.filter.channel_type_id === 0) {
+                params.append('channel_type_id', 0)
+            }
+
+            if (this.filter.channel_type_id != null && this.filter.channel_type_id !== '0'){
+                params.append('channel_type_id', this.filter.channel_type_id)
+            }
+
+            if (this.filter.comment.length > 0){
+                params.append('comment', this.filter.comment)
+            }
+
+            if (params.toString().length > 0) {
+                this.url = this.urlPrepare + params.toString();
+            }
+
+            if (this.url === oldUrl) {
+                this.$refs['isp-table'].refresh();
+            }
+        },
+
     },
+
+    mounted() {
+        this.getOrganizations();
+        this.getInternetSpeed();
+        this.getChannelTypes();
+    }
 }
 </script>
 
