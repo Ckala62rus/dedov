@@ -124,6 +124,42 @@
                                     </el-select>
                                 </div>
                             </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Cost"
+                                        v-model="filter.cost"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Static ip address"
+                                        v-model="filter.static_ip_address"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Comment"
+                                        v-model="filter.comment"
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         <v-server-table
@@ -254,6 +290,8 @@ export default {
                 organization_id: 0,
                 internet_speed_id: 0,
                 channel_type_id: 0,
+                static_ip_address: '',
+                cost: '',
                 comment: '',
             },
         }
@@ -367,6 +405,14 @@ export default {
                 params.append('channel_type_id', this.filter.channel_type_id)
             }
 
+            if (this.filter.cost.length > 0){
+                params.append('cost', this.filter.cost)
+            }
+
+            if (this.filter.static_ip_address.length > 0){
+                params.append('static_ip_address', this.filter.static_ip_address)
+            }
+
             if (this.filter.comment.length > 0){
                 params.append('comment', this.filter.comment)
             }
@@ -378,6 +424,19 @@ export default {
             if (this.url === oldUrl) {
                 this.$refs['isp-table'].refresh();
             }
+        },
+
+        clearFilter(){
+            this.filter = {
+                organization_id: 0,
+                internet_speed_id: 0,
+                channel_type_id: 0,
+                static_ip_address: '',
+                cost: '',
+                comment: '',
+            }
+
+            this.url = this.urlPrepare;
         },
 
     },

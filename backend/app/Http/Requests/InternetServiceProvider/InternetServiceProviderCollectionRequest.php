@@ -28,6 +28,9 @@ class InternetServiceProviderCollectionRequest extends FormRequest
             "organization_id" => 'integer',
             "internet_speed_id" => 'integer',
             "channel_type_id" => 'integer',
+            "cost" => 'nullable|string',
+            "static_ip_address" => 'nullable|string',
+            "comment" => 'nullable|string',
         ];
     }
 }
