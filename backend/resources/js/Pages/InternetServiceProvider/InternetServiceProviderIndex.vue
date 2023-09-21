@@ -225,6 +225,7 @@ export default {
                 'internet_speed_name',
                 'channel_type',
                 'static_ip_address',
+                'address',
                 'schema_org_channel_provider',
                 'cost',
                 'cost_participant_1',
