@@ -6,6 +6,8 @@ use App\Contracts\Backup\BackupRepositoryInterface;
 use App\Contracts\Backup\BackupServiceInterface;
 use App\Contracts\BackupObject\BackupObjectRepositoryInterface;
 use App\Contracts\BackupObject\BackupObjectServiceInterface;
+use App\Contracts\BackupPriority\BackupPriorityRepositoryInterface;
+use App\Contracts\BackupPriority\BackupPriorityServiceInterface;
 use App\Contracts\BackupTool\BackupToolRepositoryInterface;
 use App\Contracts\BackupTool\BackupToolServiceInterface;
 use App\Contracts\ChannelType\ChannelTypeRepositoryInterface;
@@ -28,6 +30,7 @@ use App\Contracts\UserRepositoryInterface;
 use App\Contracts\UserServiceInterface;
 use App\Repositories\BackupDayRepository;
 use App\Repositories\BackupObjectRepository;
+use App\Repositories\BackupPriorityRepository;
 use App\Repositories\BackupRepository;
 use App\Repositories\BackupToolRepository;
 use App\Repositories\ChannelTypeRepository;
@@ -97,6 +100,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(InternetServiceProviderRepositoryInterface::class, InternetServiceProviderRepository::class);
         $this->app->bind(InternetServiceProviderServiceInterface::class, InternetServiceProviderService::class);
+
+        $this->app->bind(BackupPriorityRepositoryInterface::class, BackupPriorityRepository::class);
+//        $this->app->bind(BackupPriorityServiceInterface::class, InternetServiceProviderService::class);
     }
 
     /**
