@@ -3,6 +3,7 @@
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BackupDayController;
 use App\Http\Controllers\BackupObjectController;
+use App\Http\Controllers\BackupPriorityController;
 use App\Http\Controllers\BackupToolController;
 use App\Http\Controllers\ChannelTypeController;
 use App\Http\Controllers\DeviceController;
@@ -118,6 +119,9 @@ Route::middleware(['auth'])->group(function () {
         // InternetServiceProvider (ISP)
         Route::resource('isp', InternetServiceProviderController::class);
         Route::get('isp-all-paginate', [InternetServiceProviderController::class, 'getAllIspWithPagination']);
+
+        // BackupPriority
+        Route::resource('backup-priority', BackupPriorityController::class);
     });
 
     // Permission

@@ -43,6 +43,7 @@ use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use App\Services\BackupDayService;
 use App\Services\BackupObjectService;
+use App\Services\BackupPriorityService;
 use App\Services\BackupService;
 use App\Services\BackupToolService;
 use App\Services\ChannelTypeService;
@@ -102,7 +103,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(InternetServiceProviderServiceInterface::class, InternetServiceProviderService::class);
 
         $this->app->bind(BackupPriorityRepositoryInterface::class, BackupPriorityRepository::class);
-//        $this->app->bind(BackupPriorityServiceInterface::class, InternetServiceProviderService::class);
+        $this->app->bind(BackupPriorityServiceInterface::class, BackupPriorityService::class);
     }
 
     /**
