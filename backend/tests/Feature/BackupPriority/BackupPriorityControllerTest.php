@@ -65,6 +65,9 @@ class BackupPriorityControllerTest extends TestCase
 
         // assert
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonValidationErrors([
+            'name' => 'The name field is required.',
+        ]);
     }
 
     public function test_show_backup_priority_success(): void
@@ -113,5 +116,50 @@ class BackupPriorityControllerTest extends TestCase
         ]);
     }
 
+    public function test_update_backup_priority_success(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
+        $dataForCreate = ['name' => 'low priority'];
+        $dataForUpdate = ['name' => 'high priority'];
+        $createdPriority = BackupPriority::factory()->create($dataForCreate);
+
+        // act
+        $response = $this->put('admin/backup-priority/' . $createdPriority->id, $dataForUpdate);
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson([
+            'data' => [
+                'backupPriority' => [
+                    'name' => $dataForUpdate['name'],
+                ],
+            ]
+        ]);
+    }
+
+    public function test_update_backup_priority_required_field_name_fail(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $dataForCreate = ['name' => 'low priority'];
+        $dataForUpdate = [];
+        $createdPriority = BackupPriority::factory()->create($dataForCreate);
+
+        // act
+        $response = $this->put('admin/backup-priority/' . $createdPriority->id, $dataForUpdate);
+
+        // assert
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertJsonValidationErrors([
+            'name' => 'The name field is required.',
+        ]);
+    }
 }
