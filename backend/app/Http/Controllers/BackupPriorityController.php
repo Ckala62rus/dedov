@@ -62,6 +62,15 @@ class BackupPriorityController extends BaseController
             ->backupPriorityService
             ->getBackupPriorityById($id);
 
+        if (!$priority) {
+            return $this->response(
+                ['backupPriority' => []],
+                'Backup priority by id:' . $id,
+                false,
+                Response::HTTP_OK
+            );
+        }
+
         return $this->response(
             ['backupPriority' => BackupPriorityShowResource::make($priority)],
             "Backup priority by id:$id",
