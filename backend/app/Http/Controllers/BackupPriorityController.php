@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Contracts\BackupPriority\BackupPriorityServiceInterface;
 use App\Http\Requests\BackupPriority\BackupPriorityStoreRequest;
+use App\Http\Requests\BackupPriority\BackupPriorityUpdateRequest;
 use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityShowResource;
 use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityStoreResource;
+use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityUpdateResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -73,13 +75,44 @@ class BackupPriorityController extends BaseController
         // view
     }
 
-    public function update(Request $request, int $id)
+    /**
+     * Update backup priority by id
+     * @param BackupPriorityUpdateRequest $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(BackupPriorityUpdateRequest $request, int $id)
     {
-        //
+        $data = $request->validated();
+
+        $model = $this
+            ->backupPriorityService
+            ->updateBackupPriority($id, $data);
+
+        return $this->response(
+            ['backupPriority' => BackupPriorityUpdateResource::make($model)],
+            "Updated backup priority by id:$id",
+            true,
+            Response::HTTP_OK
+        );
     }
 
-    public function destroy(int $id)
+    /**
+     * Delete backup priority by id
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $isDelete = $this
+            ->backupPriorityService
+            ->deleteBackupPriority($id);
+
+        return $this->response(
+            ['delete' => $isDelete],
+            "Backup priority was deleted with id:$id",
+            true,
+            Response::HTTP_OK
+        );
     }
 }
