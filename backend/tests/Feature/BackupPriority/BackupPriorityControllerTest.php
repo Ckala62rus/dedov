@@ -162,4 +162,45 @@ class BackupPriorityControllerTest extends TestCase
             'name' => 'The name field is required.',
         ]);
     }
+
+    public function test_delete_backup_priority_by_id_if_exists_in_database(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $createdPriority = BackupPriority::factory()->create();
+
+        // act
+        $response = $this->delete('admin/backup-priority/' . $createdPriority->id);
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson([
+            'data' => [
+                'delete' => true,
+            ]
+        ]);
+    }
+
+    public function test_delete_backup_priority_by_id_if_not_exists_in_database(): void
+    {
+        // arrange
+        $this->withExceptionHandling();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // act
+        $response = $this->delete('admin/backup-priority/' . random_int(1,100));
+
+        // assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson(['status' => true]);
+        $response->assertJson([
+            'data' => [
+                'delete' => false,
+            ]
+        ]);
+    }
 }
