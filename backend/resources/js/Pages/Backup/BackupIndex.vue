@@ -51,8 +51,14 @@
                                     :href="route('backup-tools.index')"
                                     as="button"
                                     method="get"
-                                    class="btn btn-success mb-5"
+                                    class="btn btn-success mb-5 mr-5"
                                 >Backup tools</Link>
+                                <Link
+                                    :href="route('backup-priorities.index')"
+                                    as="button"
+                                    method="get"
+                                    class="btn btn-success mb-5"
+                                >Backup priority</Link>
                             </div>
                         </div>
 
