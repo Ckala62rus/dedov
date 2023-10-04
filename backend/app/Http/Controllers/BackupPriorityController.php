@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\BackupPriority\BackupPriorityServiceInterface;
+use App\Http\Requests\BackupPriority\BackupPriorityCollectionRequest;
 use App\Http\Requests\BackupPriority\BackupPriorityStoreRequest;
 use App\Http\Requests\BackupPriority\BackupPriorityUpdateRequest;
+use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityCollectionResource;
 use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityShowResource;
 use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityStoreResource;
 use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityUpdateResource;
@@ -120,6 +122,43 @@ class BackupPriorityController extends BaseController
         return $this->response(
             ['delete' => $isDelete],
             "Backup priority was deleted with id:$id",
+            true,
+            Response::HTTP_OK
+        );
+    }
+
+    /**
+     * Get all backup priority entities with pagination
+     * @param BackupPriorityCollectionRequest $request
+     * @return JsonResponse
+     */
+    public function getAllBackupPriorityWithPagination(BackupPriorityCollectionRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+
+        $priorities = $this
+            ->backupPriorityService
+            ->getAllBackupPrioritiesWithPagination($data['limit'], $data);
+
+        return response()->json([
+            'data' => BackupPriorityCollectionResource::collection($priorities),
+            'count' => $priorities->total()
+        ]);
+    }
+
+    /**
+     * Get all backup priority collection
+     * @return JsonResponse
+     */
+    public function getAllBackupPriorityCollection(): JsonResponse
+    {
+        $priorities = $this
+            ->backupPriorityService
+            ->getAllBackupPrioritiesCollection([]);
+
+        return $this->response(
+            ['backupPriority' => BackupPriorityCollectionResource::collection($priorities)],
+            'Backup priority  collection',
             true,
             Response::HTTP_OK
         );

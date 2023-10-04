@@ -122,6 +122,8 @@ Route::middleware(['auth'])->group(function () {
 
         // BackupPriority
         Route::resource('backup-priority', BackupPriorityController::class);
+        Route::get('backup-priority-all-paginate', [BackupPriorityController::class, 'getAllBackupPriorityWithPagination']);
+        Route::get('backup-priority-all-collection', [BackupPriorityController::class, 'getAllBackupPriorityCollection']);
     });
 
     // Permission
