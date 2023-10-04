@@ -10,6 +10,7 @@ use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityCollectionRe
 use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityShowResource;
 use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityStoreResource;
 use App\Http\Resources\Admin\Dashboard\BackupPriority\BackupPriorityUpdateResource;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,14 +23,22 @@ class BackupPriorityController extends BaseController
         private BackupPriorityServiceInterface $backupPriorityService
     ){}
 
-    public function index()
+    /**
+     * Return backup priority index page
+     * @return \Inertia\Response
+     */
+    public function index(): \Inertia\Response
     {
-        // view
+        return Inertia::render('BackupPriority/BackupPriorityIndex');
     }
 
-    public function create()
+    /**
+     * Return backup priority create page
+     * @return \Inertia\Response
+     */
+    public function create(): \Inertia\Response
     {
-        // view
+        return Inertia::render('BackupPriority/BackupPriorityCreate');
     }
 
     /**

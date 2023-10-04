@@ -36,7 +36,7 @@ class BackupPriorityControllerTest extends TestCase
         $data = ['name' => 'low priority'];
 
         // act
-        $response = $this->post('admin/backup-priority', $data);
+        $response = $this->post('admin/backup-priorities', $data);
 
         // assert
         $response->assertStatus(Response::HTTP_CREATED);
@@ -61,7 +61,7 @@ class BackupPriorityControllerTest extends TestCase
         $data = [];
 
         // act
-        $response = $this->post('admin/backup-priority', $data);
+        $response = $this->post('admin/backup-priorities', $data);
 
         // assert
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -81,7 +81,7 @@ class BackupPriorityControllerTest extends TestCase
         $priority = BackupPriority::factory()->create($data);
 
         // act
-        $response = $this->get('admin/backup-priority/' . $priority->id);
+        $response = $this->get('admin/backup-priorities/' . $priority->id);
 
         // assert
         $response->assertStatus(Response::HTTP_OK);
@@ -104,7 +104,7 @@ class BackupPriorityControllerTest extends TestCase
         $this->actingAs($user);
 
         // act
-        $response = $this->get('admin/backup-priority/' . random_int(1,100));
+        $response = $this->get('admin/backup-priorities/' . random_int(1,100));
 
         // assert
         $response->assertStatus(Response::HTTP_OK);
@@ -128,7 +128,7 @@ class BackupPriorityControllerTest extends TestCase
         $createdPriority = BackupPriority::factory()->create($dataForCreate);
 
         // act
-        $response = $this->put('admin/backup-priority/' . $createdPriority->id, $dataForUpdate);
+        $response = $this->put('admin/backup-priorities/' . $createdPriority->id, $dataForUpdate);
 
         // assert
         $response->assertStatus(Response::HTTP_OK);
@@ -154,7 +154,7 @@ class BackupPriorityControllerTest extends TestCase
         $createdPriority = BackupPriority::factory()->create($dataForCreate);
 
         // act
-        $response = $this->put('admin/backup-priority/' . $createdPriority->id, $dataForUpdate);
+        $response = $this->put('admin/backup-priorities/' . $createdPriority->id, $dataForUpdate);
 
         // assert
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -172,7 +172,7 @@ class BackupPriorityControllerTest extends TestCase
         $createdPriority = BackupPriority::factory()->create();
 
         // act
-        $response = $this->delete('admin/backup-priority/' . $createdPriority->id);
+        $response = $this->delete('admin/backup-priorities/' . $createdPriority->id);
 
         // assert
         $response->assertStatus(Response::HTTP_OK);
@@ -192,7 +192,7 @@ class BackupPriorityControllerTest extends TestCase
         $this->actingAs($user);
 
         // act
-        $response = $this->delete('admin/backup-priority/' . random_int(1,100));
+        $response = $this->delete('admin/backup-priorities/' . random_int(1,100));
 
         // assert
         $response->assertStatus(Response::HTTP_OK);

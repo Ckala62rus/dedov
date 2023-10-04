@@ -121,9 +121,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('isp-all-paginate', [InternetServiceProviderController::class, 'getAllIspWithPagination']);
 
         // BackupPriority
-        Route::resource('backup-priority', BackupPriorityController::class);
-        Route::get('backup-priority-all-paginate', [BackupPriorityController::class, 'getAllBackupPriorityWithPagination']);
-        Route::get('backup-priority-all-collection', [BackupPriorityController::class, 'getAllBackupPriorityCollection']);
+        Route::resource('backup-priorities', BackupPriorityController::class);
+        Route::get('backup-priorities-all-paginate', [BackupPriorityController::class, 'getAllBackupPriorityWithPagination']);
+        Route::get('backup-priorities-all-collection', [BackupPriorityController::class, 'getAllBackupPriorityCollection']);
     });
 
     // Permission
