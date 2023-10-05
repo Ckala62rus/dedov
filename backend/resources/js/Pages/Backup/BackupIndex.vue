@@ -288,9 +288,9 @@ export default {
                 'storage_server_long_time',
                 'description_storage_long_time',
                 'test_date',
-                'proposals',
                 'backup_priority',
                 'comment',
+                'proposals',
                 'actions'
             ],
             options: {
