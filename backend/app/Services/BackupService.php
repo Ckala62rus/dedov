@@ -94,6 +94,10 @@ class BackupService implements BackupServiceInterface
 
         $data['user_id'] = Auth::user()->id;
 
+        if (isset($data['backup_priority_id']) && $data['backup_priority_id'] === 0) {
+            $data['backup_priority_id'] = null;
+        }
+
         $this->checkExistForeignKeyEntity($data);
 
         return $this
@@ -128,6 +132,10 @@ class BackupService implements BackupServiceInterface
         $query = $this
             ->backupRepository
             ->getQuery();
+
+        if (isset($data['backup_priority_id']) && $data['backup_priority_id'] === 0) {
+            $data['backup_priority_id'] = null;
+        }
 
         return $this
             ->backupRepository
@@ -249,6 +257,10 @@ class BackupService implements BackupServiceInterface
 
         if(isset($filter['storage_server']) && $filter['storage_server'] != 0) {
             $query = $query->where('storage_server', 'LIKE', '%' . $filter['storage_server'] . '%');
+        }
+
+        if(isset($filter['backup_priority_id']) && $filter['backup_priority_id']) {
+            $query = $query->where('backup_priority_id', $filter['backup_priority_id']);
         }
 
         return $query;

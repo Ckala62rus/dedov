@@ -26,6 +26,7 @@ class Backup extends Model
         'description_storage_long_time',
         'user_id',
         'organization_id',
+        'backup_priority_id',
     ];
 
     /**
@@ -71,5 +72,14 @@ class Backup extends Model
     public function backupTool(): HasOne
     {
         return $this->hasOne(BackupTool::class, 'id', 'backup_tool_id');
+    }
+
+    /**
+     * Get backup priority model via relation
+     * @return HasOne
+     */
+    public function backupPriority(): HasOne
+    {
+        return $this->hasOne(BackupPriority::class, 'id', 'backup_priority_id');
     }
 }

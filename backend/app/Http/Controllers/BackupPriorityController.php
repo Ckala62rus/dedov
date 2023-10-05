@@ -90,9 +90,13 @@ class BackupPriorityController extends BaseController
         );
     }
 
-    public function edit(int $id)
+    /**
+     * @param int $id
+     * @return \Inertia\Response
+     */
+    public function edit(int $id): \Inertia\Response
     {
-        // view
+        return Inertia::render('BackupPriority/BackupPriorityEdit', ['id'=>$id]);
     }
 
     /**
@@ -166,7 +170,7 @@ class BackupPriorityController extends BaseController
             ->getAllBackupPrioritiesCollection([]);
 
         return $this->response(
-            ['backupPriority' => BackupPriorityCollectionResource::collection($priorities)],
+            ['backupPriorities' => BackupPriorityCollectionResource::collection($priorities)],
             'Backup priority  collection',
             true,
             Response::HTTP_OK

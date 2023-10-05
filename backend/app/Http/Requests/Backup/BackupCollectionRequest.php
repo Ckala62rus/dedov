@@ -33,6 +33,7 @@ class BackupCollectionRequest extends FormRequest
             "backup_tool_id" => 'nullable|integer',
             "comment" => 'nullable|string',
             "storage_server" => 'nullable|string',
+            'backup_priority_id' => 'nullable|integer',
         ];
     }
 }

@@ -41,6 +41,9 @@ class BackupCollectionResource extends JsonResource
             'user_id' => $this->user_id,
             'user' => UserShowResource::make($this->user),
 
+            'backup_priority_id' => $this->backup_priority_id,
+            'backup_priority' => $this->backupPriority ? $this->backupPriority->name : '',
+
             'can_action' => $this->can_delete_or_update_current_user($this),
         ];
     }
