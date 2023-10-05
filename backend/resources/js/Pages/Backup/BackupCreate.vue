@@ -67,15 +67,6 @@
                             <div class="invalid-feedback">{{error_messages.hostname}}</div>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card card-flush h-md-100">
-                    <!--begin::Form-->
-                    <div class="card-body">
-
                         <label>Object</label>
                         <div class="form-group select-form_group">
                             <el-select
@@ -112,6 +103,15 @@
                             </el-select>
                             <div style="color: #F64E60" v-if="errors.backup_tool_id">{{error_messages.backup_tool_id}}</div>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+                    <!--begin::Form-->
+                    <div class="card-body">
 
                         <label>Day</label>
                         <div class="form-group select-form_group">
@@ -180,15 +180,6 @@
                             <div class="invalid-feedback">{{error_messages.storage_server}}</div>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card card-flush h-md-100">
-                    <!--begin::Form-->
-                    <div class="card-body">
-
                         <div class="form-group">
                             <label>Storage server long time<span class="text-danger"></span></label>
                             <input
@@ -214,6 +205,15 @@
                             <div class="invalid-feedback">{{error_messages.description_storage_long_time}}</div>
                         </div>
 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-flush h-md-100">
+                    <!--begin::Form-->
+                    <div class="card-body">
+
                         <div class="form-group">
                             <label>Test date<span class="text-danger"></span></label>
                             <input
@@ -224,6 +224,19 @@
                                 :class="{'is-invalid': errors.test_date}"
                             />
                             <div class="invalid-feedback">{{error_messages.test_date}}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Proposals<span class="text-danger"></span></label>
+                            <textarea
+                                type="text"
+                                class="form-control"
+                                placeholder="Description storage long time"
+                                rows="5"
+                                v-model="form.proposals"
+                                :class="{'is-invalid': errors.proposals}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.proposals}}</div>
                         </div>
 
                         <label>Priority</label>
@@ -310,6 +323,7 @@ export default {
                 'backup_object_id': '',
                 'backup_priority_id': 0,
                 'test_date': '',
+                'proposals': '',
             },
             organizations: null,
             backupObjects: null,
@@ -475,6 +489,7 @@ export default {
                 organization_id: '',
                 backup_priority_id: null,
                 test_date: '',
+                proposals: '',
             };
         },
 

@@ -45,6 +45,7 @@ class BackupCollectionResource extends JsonResource
             'backup_priority' => $this->backupPriority ? $this->backupPriority->name : '',
 
             'test_date' => $this->test_date,
+            'proposals' => $this->proposals,
 
             'can_action' => $this->can_delete_or_update_current_user($this),
         ];

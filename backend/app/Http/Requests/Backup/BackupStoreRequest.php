@@ -40,6 +40,7 @@ class BackupStoreRequest extends FormRequest
             'organization_id' => 'required|integer',
             'backup_priority_id' => 'nullable|integer',
             'test_date' => 'nullable|string',
+            'proposals' => 'nullable|string',
         ];
     }
 }

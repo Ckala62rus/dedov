@@ -28,6 +28,7 @@ class Backup extends Model
         'organization_id',
         'backup_priority_id',
         'test_date',
+        'proposals',
     ];
 
     /**
