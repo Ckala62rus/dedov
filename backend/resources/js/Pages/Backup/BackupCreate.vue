@@ -214,6 +214,31 @@
                             <div class="invalid-feedback">{{error_messages.description_storage_long_time}}</div>
                         </div>
 
+                        <label>Priority</label>
+                        <div class="form-group select-form_group">
+                            <el-select
+                                v-model="form.backup_priority_id"
+                                class="m-0 select-category w-100"
+                                placeholder="Backup priority"
+                                size="large"
+                                :clearable=true
+                                @clear="eventClearPriority"
+                            >
+                                <el-option
+                                    :key="0"
+                                    :label="'No priority'"
+                                    :value="0"
+                                />
+                                <el-option
+                                    v-for="backupPriority in backupPriorities"
+                                    :key="backupPriority.id"
+                                    :label="backupPriority.name"
+                                    :value="backupPriority.id"
+                                />
+                            </el-select>
+                            <div style="color: #F64E60" v-if="errors.backup_priority_id">{{error_messages.backup_priority_id}}</div>
+                        </div>
+
                         <div class="form-group">
                             <label>Comment <span class="text-danger"></span></label>
                             <textarea
@@ -271,11 +296,13 @@ export default {
                 'description_storage_long_time': '',
                 'organization_id': '',
                 'backup_object_id': '',
+                'backup_priority_id': 0,
             },
             organizations: null,
             backupObjects: null,
             backupDays: null,
             backupTools: null,
+            backupPriorities: null,
             errors: {
                 service: false,
                 owner: false,
@@ -433,6 +460,7 @@ export default {
                 storage_server_long_time: '',
                 description_storage_long_time: '',
                 organization_id: '',
+                backup_priority_id: null,
             };
         },
 
@@ -452,6 +480,10 @@ export default {
                 storage_server_long_time: false,
                 description_storage_long_time: false,
             };
+        },
+
+        eventClearPriority(){
+            this.form.backup_priority_id = 0;
         },
 
         getOrganizations(){
@@ -484,6 +516,14 @@ export default {
                     this.backupTools = res.data.data.backupTools
                 })
         },
+
+        getBackupPriorities(){
+            axios
+                .get('/admin/backup-priorities-all-collection')
+                .then(res => {
+                    this.backupPriorities = res.data.data.backupPriorities
+                })
+        },
     },
 
     mounted() {
@@ -491,6 +531,7 @@ export default {
         this.getBackupObjects();
         this.getBackupDays();
         this.getBackupTools();
+        this.getBackupPriorities();
     }
 }
 </script>

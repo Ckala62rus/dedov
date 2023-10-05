@@ -119,6 +119,31 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-2">
+                                <div class="form-group select-form_group">
+                                    <el-select
+                                        v-model="filter.backup_priority_id"
+                                        class="m-0 select-category w-100"
+                                        placeholder="Backup priority"
+                                        size="large"
+                                        :clearable=true
+                                        @clear="eventClearPriority"
+                                    >
+                                        <el-option
+                                            label="All priorities"
+                                            :value=0
+                                            :key=0
+                                        />
+                                        <el-option
+                                            v-for="backupPriority in backupPriorities"
+                                            :key="backupPriority.id"
+                                            :label="backupPriority.name"
+                                            :value="backupPriority.id"
+                                        />
+                                    </el-select>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="row">
@@ -262,6 +287,7 @@ export default {
                 // 'restricted_point',
                 'storage_server_long_time',
                 'description_storage_long_time',
+                'backup_priority',
                 'comment',
                 'actions'
             ],
@@ -308,10 +334,12 @@ export default {
             organizations: null,
             backupObjects: null,
             backupTools: null,
+            backupPriorities: null,
             filter: {
                 organization_id: 0,
                 backup_object_id: 0,
                 backup_tool_id: 0,
+                backup_priority_id: 0,
                 hostname: '',
                 service: '',
                 owner: '',
@@ -409,6 +437,10 @@ export default {
                 params.append('backup_tool_id', this.filter.backup_tool_id)
             }
 
+            if (this.filter.backup_priority_id != null){
+                params.append('backup_priority_id', this.filter.backup_priority_id)
+            }
+
             if (this.filter.comment != null){
                 params.append('comment', this.filter.comment)
             }
@@ -441,7 +473,8 @@ export default {
                 organization_id: cache.organization_id,
                 hostname: cache.hostname,
                 comment: cache.comment,
-                storage_server: cache.storage_server
+                storage_server: cache.storage_server,
+                backup_priority_id: cache.backup_priority_id
             };
 
             this.findByFilter()
@@ -457,6 +490,7 @@ export default {
                 tool: '',
                 comment: '',
                 storage_server: '',
+                backup_priority_id: 0,
             };
 
             this.url = this.urlPrepare;
@@ -491,11 +525,15 @@ export default {
         },
 
         eventClearObject(){
-            this.filter.backup_object_id = 0
+            this.filter.backup_object_id = null
         },
 
         eventClearTool(){
             this.filter.backup_tool_id = 0
+        },
+
+        eventClearPriority(){
+            this.filter.backup_priority_id = 0
         },
 
         getBackupObjects(){
@@ -513,6 +551,14 @@ export default {
                     this.backupTools = res.data.data.backupTools
                 })
         },
+
+        getBackupPriorities(){
+            axios
+                .get('/admin/backup-priorities-all-collection')
+                .then(res => {
+                    this.backupPriorities = res.data.data.backupPriorities
+                })
+        },
     },
 
     mounted() {
@@ -522,6 +568,7 @@ export default {
         this.getOrganizations();
         this.getBackupObjects();
         this.getBackupTools();
+        this.getBackupPriorities();
     }
 }
 </script>
