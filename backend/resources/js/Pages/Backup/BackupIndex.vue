@@ -287,6 +287,7 @@ export default {
                 // 'restricted_point',
                 'storage_server_long_time',
                 'description_storage_long_time',
+                'test_date',
                 'backup_priority',
                 'comment',
                 'actions'

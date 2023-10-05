@@ -214,6 +214,18 @@
                             <div class="invalid-feedback">{{error_messages.description_storage_long_time}}</div>
                         </div>
 
+                        <div class="form-group">
+                            <label>Test date<span class="text-danger"></span></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Test date"
+                                v-model="form.test_date"
+                                :class="{'is-invalid': errors.test_date}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.test_date}}</div>
+                        </div>
+
                         <label>Priority</label>
                         <div class="form-group select-form_group">
                             <el-select
@@ -297,6 +309,7 @@ export default {
                 'organization_id': '',
                 'backup_object_id': '',
                 'backup_priority_id': 0,
+                'test_date': '',
             },
             organizations: null,
             backupObjects: null,
@@ -461,6 +474,7 @@ export default {
                 description_storage_long_time: '',
                 organization_id: '',
                 backup_priority_id: null,
+                test_date: '',
             };
         },
 

@@ -39,6 +39,7 @@ class BackupUpdateRequest extends FormRequest
             'description_storage_long_time' => 'nullable|string',
             'organization_id' => 'required|integer',
             'backup_priority_id' => 'nullable|integer',
+            'test_date' => 'nullable|string',
         ];
     }
 }
