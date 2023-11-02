@@ -44,7 +44,13 @@ class UserService implements UserServiceInterface
             $data['organization_id'] = null;
         }
 
-        return $this->userRepository->createUser($data);
+        $user =  $this->userRepository->createUser($data);
+
+        if (isset($data['role_id'])){
+            $user->syncRoles($data['role_id']);
+        }
+
+        return $user;
     }
 
     public function getUserById(int $id): ?Model
