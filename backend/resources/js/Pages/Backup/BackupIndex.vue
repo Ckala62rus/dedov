@@ -291,6 +291,7 @@ export default {
                 'backup_priority',
                 'comment',
                 'proposals',
+                'os_version',
                 'actions'
             ],
             options: {

@@ -41,6 +41,7 @@ class BackupUpdateRequest extends FormRequest
             'backup_priority_id' => 'nullable|integer',
             'test_date' => 'nullable|string',
             'proposals' => 'nullable|string',
+            'os_version' => 'nullable|string',
         ];
     }
 }

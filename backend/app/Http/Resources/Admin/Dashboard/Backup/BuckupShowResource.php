@@ -37,6 +37,7 @@ class BuckupShowResource extends JsonResource
             'user_id' => $this->user_id,
             'test_date' => $this->test_date,
             'proposals' => $this->proposals,
+            'os_version' => $this->os_version,
         ];
     }
 }

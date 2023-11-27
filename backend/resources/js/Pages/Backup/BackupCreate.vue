@@ -252,6 +252,18 @@
                         </div>
 
                         <div class="form-group">
+                            <label>OS version<span class="text-danger"></span></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="OS version"
+                                v-model="form.os_version"
+                                :class="{'is-invalid': errors.os_version}"
+                            />
+                            <div class="invalid-feedback">{{error_messages.os_version}}</div>
+                        </div>
+
+                        <div class="form-group">
                             <label>Comment <span class="text-danger"></span></label>
                             <textarea
                                 type="text"
@@ -324,6 +336,7 @@ export default {
                 'backup_priority_id': 0,
                 'test_date': '',
                 'proposals': '',
+                'os_version': '',
             },
             organizations: null,
             backupObjects: null,
@@ -490,6 +503,7 @@ export default {
                 backup_priority_id: null,
                 test_date: '',
                 proposals: '',
+                os_version: '',
             };
         },
 

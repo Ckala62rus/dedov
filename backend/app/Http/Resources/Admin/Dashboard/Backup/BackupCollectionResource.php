@@ -46,6 +46,7 @@ class BackupCollectionResource extends JsonResource
 
             'test_date' => $this->test_date,
             'proposals' => $this->proposals,
+            'os_version' => $this->os_version,
 
             'can_action' => $this->can_delete_or_update_current_user($this),
         ];
