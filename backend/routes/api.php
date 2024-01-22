@@ -28,4 +28,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthTokenController::class, 'logout']);
 });
 
-Route::any('bot', [UserController::class, 'test_webhook']);
+//Route::any('bot', [UserController::class, 'test_webhook']);

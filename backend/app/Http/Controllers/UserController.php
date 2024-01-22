@@ -191,9 +191,9 @@ class UserController extends BaseController
         );
     }
 
-    public function test_webhook(Request $request)
-    {
-        Log::info($request);
-        return \response()->json(['data' => 'ok'], 200);
-    }
+//    public function test_webhook(Request $request)
+//    {
+//        Log::info($request);
+//        return \response()->json(['data' => 'ok'], 200);
+//    }
 }
