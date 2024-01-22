@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseController
 {
@@ -188,5 +189,11 @@ class UserController extends BaseController
             true,
             Response::HTTP_OK
         );
+    }
+
+    public function test_webhook(Request $request)
+    {
+        Log::info($request);
+        return \response()->json(['data' => 'ok'], 200);
     }
 }
