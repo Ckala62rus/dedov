@@ -52,8 +52,8 @@ class BackupsExport implements FromCollection, WithHeadings, ShouldAutoSize//, W
             'Comment',
             'Proposals',
             'Os version',
-            'Created at',
-            'Updated at',
+//            'Created at',
+//            'Updated at',
         ];
     }
 }

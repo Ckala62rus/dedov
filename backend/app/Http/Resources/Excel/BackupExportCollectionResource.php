@@ -37,8 +37,8 @@ class BackupExportCollectionResource extends JsonResource
             'comment' => $this->comment,
             'proposals' => $this->proposals,
             'os_version' => $this->os_version,
-            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
-            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
+//            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
+//            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
         ];
     }
 }
