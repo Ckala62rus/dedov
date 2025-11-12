@@ -16,7 +16,7 @@ class BackupExportCollectionResource extends JsonResource
     public function toArray($request)
     {
 //        return parent::toArray($request);
-//        dd($this->backupDay->name);
+//        dd($this);
         return [
             'id' => $this->id,
             'organization' => $this->organization->name,
@@ -24,14 +24,14 @@ class BackupExportCollectionResource extends JsonResource
             'owner' => $this->owner,
             'hostname' => $this->hostname,
             'object' => $this->backupObject->name,
-            'tool' => $this->backupTool->name,
+            'tool' => $this->backupTool ? $this->backupTool->name : null,
             'bd' => $this->bd,
             'restricted_point' => $this->restricted_point,
             'type' => $this->type,
             'day' => $this->backupDay ? $this->backupDay->name : null,
             'time_start' => $this->time_start,
             'storage_server' => $this->storage_server,
-            'storage_long_time' => $this->storage_long_time,
+            'storage_long_time' => $this->storage_server_long_time,
             'description_storage_long_time' => $this->description_storage_long_time,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
