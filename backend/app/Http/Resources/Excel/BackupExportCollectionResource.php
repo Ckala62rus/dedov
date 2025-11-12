@@ -16,18 +16,19 @@ class BackupExportCollectionResource extends JsonResource
     public function toArray($request)
     {
 //        return parent::toArray($request);
+//        dd($this->backupDay->name);
         return [
             'id' => $this->id,
             'organization' => $this->organization->name,
             'service' => $this->service,
             'owner' => $this->owner,
             'hostname' => $this->hostname,
-            'object' => $this->object,
-            'tool' => $this->tool,
+            'object' => $this->backupObject->name,
+            'tool' => $this->backupTool->name,
             'bd' => $this->bd,
             'restricted_point' => $this->restricted_point,
             'type' => $this->type,
-            'day' => $this->day,
+            'day' => $this->backupDay ? $this->backupDay->name : null,
             'time_start' => $this->time_start,
             'storage_server' => $this->storage_server,
             'storage_long_time' => $this->storage_long_time,

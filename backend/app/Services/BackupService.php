@@ -72,6 +72,8 @@ class BackupService implements BackupServiceInterface
             ->backupRepository
             ->withBackupRelation($query, [
                 'user',
+                'backupObject',
+                'backupTool',
                 'organization',
             ]);
 
