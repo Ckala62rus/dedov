@@ -21,7 +21,7 @@ class BackupsExport implements FromCollection, WithHeadings, ShouldAutoSize//, W
         $data = $this
             ->backupService
             ->getAllBackupsCollection($this->request->all());
-
+//dd($data);
         return BackupExportCollectionResource::collection($data);
     }
 
@@ -40,14 +40,18 @@ class BackupsExport implements FromCollection, WithHeadings, ShouldAutoSize//, W
             'Hostname',
             'Object',
             'Tool',
-            'BD',
-            'Restricted point',
-            'Type',
+            'Storage server',
+            'Description_storage',
+//            'Restricted point',
             'Day',
             'Time start',
-            'Storage server',
             'Storage long time',
             'Description storage long time',
+            'Test date',
+            'Backup priority',
+            'Comment',
+            'Proposals',
+            'Os version',
             'Created at',
             'Updated at',
         ];
